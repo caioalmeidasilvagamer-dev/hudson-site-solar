@@ -1,0 +1,505 @@
+/* ============================================================
+   SOLAR LANDING PAGE — style-desktop.css
+   Apenas media queries de desktop (min-width).
+   Requer style-base.css carregado antes.
+   Breakpoints: 600px | 900px | 1280px
+   ============================================================ */
+
+
+/* ============================================================
+   ≥ 600px — TABLET
+   ============================================================ */
+
+@media (min-width: 600px) {
+
+  /* Header — exibe CTA */
+  .btn-header-cta {
+    display: inline-flex;
+  }
+
+  /* Header — exibe botão Simular */
+  .btn-header-secondary {
+    display: inline-flex;
+  }
+
+  /* Hero — aumenta texto no tablet */
+  .hero-text-col {
+    padding: 60px 32px 60px;
+    text-align: left;
+  }
+
+  .hero-actions {
+    justify-content: flex-start;
+  }
+
+  .hero-stats {
+    justify-content: flex-start;
+  }
+
+  .hero-badge {
+    margin: 0 0 20px;
+  }
+
+  /* Hero model maior em tablet */
+  .hero-model-col {
+    min-height: var(--hero-model-h);
+  }
+
+  model-viewer {
+    min-height: var(--hero-model-h);
+  }
+
+  /* Calculadora — botão CTA não full-width */
+  .btn-calc-cta {
+    width: auto;
+  }
+
+  /* Calculadora — results grid 3 cols */
+  .results-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Formulário — row de 2 colunas */
+  .form-row-2 {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+
+  /* Stats de projetos — linha */
+  .projetos-stats-strip {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    text-align: left;
+    gap: 16px;
+  }
+
+  .proj-stat {
+    align-items: flex-start;
+  }
+
+  .proj-stat-sep {
+    display: block;
+  }
+
+  /* Social proof bar — desativa wrap em tablet */
+  .social-proof-inner {
+    flex-wrap: nowrap;
+  }
+}
+
+
+/* ============================================================
+   ≥ 900px — DESKTOP
+   ============================================================ */
+
+@media (min-width: 900px) {
+
+  /* Header — exibe nav, esconde hamburger e mobile-menu */
+  .header-nav {
+    display: flex;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+
+  /* Hero — split 50/50 */
+  .hero {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+
+  .hero-text-col {
+    padding: 60px 48px 100px 60px;
+    max-width: 600px;
+    text-align: left;
+  }
+
+  .hero-model-col {
+    height: auto;
+    min-height: var(--hero-model-h);
+    padding: 0;
+  }
+
+  model-viewer {
+    min-height: var(--hero-model-h);
+  }
+
+  .hero-actions {
+    justify-content: flex-start;
+  }
+
+  .hero-stats {
+    justify-content: flex-start;
+  }
+
+  .hero-badge {
+    margin: 0 0 20px;
+  }
+
+  /* Imagem de fundo — DESKTOP (esquerda opaca → direita transparente) */
+  .hero::before {
+    background-image: url('assets/images/bg-hero-desktop.jpeg');
+    background-position: center left;
+    mask-image: linear-gradient(to right, black 20%, transparent 50%);
+    -webkit-mask-image: linear-gradient(to right, black 20%, transparent 50%);
+  }
+
+  /* Diagrama volta para linha horizontal */
+  .fluxo-diagrama {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 0;
+  }
+
+  /* Nós voltam para largura fixa */
+  .fluxo-no {
+    width: var(--fluxo-no-w-desktop, 160px);
+    max-width: none;
+    padding: 0;
+    padding-bottom: 0;
+    gap: 12px;
+  }
+
+  /* Destinos voltam para coluna */
+  .fluxo-destinos-grid {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .fluxo-destino {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .fluxo-destino span {
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+
+  .fluxo-icone--destino {
+    width: 64px;
+    height: 64px;
+    padding: 13px;
+  }
+
+  /* SVG desktop visível, mobile oculto */
+  .fluxo-svg-connectors {
+    display: block;
+  }
+
+  .fluxo-svg-mobile {
+    display: none;
+  }
+
+  /* Calculadora — 2 cols */
+  .calc-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: 64px;
+  }
+
+  /* Benefícios — 2 cols no desktop intermediário */
+  .beneficios-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Projetos — 2 cols */
+  .projetos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Depoimentos — lado a lado, sem slider */
+  .depoimentos-slider {
+    transform: none;
+    gap: var(--gap);
+    cursor: default;
+  }
+
+  .depoimento-card {
+    flex: 1;
+    width: auto;
+  }
+
+  .depo-controls {
+    display: none;
+  }
+
+  /* Contato — 2 cols */
+  .contato-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 64px;
+  }
+
+  /* Processo — linha conectora de desktop */
+  .processo-linha {
+    display: block;
+    position: absolute;
+    top: 52px;
+    left: calc(12.5% + 24px);
+    right: calc(12.5% + 24px);
+    height: 2px;
+    background: var(--gold-glow-lg);
+    z-index: 0;
+    border-radius: 2px;
+  }
+
+  .processo-linha-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--orange));
+    border-radius: 2px;
+    transition: width 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 0 12px var(--gold-glow);
+  }
+
+  .processo-linha-fill.active {
+    width: 100%;
+  }
+
+  /* Processo — desktop: 4 colunas lado a lado */
+  .processo-timeline {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .processo-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+  }
+
+  .step-circle {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    min-height: 80px;
+    flex-shrink: 0;
+    margin-bottom: 20px;
+  }
+
+  .step-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Mobile CTA flutuante — oculto no desktop */
+  .mobile-cta-float {
+    display: none;
+  }
+
+  /* Botão voltar ao topo e whatsapp — posição normal (sem mobile CTA) */
+  .float-whats {
+    bottom: var(--float-btn-offset);
+  }
+
+  .back-to-top-btn {
+    bottom: var(--back-top-bottom);
+  }
+
+
+  .fluxo-destinos-grid {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .fluxo-destino {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .fluxo-destino span {
+    font-size: 0.88rem;
+    white-space: nowrap;
+    text-align: left;
+  }
+
+  .fluxo-icone--destino {
+    width: 64px;
+    height: 64px;
+    padding: 13px;
+  }
+
+  /* Selos e Certificações — desktop */
+  .selos-section .title-sub {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  .selos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 48px 0;
+  }
+
+  .selo-card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2xl);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    transition: all var(--transition-normal) var(--ease);
+  }
+
+  .selo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: var(--radius-xl);
+    margin-bottom: 8px;
+  }
+
+  .selos-extra {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 32px;
+    margin-top: 48px;
+    padding: 24px;
+    background: rgba(5, 5, 5, 0.3);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--border-subtle);
+  }
+
+   .selos-extra-item {
+     flex: 1;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     text-align: center;
+     gap: 12px;
+     font-size: 0.9rem;
+     color: var(--text-muted);
+   }
+
+   .selos-extra-item svg {
+     display: block;
+     margin: 0 auto 8px;
+   }
+}
+
+
+/* ============================================================
+   ≥ 1280px — WIDE
+   ============================================================ */
+
+@media (min-width: 1280px) {
+
+  /* Benefícios — 3 cols no wide */
+  .beneficios-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Projetos — 3 cols no wide */
+  .projetos-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Calculadora — gap maior */
+  .calc-grid {
+    gap: 80px;
+  }
+}
+
+
+/* ============================================================
+   Mobile — Override do footer e do float-whatsapp quando
+   mobile-cta-float está visível (≤ 767px)
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .mobile-cta-float {
+    display: flex;
+  }
+
+  /* Empurra o float-whatsapp para não cobrir o CTA móvel */
+  .float-whats {
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .back-to-top-btn {
+    bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ============================================================
+   DESIGN ENHANCEMENTS — DESKTOP
+   Efeitos visuais dedicados a resoluções de desktop (min-width: 900px)
+   ============================================================ */
+
+@media (min-width: 900px) {
+
+  /* 1. Efeitos de animação na navegação do menu */
+  .nav-link {
+    position: relative;
+    padding-bottom: 4px;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: width var(--transition-normal) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+  }
+
+  /* 2. Efeito de elevação expandido nos botões no hover */
+  .btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 28px rgba(217, 154, 60, 0.5), 0 0 16px rgba(217, 154, 60, 0.2);
+  }
+
+  .btn-secondary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 24px var(--gold-opacity-15);
+  }
+
+  /* 3. Transição premium nos cards */
+  .depoimento-card,
+  .calc-card,
+  .projeto-card,
+  .beneficio-card {
+    transition: transform var(--transition-slow) cubic-bezier(0.34, 1.56, 0.64, 1), border-color var(--transition-slow) ease, box-shadow var(--transition-slow) ease !important;
+  }
+
+  .depoimento-card:hover,
+  .calc-card:hover,
+  .projeto-card:hover,
+  .beneficio-card:hover {
+    transform: translateY(-8px) scale(1.01) !important;
+    border-color: rgba(217, 154, 60, 0.4) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(217, 154, 60, 0.12) !important;
+  }
+}
