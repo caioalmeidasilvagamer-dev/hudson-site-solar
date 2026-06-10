@@ -5146,24 +5146,29 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   z-index: 1;
 }
 
-.video-container {
-  max-width: 860px;
+.video-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
-.video-placeholder {
-  border-radius: var(--radius-xl);
-  overflow: hidden;
+.video-col-video {
+  width: 100%;
+  max-width: 320px;
+  flex-shrink: 0;
 }
 
-.video-info {
-  padding: 24px 0 0;
+.video-col-info {
+  flex: 1;
   color: var(--text-muted);
   font-size: var(--font-size-sm);
   line-height: 1.7;
 }
 
-.video-info h3 {
+.video-col-info h3 {
   font-size: var(--font-size-lg);
   font-weight: 600;
   margin-bottom: 16px;

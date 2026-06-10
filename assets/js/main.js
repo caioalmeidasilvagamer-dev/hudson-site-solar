@@ -868,7 +868,7 @@ function mascaraCelular(input) {
 
     // Número de WhatsApp de destino (placehoder substituível pelo cliente)
     // Usamos um número padrão internacional fictício ou limpo
-    const whatsappNumero = "5511999999999";
+    const whatsappNumero = "5533988845152";
 
     // Formatação da mensagem em formato URL-encoded
     const textoMensagem = `Olá! Vim pelo site da SolarTech e gostaria de solicitar um orçamento gratuito.\n\n` +
