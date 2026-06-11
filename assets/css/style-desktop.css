@@ -141,12 +141,16 @@
     margin: 0 0 20px;
   }
 
-  /* Imagem de fundo — DESKTOP (esquerda opaca → direita transparente) */
+  /* Imagem de fundo — DESKTOP (esquerda visível, some antes do modelo 3D) */
   .hero::before {
-    background-image: url('assets/images/bg-hero-desktop.jpeg');
+    background-image: url('../images/bg-hero-desktop.png');
     background-position: center left;
-    mask-image: linear-gradient(to right, black 20%, transparent 50%);
-    -webkit-mask-image: linear-gradient(to right, black 20%, transparent 50%);
+    mask-image: linear-gradient(to right, black 40%, transparent 70%);
+    -webkit-mask-image: linear-gradient(to right, black 40%, transparent 70%);
+  }
+
+  .hero::after {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.65) 40%, transparent 65%);
   }
 
   /* Diagrama volta para linha horizontal */
