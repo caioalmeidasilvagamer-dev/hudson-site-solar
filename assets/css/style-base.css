@@ -4339,10 +4339,11 @@ html:not(.dark) .form-card-glass {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--gold-glow), #3a3a3a);
+    background: linear-gradient(135deg, var(--gold), var(--gold-dim));
     border-radius: 18px;
     color: var(--color-white);
     position: relative;
+    box-shadow: 0 4px 12px var(--gold-glow);
   }
 
   .selo-content {
