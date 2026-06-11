@@ -515,7 +515,7 @@
   .projeto-card:hover,
   .beneficio-card:hover {
     transform: translateY(-8px) scale(1.01) !important;
-    border-color: rgba(217, 154, 60, 0.4) !important;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(217, 154, 60, 0.12) !important;
+    border-color: var(--border-hover) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 0 25px var(--gold-glow) !important;
   }
 }

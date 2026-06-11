@@ -17,101 +17,75 @@
  * ============================================================
  */
 :root {
-  /* ==========================================
-     NOVA IDENTIDADE VISUAL — ENGENHARIA PREMIUM
-     Fundo: Escuro profissional #0F1115
-     Acento: Dourado elegante #D99A3C
-     ========================================== */
+  /* === PALETA PROSOL — AZUL + VERDE, MODO CLARO PADRÃO === */
+  --cor-primaria: #4a5df9;
+  --cor-primaria-hover: #6b7cff;
+  --cor-accent-amber: #68a519;
 
-  /* === NOVA PALETA PRINCIPAL (PREMIUM ENGINEERING) === */
-  --cor-primaria: #D99A3C;
-  /* dourado elegante premium */
-  --cor-primaria-hover: #E8B35A;
-  /* dourado claro hover */
-  --cor-accent-amber: #E8B35A;
-  /* dourado claro premium */
+  --cor-gradient-start: #4a5df9;
+  --cor-gradient-end: #6b7cff;
+  --gradiente-dourado: linear-gradient(135deg, #4a5df9 0%, #6b7cff 100%);
 
-  /* === NOVO GRADIENTE PREMIUM === */
-  --cor-gradient-start: #D99A3C;
-  /* dourado elegante */
-  --cor-gradient-end: #E8B35A;
-  /* dourado claro */
-  --gradiente-dourado: linear-gradient(135deg, #D99A3C 0%, #E8B35A 100%);
-
-  /* === FUNDOS ESCUROS (PROFISSIONAL PREMIUM) === */
-  --cor-secundaria: #0F1115;
-  /* fundo principal premium */
-  --cor-fundo-escuro: #0A0A0A;
-  /* preto profundo quase puro */
-  --cor-fundo-medio: #171A21;
-  /* surface premium principal */
+  --cor-secundaria: #ffffff;
+  --cor-fundo-escuro: #f0f2ff;
+  --cor-fundo-medio: #f5f7ff;
   --cor-fundo-claro: #FAFAFA;
-  /* branco premium modo claro */
   --cor-branco: #FFFFFF;
 
-  /* === TEXTO (CONTRASTE OTIMIZADO) === */
-  --cor-texto-principal: #FAFAFA;
-  /* texto principal premium */
-  --cor-texto-suave: #D1D5DB;
-  /* texto suave - cinza claro premium */
-  --cor-texto-escuro: #0F1115;
-  /* texto escuro modo claro */
-  --cor-destaque: #D99A3C;
-  /* destaque dourado */
-  --cor-borda: var(--gold-opacity-15);
-  /* borda dourada sutil premium */
-  --cor-borda-dourada: rgba(217, 154, 60, 0.30);
-  /* borda dourada mais visível */
+  --cor-texto-principal: #0f1118;
+  --cor-texto-suave: #4b5563;
+  --cor-texto-escuro: #0f1118;
+  --cor-destaque: #4a5df9;
+  --cor-borda: rgba(74, 93, 249, 0.15);
+  --cor-borda-dourada: rgba(74, 93, 249, 0.30);
 
-  /* === WHATSAPP === */
   --cor-verde-whatsapp: #25D366;
   --cor-verde-whatsapp-hover: #1DA851;
 
-  /* === TIPOGRAFIA — OUTFIT UNIFICADA === */
   --fonte-principal: 'Outfit', system-ui, sans-serif;
   --fonte-secundaria: 'Outfit', system-ui, sans-serif;
 
-  /* === SOMBRAS & GLOW PREMIUM === */
-  --sombra-dourada: 0 0 24px rgba(217, 154, 60, 0.55);
-  --sombra-glow-hover: 0 8px 32px rgba(217, 154, 60, 0.75);
-  --sombra-card: 0 4px 32px rgba(0, 0, 0, 0.60);
+  --sombra-dourada: 0 0 24px rgba(74, 93, 249, 0.30);
+  --sombra-glow-hover: 0 8px 32px rgba(74, 93, 249, 0.45);
+  --sombra-card: 0 2px 16px rgba(74, 93, 249, 0.08);
 
-  /* ==========================================
-     MODO PADRÃO = ESCURO PREMIUM
-     Fundo #0F1115 · Texto #FAFAFA · Ouro #D99A3C
-     ========================================== */
-  --bg: var(--cor-secundaria);
-  /* #0F1115 */
-  --bg-surface: var(--cor-fundo-medio);
-  /* #171A21 */
-  --bg-card: #1A1F29;
-  /* tom médio premium para cards */
-  --gold: var(--cor-primaria);
-  /* #D99A3C */
-  --gold-dim: var(--cor-primaria-hover);
-  /* #E8B35A */
-  --gold-glow: rgba(217, 154, 60, 0.22);
-  --gold-glow-lg: rgba(217, 154, 60, 0.10);
-  --orange: var(--cor-accent-amber);
-  /* #E8B35A */
-  --sky: var(--cor-verde-whatsapp);
-  --sky-accent: var(--cor-verde-whatsapp-hover);
-  --whatsapp: var(--cor-verde-whatsapp);
-  --whatsapp-dark: var(--cor-verde-whatsapp-hover);
-  --text: var(--cor-texto-principal);
-  /* #FAFAFA */
-  --text-muted: var(--cor-texto-suave);
-  /* #D1D5DB */
-  --text-dim: #6B7280;
-  /* texto auxiliar cinza médio */
-  --text-offer: var(--cor-texto-principal);
-  --border: var(--cor-borda);
-  /* rgba(217,154,60,0.15) */
-  --border-hover: var(--cor-borda-dourada);
-  /* rgba(217,154,60,0.30) */
+  --bg: #ffffff;
+  --bg-surface: #f5f7ff;
+  --bg-card: #ffffff;
+  --gold: #4a5df9;
+  --gold-dim: #6b7cff;
+  --gold-glow: rgba(74, 93, 249, 0.15);
+  --gold-glow-lg: rgba(74, 93, 249, 0.07);
+  --orange: #68a519;
+  --sky: #25D366;
+  --sky-accent: #1DA851;
+  --whatsapp: #25D366;
+  --whatsapp-dark: #1DA851;
+  --text: #0f1118;
+  --text-muted: #4b5563;
+  --text-dim: #9ca3af;
+  --text-offer: #0f1118;
+  --border: rgba(74, 93, 249, 0.12);
+  --border-hover: rgba(74, 93, 249, 0.35);
 
-  --font-display: var(--fonte-principal);
-  --font-body: var(--fonte-secundaria);
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+
+  --color-white: #ffffff;
+  --color-gray-light: #a0a0a0;
+  --color-gray: #777777;
+  --color-gray-medium: #888888;
+  --color-gray-dark: #666666;
+  --color-gold-highlight: #4a5df9;
+  --gold-opacity-10: rgba(74, 93, 249, 0.10);
+  --gold-opacity-15: rgba(74, 93, 249, 0.15);
+  --gold-opacity-25: rgba(74, 93, 249, 0.25);
+  --gold-opacity-30: rgba(74, 93, 249, 0.30);
+  --gold-opacity-35: rgba(74, 93, 249, 0.35);
+  --gold-opacity-40: rgba(74, 93, 249, 0.40);
+  --whatsapp-opacity-10: rgba(37, 211, 102, 0.10);
+  --whatsapp-opacity-15: rgba(37, 211, 102, 0.15);
+  --whatsapp-opacity-20: rgba(37, 211, 102, 0.20);
 
   /* === ESPAÇAMENTOS === */
   --header-h: 72px;
@@ -134,7 +108,6 @@
   --fluxo-icone-size: 88px;
   --cert-badge-size: 130px;
   --cert-inner-size: 106px;
-  /* escuro por padrão — partículas sempre visíveis */
   --footer-pb: 120px;
   --toast-bottom: 32px;
   --social-bar-py: 9px;
@@ -146,23 +119,19 @@
   /* === TRANSIÇÕES === */
   --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.4s;
 
-  /* === COLORS — STANDARD === */
-  --color-white: #ffffff;
-  --color-gray-light: #a0a0a0;
-  --color-gray: #777777;
-  --color-gray-medium: #888888;
-  --color-gray-dark: #666666;
-  --color-gold-highlight: #D4AF37;
-  --gold-opacity-10: rgba(217, 154, 60, 0.10);
-  --gold-opacity-15: rgba(217, 154, 60, 0.15);
-  --gold-opacity-25: rgba(217, 154, 60, 0.25);
-  --gold-opacity-30: rgba(217, 154, 60, 0.30);
-  --gold-opacity-35: rgba(217, 154, 60, 0.35);
-  --gold-opacity-40: rgba(217, 154, 60, 0.40);
-  --whatsapp-opacity-10: rgba(37, 211, 102, 0.10);
-  --whatsapp-opacity-15: rgba(37, 211, 102, 0.15);
-  --whatsapp-opacity-20: rgba(37, 211, 102, 0.20);
+  /* === BORDER RADIUS === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-3xl: 50px;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
 
   /* === TYPOGRAPHY === */
   --font-mono: 'Courier New', monospace;
@@ -179,43 +148,26 @@
   --font-size-heading-md: clamp(2rem, 5vw, 3rem);
   --font-size-heading-lg: clamp(2rem, 5vw, 3.2rem);
   --font-size-heading-xl: clamp(2.8rem, 7vw, 5rem);
-
-  /* === BORDER RADIUS === */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 24px;
-  --radius-3xl: 50px;
-  --radius-pill: 999px;
-  --radius-circle: 50%;
-
-  /* === TRANSITIONS === */
-  --transition-fast: 0.2s;
-  --transition-normal: 0.3s;
-  --transition-slow: 0.4s;
 }
 
-/* === MODO ULTRA-ESCURO (toggle) — #000000 profundo com nova paleta === */
+/* === MODO ESCURO (toggle) — navy profundo === */
 html.dark {
-  --bg: #000000;
-  --bg-surface: #0A0A0A;
-  --bg-card: #111111;
-  --gold: var(--cor-primaria);
-  /* #D99A3C */
-  --gold-dim: var(--cor-primaria-hover);
-  /* #E8B35A */
-  --gold-glow: rgba(217, 154, 60, 0.25);
-  --gold-glow-lg: rgba(217, 154, 60, 0.12);
-  --orange: var(--cor-accent-amber);
-  --sky: var(--cor-verde-whatsapp);
-  --text: var(--cor-texto-principal);
-  /* #FAFAFA */
-  --text-muted: var(--cor-texto-suave);
-  /* #D1D5DB */
+  --bg: #0a0d1a;
+  --bg-surface: #0f1426;
+  --bg-card: #141926;
+  --gold: #4a5df9;
+  --gold-dim: #6b7cff;
+  --gold-glow: rgba(74, 93, 249, 0.25);
+  --gold-glow-lg: rgba(74, 93, 249, 0.12);
+  --orange: #68a519;
+  --sky: #25D366;
+  --text: #FAFAFA;
+  --text-muted: #D1D5DB;
   --text-dim: #666666;
-  --border: rgba(255, 255, 255, 0.05);
-  --border-hover: rgba(217, 154, 60, 0.35);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(74, 93, 249, 0.40);
+  --bg-card: #1a2035;
+  --sombra-card: 0 4px 32px rgba(0, 0, 0, 0.60);
 }
 
 
@@ -4416,7 +4368,7 @@ html:not(.dark) .form-card-glass {
     gap: 12px;
     margin-top: 48px;
     padding: 24px;
-    background: rgba(5, 5, 5, 0.3);
+    background: var(--bg-surface);
     border-radius: var(--radius-2xl);
     border: 1px solid var(--border-subtle);
   }
@@ -4810,7 +4762,7 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   }
 
   .site-header.scrolled {
-    background: rgba(29, 29, 29, 0.88) !important;
+    background: color-mix(in srgb, var(--bg-surface) 92%, transparent) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     border-bottom: 1px solid var(--gold-opacity-15) !important;
@@ -4867,8 +4819,8 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   .calc-card,
   .projeto-card,
   .beneficio-card {
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    background: rgba(17, 17, 17, 0.6) !important;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
     border-radius: var(--radius-2xl);
     overflow: hidden;
     transition: transform var(--transition-normal) var(--ease-spring), border-color var(--transition-normal) ease, box-shadow var(--transition-normal) ease;
@@ -4879,8 +4831,8 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   .projeto-card:hover,
   .beneficio-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(217, 154, 60, 0.3) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(217, 154, 60, 0.08) !important;
+    border-color: var(--border-hover) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 0 20px var(--gold-glow) !important;
   }
 
   /* 7. Divisores de Seção com Linha Ouro */
