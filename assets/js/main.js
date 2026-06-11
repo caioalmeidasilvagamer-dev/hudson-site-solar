@@ -1248,6 +1248,8 @@ function showFormToast() {
       className.includes('depo-reveal') ||
       className.includes('contato-reveal') ||
       className.includes('beneficios-reveal') ||
+      className.includes('reveal-left') ||
+      className.includes('reveal-right') ||
       className.includes('calc-reveal') ||
       className.includes('historia-reveal');
   });
@@ -1344,4 +1346,28 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   requestAnimationFrame(tick);
+})();
+
+/* ===== CURSOR PERSONALIZADO ===== */
+(function() {
+  const cursor = document.getElementById('custom-cursor');
+  if (!cursor || window.matchMedia('(pointer: coarse)').matches) return;
+
+  let mouseX = 0, mouseY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  const hoverTargets = document.querySelectorAll('a, button, [role="button"], input, select, textarea, label');
+  hoverTargets.forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
+  document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
 })();

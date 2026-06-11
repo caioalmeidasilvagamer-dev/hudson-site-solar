@@ -19,13 +19,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style"
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" />
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" />
   <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     media="print" onload="this.media='all'" />
   <noscript>
     <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" />
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" />
   </noscript>
 
   <!-- Model Viewer -->
@@ -41,6 +41,7 @@
 </head>
 
 <body>
+<div class="custom-cursor" id="custom-cursor" aria-hidden="true"></div>
 
   <!-- ========== HEADER FIXO ========== -->
   <header class="site-header" id="site-header">
@@ -73,7 +74,7 @@
       <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
         <!-- Ícone sol — visível no modo escuro (clicar para ir ao claro) -->
         <svg class="theme-icon theme-icon--sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-          viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
           aria-hidden="true">
           <circle cx="12" cy="12" r="4" />
           <line x1="12" y1="2" x2="12" y2="5" />
@@ -88,7 +89,7 @@
 
         <!-- Ícone lua — visível no modo claro (clicar para ir ao escuro) -->
         <svg class="theme-icon theme-icon--moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-          viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
           aria-hidden="true">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </svg>
@@ -172,7 +173,7 @@
       </div>
       <div class="hero-stats" aria-label="Números de impacto">
         <div class="hero-stat">
-          <span class="stat-number">3+</span>
+          <span class="stat-number">7+</span>
           <span class="stat-label">Anos de Experiência</span>
         </div>
         <div class="hero-stat-divider" aria-hidden="true"></div>
@@ -863,7 +864,7 @@
 
       <div class="beneficios-grid">
         <!-- Benefício 1: Economia -->
-        <div class="beneficio-card beneficios-reveal" data-delay="1">
+        <div class="beneficio-card beneficios-reveal reveal-left" data-delay="1">
           <div class="beneficio-icon">
             <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
               stroke-linejoin="round">
@@ -881,7 +882,7 @@
         </div>
 
         <!-- Benefício 2: Retorno -->
-        <div class="beneficio-card beneficios-reveal" data-delay="2">
+        <div class="beneficio-card beneficios-reveal reveal-right" data-delay="2">
           <div class="beneficio-icon">
             <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
               stroke-linejoin="round">
@@ -894,7 +895,7 @@
         </div>
 
         <!-- Benefício 3: Sustentabilidade -->
-        <div class="beneficio-card beneficios-reveal" data-delay="3">
+        <div class="beneficio-card beneficios-reveal reveal-left" data-delay="3">
           <div class="beneficio-icon">
             <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
               stroke-linejoin="round">
@@ -911,7 +912,7 @@
         </div>
 
         <!-- Benefício 4: Garantia -->
-        <div class="beneficio-card beneficios-reveal" data-delay="4">
+        <div class="beneficio-card beneficios-reveal reveal-right" data-delay="4">
           <div class="beneficio-icon">
             <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
               stroke-linejoin="round">
@@ -926,7 +927,7 @@
         </div>
 
         <!-- Benefício 5: Financiamento -->
-        <div class="beneficio-card beneficios-reveal" data-delay="5">
+        <div class="beneficio-card beneficios-reveal reveal-left" data-delay="5">
           <div class="beneficio-icon">
             <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
               stroke-linejoin="round">
@@ -942,7 +943,7 @@
         </div>
 
         <!-- Benefício 6: Autonomia -->
-        <div class="beneficio-card beneficios-reveal" data-delay="6">
+        <div class="beneficio-card beneficios-reveal reveal-right" data-delay="6">
           <div class="beneficio-icon">
             <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
               stroke-linejoin="round">
@@ -1149,13 +1150,23 @@
       <div class="text-center historia-reveal" data-delay="0">
         <span class="section-badge">Nossa Trajetória</span>
         <h2 class="section-title">Consolidando a energia solar em Almenara/MG e região</h2>
-        <p class="section-subtitle">Desde 2022, transformando telhados em fontes de economia e sustentabilidade</p>
+        <p class="section-subtitle">7 anos de experiência no setor solar, desde 2022 com a ProSol em Almenara/MG</p>
       </div>
 
       <!-- Timeline -->
       <div class="historia-timeline mt-16">
-        <!-- Item 2022 -->
+        <!-- Item 2017 -->
         <div class="historia-item historia-reveal" data-delay="1">
+          <div class="historia-anos">2017</div>
+          <div class="historia-content">
+            <div class="historia-circle"></div>
+            <h3 class="historia-title">O Início da Trajetória</h3>
+            <p class="historia-desc">Hudson Rocha inicia sua carreira no setor de energia solar, acumulando experiência técnica e comercial que seria a base da ProSol.</p>
+          </div>
+        </div>
+
+        <!-- Item 2022 -->
+        <div class="historia-item historia-reveal" data-delay="2">
           <div class="historia-anos">2022</div>
           <div class="historia-content">
             <div class="historia-circle"></div>
@@ -1166,7 +1177,7 @@
         </div>
 
         <!-- Item 2023 -->
-        <div class="historia-item historia-reveal" data-delay="2">
+        <div class="historia-item historia-reveal" data-delay="3">
           <div class="historia-anos">2023</div>
           <div class="historia-content">
             <div class="historia-circle"></div>
@@ -1176,7 +1187,7 @@
         </div>
 
         <!-- Item 2024 -->
-        <div class="historia-item historia-reveal" data-delay="3">
+        <div class="historia-item historia-reveal" data-delay="4">
           <div class="historia-anos">2024</div>
           <div class="historia-content">
             <div class="historia-circle"></div>
@@ -1186,7 +1197,7 @@
         </div>
 
         <!-- Item 2025 -->
-        <div class="historia-item historia-reveal" data-delay="4">
+        <div class="historia-item historia-reveal" data-delay="5">
           <div class="historia-anos">2025</div>
           <div class="historia-content">
             <div class="historia-circle"></div>
@@ -1200,7 +1211,7 @@
       <!-- Estatísticas -->
       <div class="historia-stats mt-24">
         <div class="historia-stat historia-reveal" data-delay="5">
-          <div class="stat-number">3+</div>
+          <div class="stat-number">7+</div>
           <div class="stat-label">Anos de Experiência</div>
         </div>
         <div class="historia-stat historia-reveal" data-delay="6">
@@ -1355,6 +1366,8 @@
                 alt="ABSOLAR"></div>
             <div class="parceiro-logo" title="Risen Energy"><img src="assets/logos%20parceiros/risen-logo.png"
                 alt="Risen Energy"></div>
+            <div class="parceiro-logo" title="SolarEdge"><img src="assets/logos%20parceiros/solaredge-logo.png" alt="SolarEdge"></div>
+            <div class="parceiro-logo" title="PHB Solar"><img src="assets/logos%20parceiros/phbsolar-logo.png" alt="PHB Solar"></div>
           </div>
           <!-- Grupo 2 — clone -->
           <div class="parceiros-logos-group" aria-hidden="true">
@@ -1368,6 +1381,8 @@
             </div>
             <div class="parceiro-logo" title="Risen Energy"><img src="assets/logos%20parceiros/risen-logo.png" alt="">
             </div>
+            <div class="parceiro-logo" title="SolarEdge"><img src="assets/logos%20parceiros/solaredge-logo.png" alt=""></div>
+            <div class="parceiro-logo" title="PHB Solar"><img src="assets/logos%20parceiros/phbsolar-logo.png" alt=""></div>
           </div>
           <!-- Grupo 3 — clone -->
           <div class="parceiros-logos-group" aria-hidden="true">
@@ -1381,6 +1396,8 @@
             </div>
             <div class="parceiro-logo" title="Risen Energy"><img src="assets/logos%20parceiros/risen-logo.png" alt="">
             </div>
+            <div class="parceiro-logo" title="SolarEdge"><img src="assets/logos%20parceiros/solaredge-logo.png" alt=""></div>
+            <div class="parceiro-logo" title="PHB Solar"><img src="assets/logos%20parceiros/phbsolar-logo.png" alt=""></div>
           </div>
           <!-- Grupo 4 — clone -->
           <div class="parceiros-logos-group" aria-hidden="true">
@@ -1394,6 +1411,8 @@
             </div>
             <div class="parceiro-logo" title="Risen Energy"><img src="assets/logos%20parceiros/risen-logo.png" alt="">
             </div>
+            <div class="parceiro-logo" title="SolarEdge"><img src="assets/logos%20parceiros/solaredge-logo.png" alt=""></div>
+            <div class="parceiro-logo" title="PHB Solar"><img src="assets/logos%20parceiros/phbsolar-logo.png" alt=""></div>
           </div>
         </div>
       </div>
@@ -1699,8 +1718,8 @@
               <div class="pulse-indicator"></div>
             </div>
             <div class="consultor-meta">
-              <span class="consultor-name">Hudson</span>
-              <span class="consultor-role">Consultor Solar — ProSol Energia Solar</span>
+              <span class="consultor-name">Hudson Rocha</span>
+              <span class="consultor-role">Fundador & Consultor Solar — ProSol Energia Solar</span>
             </div>
           </div>
         </div>
