@@ -523,4 +523,18 @@
     border-color: var(--border-hover) !important;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 0 25px var(--gold-glow) !important;
   }
+
+  .contato-mapa-wrap {
+    flex-direction: row !important;
+  }
+
+  .contato-mapa-wrap > div {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .contato-mapa-wrap > div video,
+  .contato-mapa-wrap > div iframe {
+    height: 100% !important;
+  }
 }

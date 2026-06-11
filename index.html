@@ -1427,6 +1427,35 @@
   </section>
 
   <!-- Seção 6: Depoimentos (Fase 4) -->
+  <!-- ========== SEÇÃO VÍDEO EQUIPE ========== -->
+  <section id="equipe-em-acao" class="equipe-video-section">
+    <div class="container">
+      <div class="text-center equipe-reveal" data-delay="0" style="margin-bottom:48px;">
+        <span class="section-badge">ProSol em Ação</span>
+        <h2 class="section-title">Veja Nossa Equipe Trabalhando</h2>
+        <p class="section-subtitle">Do planejamento com drone à instalação finalizada — veja como a ProSol transforma telhados em fontes de economia.</p>
+      </div>
+
+      <div class="equipe-video-wrap equipe-reveal" data-delay="1">
+        <video
+          id="equipe-video"
+          src="assets/videos/WhatsApp Video 2026-06-10 at 17.57.54.mp4"
+          loop
+          playsinline
+          muted
+          style="width:100%;display:block;border-radius:var(--radius-2xl);"></video>
+
+        <!-- Overlay play/pause -->
+        <div class="equipe-video-overlay" id="equipe-overlay">
+          <button class="equipe-play-btn" id="equipe-play-btn" aria-label="Reproduzir vídeo">
+            <svg id="equipe-icon-play" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="equipe-icon-pause" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="depoimentos" class="depoimentos-section">
     <div class="container">
       <div class="depoimentos-header text-center depoimentos-reveal" data-delay="0">
@@ -1789,8 +1818,33 @@
   </section>
 
   <!-- ========== MAPA / LOCALIZAÇÃO ========== -->
-  <section class="mapa-section" id="mapa" style="padding: 0; margin: 0;">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3831.755780234519!2d-40.696972325080566!3d-16.18153978451438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x74979020c9dbd4b%3A0x38863b926bb21b55!2sProSol%20Energia%20Solar!5e0!3m2!1spt-BR!2sbr!4v1781121787446!5m2!1spt-BR!2sbr" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <section class="mapa-section" id="mapa" style="padding: 0 16px; margin: 0;">
+    <div class="contato-mapa-wrap" style="display:flex;flex-direction:column;gap:16px;">
+
+      <!-- Vídeo: como chegar -->
+      <a href="assets/videos/AQPqAHWRsIXJXxbhIQrXr7cx6W26UjBFezrUwJPJ21TW76JvO_9RSnrV_FAJGesQfHw90hnmgedoNqW6-BMIppd8eELlqrbz4bawi4A.mp4" target="_blank" rel="noopener noreferrer" style="display:block;border-radius:var(--radius-xl);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.12);position:relative;aspect-ratio:3/4;text-decoration:none;">
+        <div style="position:absolute;top:12px;left:12px;z-index:2;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);border-radius:var(--radius-pill);padding:6px 14px;display:flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span style="font-size:0.75rem;font-weight:600;color:#ffffff;letter-spacing:0.04em;">Como chegar</span>
+        </div>
+        <div style="position:absolute;bottom:12px;right:12px;z-index:2;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <video
+          src="assets/videos/AQPqAHWRsIXJXxbhIQrXr7cx6W26UjBFezrUwJPJ21TW76JvO_9RSnrV_FAJGesQfHw90hnmgedoNqW6-BMIppd8eELlqrbz4bawi4A.mp4"
+          autoplay muted loop playsinline
+          style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;">
+        </video>
+      </a>
+
+      <!-- Mapa Google -->
+      <div style="border-radius:var(--radius-xl);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.12);">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3831.755780234519!2d-40.696972325080566!3d-16.18153978451438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x74979020c9dbd4b%3A0x38863b926bb21b55!2sProSol%20Energia%20Solar!5e0!3m2!1spt-BR!2sbr!4v1781121787446!5m2!1spt-BR!2sbr"
+          width="100%" height="280" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+    </div>
   </section>
 
   <!-- Modal Lightbox (Fase 4) -->

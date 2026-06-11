@@ -1348,3 +1348,36 @@ document.addEventListener('DOMContentLoaded', function () {
   requestAnimationFrame(tick);
 })();
 
+(function() {
+  const wrap = document.querySelector('.equipe-video-wrap');
+  const video = document.getElementById('equipe-video');
+  const btn = document.getElementById('equipe-play-btn');
+  const iconPlay = document.getElementById('equipe-icon-play');
+  const iconPause = document.getElementById('equipe-icon-pause');
+
+  if (!video) return;
+
+  function togglePlay() {
+    if (video.paused) {
+      video.play();
+      wrap.classList.add('playing');
+      iconPlay.style.display = 'none';
+      iconPause.style.display = 'block';
+    } else {
+      video.pause();
+      wrap.classList.remove('playing');
+      iconPlay.style.display = 'block';
+      iconPause.style.display = 'none';
+    }
+  }
+
+  wrap.addEventListener('click', togglePlay);
+
+  // Revelar seção no scroll
+  const reveals = document.querySelectorAll('.equipe-reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => obs.observe(el));
+})();
+
