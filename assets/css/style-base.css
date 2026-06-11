@@ -114,8 +114,8 @@
   --card-px: 32px;
 
   /* === COMPONENTES === */
-  --hero-model-h: 600px;
-  --hero-model-h-mobile: clamp(500px, 70vh, 850px);
+  --hero-model-h: 650px;
+  --hero-model-h-mobile: clamp(550px, 75vh, 900px);
   --hamburger-size: 36px;
   --float-btn-size: 60px;
   --float-btn-offset: 18px;
@@ -663,7 +663,7 @@ html:not(.dark) .theme-icon--moon {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('../images/quero_a_mesma_imagem_mas_202606111527.jpeg') center top / cover no-repeat;
+  background: url('../images/bg-hero-mobile.jpeg') center top / cover no-repeat;
   mask-image: linear-gradient(to bottom, black 30%, transparent 75%);
   -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 75%);
   pointer-events: none;
@@ -705,8 +705,8 @@ html:not(.dark) .theme-icon--moon {
 
 model-viewer {
   width: 100%;
-  height: 70%;
-  min-height: 300px;
+  height: 95%;
+  min-height: 400px;
   --poster-color: transparent;
   --progress-bar-color: var(--gold);
   will-change: transform, opacity;
@@ -966,11 +966,6 @@ html:not(.dark) .stat-label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  font-size: var(--font-size-micro);
-  color: var(--hero-text-dim);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   pointer-events: none;
   animation: fade-in-up 1.2s 2s var(--ease) both;
 }
@@ -980,8 +975,9 @@ html:not(.dark) .stat-label {
 }
 
 .chevron {
-  color: var(--solar-yellow);
-  opacity: 0.8;
+  color: #ffffff;
+  opacity: 0.9;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
 }
 
 /* Animações de entrada */
@@ -4725,22 +4721,13 @@ html:not(.dark) .form-card-glass {
   .alta-tensao-img-wrapper {
     position: relative;
     max-width: 100%;
-    border-radius: var(--radius-2xl);
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
-    transition: transform 0.5s var(--ease);
-  }
-
-  .alta-tensao-img-wrapper:hover {
-    transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+    animation: float-phone 4s ease-in-out infinite;
   }
 
   .alta-tensao-img {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: var(--radius-2xl);
   }
 
   .alta-tensao-img-overlay {
@@ -5438,9 +5425,7 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
 
 .alta-tensao-img-wrapper {
   position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: float-phone 4s ease-in-out infinite;
 }
 
 .alta-tensao-img {
@@ -5449,6 +5434,11 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   display: block;
   object-fit: cover;
   max-height: 500px;
+}
+
+@keyframes float-phone {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
 .alta-tensao-img-overlay {
