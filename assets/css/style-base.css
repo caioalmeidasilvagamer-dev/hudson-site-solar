@@ -34,7 +34,7 @@
   --cor-branco: #FFFFFF;
 
   --cor-texto-principal: #00143c;
-  --cor-texto-suave: #4b5563;
+  --cor-texto-suave: #2c3139;
   --cor-texto-escuro: #00143c;
   --cor-destaque: #0050a0;
   --cor-borda: rgba(0, 80, 160, 0.15);
@@ -66,7 +66,7 @@
   --whatsapp: #25D366;
   --whatsapp-dark: #1DA851;
   --text: #00143c;
-  --text-muted: #4b5563;
+  --text-muted: #282c31;
   --text-dim: #6b7280;
   --text-offer: #00143c;
   --border: rgba(0, 80, 160, 0.12);
@@ -5437,8 +5437,15 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
 }
 
 @keyframes float-phone {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
 .alta-tensao-img-overlay {
@@ -5529,7 +5536,7 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   margin: 0 auto;
   border-radius: var(--radius-2xl);
   overflow: hidden;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   background: #000;
 }
@@ -5547,7 +5554,7 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   transition: background 0.3s ease;
   border-radius: var(--radius-2xl);
 }
@@ -5568,10 +5575,10 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 2px solid rgba(255,255,255,0.4);
+  border: 2px solid rgba(255, 255, 255, 0.4);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -5582,7 +5589,7 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
 
 .equipe-play-btn:hover {
   transform: scale(1.1);
-  background: rgba(255,255,255,0.25);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .equipe-reveal {
