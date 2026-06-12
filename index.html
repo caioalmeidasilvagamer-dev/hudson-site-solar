@@ -15,6 +15,21 @@
     content="Instalação profissional de painéis solares em Almenara/MG e região do Vale do Jequitinhonha. Orçamento gratuito e sem compromisso." />
   <meta property="og:type" content="website" />
 
+  <!-- Canonical -->
+  <!-- TODO: substituir pelo domínio real do site (Vercel ou domínio próprio) -->
+  <link rel="canonical" href="https://[DOMINIO-DO-CLIENTE]/" />
+
+  <!-- Open Graph adicionais -->
+  <meta property="og:image" content="https://[DOMINIO-DO-CLIENTE]/assets/images/cropped_image%20(1).png" />
+  <meta property="og:url" content="https://[DOMINIO-DO-CLIENTE]/" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <!-- Geo tags — Almenara/MG -->
+  <meta name="geo.region" content="BR-MG" />
+  <meta name="geo.placename" content="Almenara, Minas Gerais" />
+  <meta name="geo.position" content="-16.1817;-40.7131" />
+  <meta name="ICBM" content="-16.1817, -40.7131" />
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,6 +53,146 @@
   <!-- Favicon -->
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='5' fill='none' stroke='%23f4b400' stroke-width='2'/><line x1='16' y1='2' x2='16' y2='7' stroke='%23f4b400' stroke-width='2' stroke-linecap='round'/><line x1='16' y1='25' x2='16' y2='30' stroke='%23f4b400' stroke-width='2' stroke-linecap='round'/><line x1='2' y1='16' x2='7' y2='16' stroke='%23f4b400' stroke-width='2' stroke-linecap='round'/><line x1='25' y1='16' x2='30' y2='16' stroke='%23f4b400' stroke-width='2' stroke-linecap='round'/><line x1='6' y1='6' x2='9.5' y2='9.5' stroke='%23f4b400' stroke-width='2' stroke-linecap='round'/><line x1='22.5' y1='22.5' x2='26' y2='26' stroke='%23f4b400' stroke-width='2' stroke-linecap='round'/><line x1='26' y1='6' x2='22.5' y2='9.5' stroke='%23f4b400' stroke-width='2' stroke-linecap='round'/><line x1='9.5' y1='22.5' x2='6' y2='26' stroke='%23f4b400' stroke-width='2' stroke-linecap='round'/></svg>">
+
+  <!-- Schema LocalBusiness -->
+  <!-- TODO: substituir [DOMINIO-DO-CLIENTE] pelo domínio real do site -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
+    "name": "ProSol Energia Solar",
+    "image": "https://[DOMINIO-DO-CLIENTE]/assets/images/cropped_image%20(1).png",
+    "url": "https://[DOMINIO-DO-CLIENTE]/",
+    "telephone": "+55-33-98884-5152",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Almenara",
+      "addressRegion": "MG",
+      "addressCountry": "BR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -16.1817,
+      "longitude": -40.7131
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "08:00",
+        "closes": "18:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "08:00",
+        "closes": "12:00"
+      }
+    ],
+    "areaServed": [
+      { "@type": "City", "name": "Almenara" },
+      { "@type": "City", "name": "Jacinto" },
+      { "@type": "City", "name": "Mata Verde" },
+      { "@type": "City", "name": "Salto da Divisa" },
+      { "@type": "City", "name": "Rubim" },
+      { "@type": "AdministrativeArea", "name": "Vale do Jequitinhonha" }
+    ],
+    "founder": {
+      "@type": "Person",
+      "name": "Hudson Rocha"
+    },
+    "sameAs": [
+      "https://www.instagram.com/prosol.energiasolar/"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Serviços de Energia Solar",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Instalação Solar Residencial"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Instalação Solar Comercial"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Energia Solar para Alta Tensão (Mercado Livre)"
+          }
+        }
+      ]
+    }
+  }
+  </script>
+
+  <!-- Schema FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Minha conta de luz precisa ser muito alta para compensar?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Não! Sistemas solares são viáveis a partir de contas de R$ 150/mês. Quanto maior a conta, maior a economia — mas mesmo para contas menores o retorno é atrativo, especialmente com financiamento que transforma a conta atual em parcela de instalação."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "O sistema funciona em dias nublados ou chuvosos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sim! Os painéis captam luz difusa, não apenas luz direta. Em dias nublados, a geração pode cair de 20 a 30%, mas o sistema continua funcionando normalmente. O Brasil possui uma das melhores irradiações solares do mundo — mesmo no inverno ou em dias encobertos."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Preciso de muito espaço no telhado?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Para uma residência com conta de R$ 300/mês são necessários apenas 12 a 16 m² de área útil. Telhados com sombreamento parcial ou orientação diferente do norte geográfico ainda são aproveitáveis com planejamento técnico adequado."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Como funciona o financiamento? Preciso pagar tudo à vista?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Não precisa! Trabalhamos com financiamento via bancos parceiros com taxas atrativas e prazo de até 84 meses. Na prática, a parcela mensal do financiamento costuma ser menor do que sua conta de luz atual — você começa economizando desde o primeiro mês."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "O sistema precisa de manutenção periódica?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A manutenção é mínima e barata. Recomendamos limpeza dos painéis a cada 6 meses (água e detergente suave) e uma revisão elétrica anual. Os painéis são projetados para durar 25 a 30 anos com degradação mínima de geração."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Em quanto tempo recupero o investimento (payback)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "O payback médio no Brasil é de 3 a 5 anos, dependendo do porte do sistema e localização. Após esse período, toda a energia gerada representa lucro puro por mais 20 anos. É o investimento com melhor relação risco/retorno disponível hoje para residências e empresas."
+        }
+      }
+    ]
+  }
+  </script>
+
 </head>
 
 <body>
@@ -147,8 +302,8 @@
     <!-- COLUNA ESQUERDA: texto -->
     <div class="hero-text-col">
       <h1 class="hero-headline">
-        Economize na conta de luz<br />
-        <em>com energia solar.</em>
+        Energia Solar em Almenara/MG<br />
+        <em>economize até 95% na conta de luz.</em>
       </h1>
       <p class="hero-sub">
         Soluções completas em energia solar para residências, empresas e comércios em Almenara/MG e região do Vale do Jequitinhonha. Reduza até 95%
@@ -795,7 +950,7 @@
           <p style="font-size:0.9rem;color:var(--text-muted);margin:0;">Reconhecida como empresa destaque em Almenara/MG, premiada em cerimônia oficial em 2025.</p>
         </div>
         <div style="width:100%;max-width:420px;border-radius:var(--radius-xl);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.15);">
-          <img src="assets/images/EMBRAPECIL.jpg" alt="Prêmio Destaque EMBRAPECIL — ProSol Energia Solar" style="width:100%;height:auto;display:block;object-fit:cover;">
+          <img src="assets/images/EMBRAPECIL.jpg" alt="Prêmio Destaque EMBRAPECIL — ProSol Energia Solar" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;object-fit:cover;">
         </div>
       </div>
 
@@ -1145,51 +1300,51 @@
         <!-- Carrossel 1: move para ESQUERDA -->
         <div class="proj-track-wrap">
           <div class="proj-track" id="proj-track-1" data-direction="left">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.41.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.42.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.43.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.44.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.45.jpeg" alt="Projeto realizado">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.41.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.42.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.43.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.44.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.45.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
             <!-- duplicatas para loop infinito -->
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.41.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.42.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.43.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.44.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.45.jpeg" alt="Projeto realizado">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.41.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.42.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.43.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.44.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.45.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
           </div>
         </div>
 
         <!-- Carrossel 2: move para DIREITA -->
         <div class="proj-track-wrap">
           <div class="proj-track" id="proj-track-2" data-direction="right">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.46.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.47.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.48.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.49.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.50.jpeg" alt="Projeto realizado">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.46.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.47.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.48.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.49.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.50.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
             <!-- duplicatas para loop infinito -->
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.46.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.47.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.48.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.49.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.50.jpeg" alt="Projeto realizado">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.46.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.47.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.48.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.49.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.50.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
           </div>
         </div>
 
         <!-- Carrossel 3: move para ESQUERDA -->
         <div class="proj-track-wrap">
           <div class="proj-track" id="proj-track-3" data-direction="left">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.51.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.52.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.53.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.54.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.55.jpeg" alt="Projeto realizado">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.51.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.52.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.53.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.54.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.55.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
             <!-- duplicatas para loop infinito -->
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.51.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.52.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.53.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.54.jpeg" alt="Projeto realizado">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.55.jpeg" alt="Projeto realizado">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.51.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.52.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.53.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.54.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.55.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
           </div>
         </div>
 
@@ -1263,53 +1418,53 @@
                 alt="ABSOLAR"></div>
             <div class="parceiro-logo" title="Risen Energy"><img src="assets/logos%20parceiros/risen-logo.png"
                 alt="Risen Energy"></div>
-            <div class="parceiro-logo" title="SolarEdge"><img src="assets/logos%20parceiros/solaredge-logo.png" alt="SolarEdge"></div>
-            <div class="parceiro-logo" title="PHB Solar"><img src="assets/logos%20parceiros/phbsolar-logo.png" alt="PHB Solar"></div>
+            <div class="parceiro-logo" title="SolarEdge"><img src="assets/logos%20parceiros/solaredge-logo.png" alt="SolarEdge" loading="lazy" decoding="async"></div>
+            <div class="parceiro-logo" title="PHB Solar"><img src="assets/logos%20parceiros/phbsolar-logo.png" alt="PHB Solar" loading="lazy" decoding="async"></div>
           </div>
           <!-- Grupo 2 — clone -->
           <div class="parceiros-logos-group" aria-hidden="true">
-            <div class="parceiro-logo" title="Fronius"><img src="assets/logos%20parceiros/fronius-logo.png" alt="">
+            <div class="parceiro-logo" title="Fronius"><img src="assets/logos%20parceiros/fronius-logo.png" alt="" loading="lazy" decoding="async">
             </div>
-            <div class="parceiro-logo" title="Growatt"><img src="assets/logos%20parceiros/growatt-logo.png" alt="">
+            <div class="parceiro-logo" title="Growatt"><img src="assets/logos%20parceiros/growatt-logo.png" alt="" loading="lazy" decoding="async">
             </div>
             <div class="parceiro-logo" title="Canadian Solar"><img
                 src="assets/logos%20parceiros/canadian-solar-logo.png" alt=""></div>
-            <div class="parceiro-logo" title="ABSOLAR"><img src="assets/logos%20parceiros/absolar-logo.png" alt="">
+            <div class="parceiro-logo" title="ABSOLAR"><img src="assets/logos%20parceiros/absolar-logo.png" alt="" loading="lazy" decoding="async">
             </div>
-            <div class="parceiro-logo" title="Risen Energy"><img src="assets/logos%20parceiros/risen-logo.png" alt="">
+            <div class="parceiro-logo" title="Risen Energy"><img src="assets/logos%20parceiros/risen-logo.png" alt="" loading="lazy" decoding="async">
             </div>
-            <div class="parceiro-logo" title="SolarEdge"><img src="assets/logos%20parceiros/solaredge-logo.png" alt=""></div>
-            <div class="parceiro-logo" title="PHB Solar"><img src="assets/logos%20parceiros/phbsolar-logo.png" alt=""></div>
+            <div class="parceiro-logo" title="SolarEdge"><img src="assets/logos%20parceiros/solaredge-logo.png" alt="" loading="lazy" decoding="async"></div>
+            <div class="parceiro-logo" title="PHB Solar"><img src="assets/logos%20parceiros/phbsolar-logo.png" alt="" loading="lazy" decoding="async"></div>
           </div>
           <!-- Grupo 3 — clone -->
           <div class="parceiros-logos-group" aria-hidden="true">
-            <div class="parceiro-logo" title="Fronius"><img src="assets/logos%20parceiros/fronius-logo.png" alt="">
+            <div class="parceiro-logo" title="Fronius"><img src="assets/logos%20parceiros/fronius-logo.png" alt="" loading="lazy" decoding="async">
             </div>
-            <div class="parceiro-logo" title="Growatt"><img src="assets/logos%20parceiros/growatt-logo.png" alt="">
+            <div class="parceiro-logo" title="Growatt"><img src="assets/logos%20parceiros/growatt-logo.png" alt="" loading="lazy" decoding="async">
             </div>
             <div class="parceiro-logo" title="Canadian Solar"><img
                 src="assets/logos%20parceiros/canadian-solar-logo.png" alt=""></div>
-            <div class="parceiro-logo" title="ABSOLAR"><img src="assets/logos%20parceiros/absolar-logo.png" alt="">
+            <div class="parceiro-logo" title="ABSOLAR"><img src="assets/logos%20parceiros/absolar-logo.png" alt="" loading="lazy" decoding="async">
             </div>
-            <div class="parceiro-logo" title="Risen Energy"><img src="assets/logos%20parceiros/risen-logo.png" alt="">
+            <div class="parceiro-logo" title="Risen Energy"><img src="assets/logos%20parceiros/risen-logo.png" alt="" loading="lazy" decoding="async">
             </div>
-            <div class="parceiro-logo" title="SolarEdge"><img src="assets/logos%20parceiros/solaredge-logo.png" alt=""></div>
-            <div class="parceiro-logo" title="PHB Solar"><img src="assets/logos%20parceiros/phbsolar-logo.png" alt=""></div>
+            <div class="parceiro-logo" title="SolarEdge"><img src="assets/logos%20parceiros/solaredge-logo.png" alt="" loading="lazy" decoding="async"></div>
+            <div class="parceiro-logo" title="PHB Solar"><img src="assets/logos%20parceiros/phbsolar-logo.png" alt="" loading="lazy" decoding="async"></div>
           </div>
           <!-- Grupo 4 — clone -->
           <div class="parceiros-logos-group" aria-hidden="true">
-            <div class="parceiro-logo" title="Fronius"><img src="assets/logos%20parceiros/fronius-logo.png" alt="">
+            <div class="parceiro-logo" title="Fronius"><img src="assets/logos%20parceiros/fronius-logo.png" alt="" loading="lazy" decoding="async">
             </div>
-            <div class="parceiro-logo" title="Growatt"><img src="assets/logos%20parceiros/growatt-logo.png" alt="">
+            <div class="parceiro-logo" title="Growatt"><img src="assets/logos%20parceiros/growatt-logo.png" alt="" loading="lazy" decoding="async">
             </div>
             <div class="parceiro-logo" title="Canadian Solar"><img
                 src="assets/logos%20parceiros/canadian-solar-logo.png" alt=""></div>
-            <div class="parceiro-logo" title="ABSOLAR"><img src="assets/logos%20parceiros/absolar-logo.png" alt="">
+            <div class="parceiro-logo" title="ABSOLAR"><img src="assets/logos%20parceiros/absolar-logo.png" alt="" loading="lazy" decoding="async">
             </div>
-            <div class="parceiro-logo" title="Risen Energy"><img src="assets/logos%20parceiros/risen-logo.png" alt="">
+            <div class="parceiro-logo" title="Risen Energy"><img src="assets/logos%20parceiros/risen-logo.png" alt="" loading="lazy" decoding="async">
             </div>
-            <div class="parceiro-logo" title="SolarEdge"><img src="assets/logos%20parceiros/solaredge-logo.png" alt=""></div>
-            <div class="parceiro-logo" title="PHB Solar"><img src="assets/logos%20parceiros/phbsolar-logo.png" alt=""></div>
+            <div class="parceiro-logo" title="SolarEdge"><img src="assets/logos%20parceiros/solaredge-logo.png" alt="" loading="lazy" decoding="async"></div>
+            <div class="parceiro-logo" title="PHB Solar"><img src="assets/logos%20parceiros/phbsolar-logo.png" alt="" loading="lazy" decoding="async"></div>
           </div>
         </div>
       </div>
@@ -1369,7 +1524,7 @@
             <p class="depo-text">Ótimo pós venda e excelente atendimento!!!</p>
             <div class="depo-user">
               <div class="depo-avatar flex-center" style="overflow:hidden;">
-                <img src="assets/avatars/luis-gustavo-aguilar.png" alt="Luis Gustavo Aguilar" style="width:100%;height:100%;object-fit:cover;">
+                <img src="assets/avatars/luis-gustavo-aguilar.png" alt="Luis Gustavo Aguilar" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
               </div>
               <div class="depo-meta">
                 <span class="depo-name">Luis Gustavo Aguilar</span>
@@ -1391,7 +1546,7 @@
             <p class="depo-text">Empresa séria, que visa atender o cliente com qualidade e transparência!!</p>
             <div class="depo-user">
               <div class="depo-avatar flex-center" style="overflow:hidden;">
-                <img src="assets/avatars/alessandra-aguilar-freitas.png" alt="Alessandra Aguilar Freitas" style="width:100%;height:100%;object-fit:cover;">
+                <img src="assets/avatars/alessandra-aguilar-freitas.png" alt="Alessandra Aguilar Freitas" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
               </div>
               <div class="depo-meta">
                 <span class="depo-name">Alessandra Aguilar Freitas</span>
@@ -1457,7 +1612,7 @@
             <p class="depo-text">Excelente empresa.</p>
             <div class="depo-user">
               <div class="depo-avatar flex-center" style="overflow:hidden;">
-                <img src="assets/avatars/empire-leonardo-vargas.png" alt="Empire Leonardo Vargas" style="width:100%;height:100%;object-fit:cover;">
+                <img src="assets/avatars/empire-leonardo-vargas.png" alt="Empire Leonardo Vargas" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
               </div>
               <div class="depo-meta">
                 <span class="depo-name">Empire Leonardo Vargas</span>
@@ -1639,7 +1794,7 @@
           <div class="consultor-badge">
             <div class="consultor-avatar-wrap">
               <div class="consultor-avatar flex-center" style="overflow: hidden; background: linear-gradient(135deg, #1a3a2a, #0d2818); display: flex; align-items: center; justify-content: center;">
-                <img src="assets/avatars/hudson-profile-photo.png" alt="Hudson Rocha" style="width:100%;height:100%;object-fit:cover;">
+                <img src="assets/avatars/hudson-profile-photo.png" alt="Hudson Rocha" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
               </div>
               <div class="pulse-indicator"></div>
             </div>
@@ -1691,7 +1846,7 @@
               <div class="qrcode-section mt-16 pt-16 border-t border-gray-800" style="display:flex;flex-direction:column;align-items:center;width:100%;">
                 <div class="text-center">
                   <div class="inline-block p-6 bg-white rounded-lg shadow-lg" style="display:flex;flex-direction:column;align-items:center;margin:0 auto;">
-                    <img src="assets/images/qrcode-whatsapp.png" alt="QR Code WhatsApp ProSol Energia Solar" style="width:160px;height:160px;border-radius:8px;display:block;">
+                    <img src="assets/images/qrcode-whatsapp.png" alt="QR Code WhatsApp ProSol Energia Solar" loading="lazy" decoding="async" style="width:160px;height:160px;border-radius:8px;display:block;">
                     <div class="mt-6">
                       <p style="color:#666;font-size:0.85rem;padding-top:15px;">Aponte a câmera do celular</p>
                       <p style="color:#666;font-size:0.85rem;padding-bottom:10px;">Redireciona para: (33) 98884-5152</p>
@@ -1760,7 +1915,7 @@
         <div class="footer-logo-area">
           <div class="footer-logo-wrap">
             <!-- Logo minimalista premium da ProSol Energia Solar com destaque verde -->
-            <img src="assets/images/cropped_image (1).png" alt="ProSol Energia Solar" style="height:42px;width:auto;object-fit:contain;filter:brightness(1.1);">
+            <img src="assets/images/cropped_image (1).png" alt="ProSol Energia Solar" loading="lazy" decoding="async" style="height:42px;width:auto;object-fit:contain;filter:brightness(1.1);">
           </div>
         </div>
         <div class="footer-desc-area">

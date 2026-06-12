@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO: substituir [DOMINIO-DO-CLIENTE] pelo domínio real do site
+Sitemap: https://[DOMINIO-DO-CLIENTE]/sitemap.xml
