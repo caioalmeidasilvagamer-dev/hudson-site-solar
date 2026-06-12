@@ -1354,11 +1354,40 @@ document.addEventListener('DOMContentLoaded', function () {
   const btn = document.getElementById('equipe-play-btn');
   const iconPlay = document.getElementById('equipe-icon-play');
   const iconPause = document.getElementById('equipe-icon-pause');
+  const posterCanvas = document.getElementById('equipe-poster');
 
   if (!video) return;
 
+  // Capture first frame as poster
+  function capturePoster() {
+    if (!posterCanvas) return;
+    const v = video;
+    const w = v.videoWidth;
+    const h = v.videoHeight;
+    if (!w || !h) return;
+    posterCanvas.width = w;
+    posterCanvas.height = h;
+    const ctx = posterCanvas.getContext('2d');
+    ctx.drawImage(v, 0, 0, w, h);
+    posterCanvas.style.display = 'block';
+  }
+
+  // Try to capture as soon as metadata is ready
+  video.addEventListener('loadeddata', capturePoster);
+  // Also try on seeked (in case loadeddata fires before dimensions are ready)
+  video.addEventListener('seeked', capturePoster);
+
+  // Force seek to 0 to trigger frame capture
+  video.currentTime = 0.01;
+
+  // Hide poster when video actually plays
+  function hidePoster() {
+    if (posterCanvas) posterCanvas.style.display = 'none';
+  }
+
   function togglePlay() {
     if (video.paused) {
+      hidePoster();
       video.play();
       wrap.classList.add('playing');
       iconPlay.style.display = 'none';
