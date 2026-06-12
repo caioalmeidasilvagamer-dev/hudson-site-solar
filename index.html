@@ -5,6 +5,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta name="theme-color" content="#0a1445" media="(prefers-color-scheme: dark)" />
   <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)" />
   <title>ProSol Energia Solar — Economize até 95% na Conta de Luz</title>
@@ -47,8 +50,8 @@
   <script type="module" defer
     src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
 
-  <link rel="stylesheet" href="assets/css/style-base.css" />
-  <link rel="stylesheet" href="assets/css/style-desktop.css" />
+  <link rel="stylesheet" href="assets/css/style-base.css?v=3" />
+  <link rel="stylesheet" href="assets/css/style-desktop.css?v=3" />
 
   <!-- Favicon -->
   <link rel="icon"
@@ -1485,12 +1488,11 @@
         <video
           id="equipe-video"
           src="assets/videos/WhatsApp Video 2026-06-10 at 17.57.54.mp4"
+          poster="assets/images/equipe-poster.jpg?v=2"
           loop
           playsinline
           muted
-          preload="metadata"
           style="width:100%;display:block;border-radius:var(--radius-2xl);"></video>
-        <canvas id="equipe-poster" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:var(--radius-2xl);pointer-events:none;z-index:1;"></canvas>
 
         <!-- Overlay play/pause -->
         <div class="equipe-video-overlay" id="equipe-overlay">
@@ -2123,7 +2125,7 @@
     </svg>
   </button>
 
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=3"></script>
 </body>
 
 </html>

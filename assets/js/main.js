@@ -1351,58 +1351,54 @@ document.addEventListener('DOMContentLoaded', function () {
 (function() {
   const wrap = document.querySelector('.equipe-video-wrap');
   const video = document.getElementById('equipe-video');
-  const btn = document.getElementById('equipe-play-btn');
+  const overlay = document.getElementById('equipe-overlay');
   const iconPlay = document.getElementById('equipe-icon-play');
   const iconPause = document.getElementById('equipe-icon-pause');
-  const posterCanvas = document.getElementById('equipe-poster');
+  let hideTimer = null;
 
   if (!video) return;
 
-  // Capture first frame as poster
-  function capturePoster() {
-    if (!posterCanvas) return;
-    const v = video;
-    const w = v.videoWidth;
-    const h = v.videoHeight;
-    if (!w || !h) return;
-    posterCanvas.width = w;
-    posterCanvas.height = h;
-    const ctx = posterCanvas.getContext('2d');
-    ctx.drawImage(v, 0, 0, w, h);
-    posterCanvas.style.display = 'block';
-  }
-
-  // Try to capture as soon as metadata is ready
-  video.addEventListener('loadeddata', capturePoster);
-  // Also try on seeked (in case loadeddata fires before dimensions are ready)
-  video.addEventListener('seeked', capturePoster);
-
-  // Force seek to 0 to trigger frame capture
-  video.currentTime = 0.01;
-
-  // Hide poster when video actually plays
-  function hidePoster() {
-    if (posterCanvas) posterCanvas.style.display = 'none';
-  }
-
   function togglePlay() {
     if (video.paused) {
-      hidePoster();
       video.play();
       wrap.classList.add('playing');
       iconPlay.style.display = 'none';
       iconPause.style.display = 'block';
+
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+      }, 1000);
     } else {
       video.pause();
       wrap.classList.remove('playing');
       iconPlay.style.display = 'block';
       iconPause.style.display = 'none';
+      overlay.style.opacity = '';
+      overlay.style.pointerEvents = '';
+      clearTimeout(hideTimer);
     }
   }
 
+  wrap.addEventListener('mouseenter', () => {
+    if (!video.paused) {
+      overlay.style.opacity = '';
+      overlay.style.pointerEvents = '';
+    }
+  });
+  wrap.addEventListener('mouseleave', () => {
+    if (!video.paused) {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+      }, 1000);
+    }
+  });
+
   wrap.addEventListener('click', togglePlay);
 
-  // Revelar seção no scroll
   const reveals = document.querySelectorAll('.equipe-reveal');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });

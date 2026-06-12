@@ -5555,7 +5555,7 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.35);
-  transition: background 0.3s ease;
+  transition: opacity 0.4s ease, background 0.3s ease;
   border-radius: var(--radius-2xl);
 }
 
@@ -5563,12 +5563,9 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   background: transparent;
 }
 
-.equipe-video-wrap.playing .equipe-video-overlay:not(:hover) {
-  opacity: 0;
-}
-
 .equipe-video-wrap:hover .equipe-video-overlay {
   opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 .equipe-play-btn {
