@@ -237,16 +237,16 @@
 
   /* Depoimentos — lado a lado, sem slider */
   .depoimentos-slider {
-    transform: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+    transform: none;
     cursor: default;
-    flex-wrap: nowrap;
     overflow: visible;
-    align-items: stretch;
   }
 
   .depoimento-card {
-    flex: 1 1 0;
+    flex: none;
     width: auto;
     min-width: 0;
     height: auto;
@@ -368,7 +368,7 @@
 
   .selos-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
     margin: 48px 0;
   }
@@ -389,15 +389,21 @@
   }
 
   .selo-icon {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 64px;
-    height: 64px;
     background: linear-gradient(135deg, var(--gold), var(--gold-dim));
     border-radius: var(--radius-xl);
+    color: var(--color-white);
     margin-bottom: 8px;
     box-shadow: 0 4px 12px var(--gold-glow);
+  }
+
+  .selo-card.financimento .selo-icon {
+    background: linear-gradient(135deg, var(--orange), color-mix(in srgb, var(--orange) 70%, var(--gold)));
   }
 
   .selos-extra {
