@@ -519,6 +519,12 @@ function calcularSolar() {
   const conta = parseFloat(document.getElementById('conta').value);
   const ligacao = document.getElementById('ligacao').value;
   const cidade = document.getElementById('cidade') ? document.getElementById('cidade').value.trim() : '';
+  const nome = document.getElementById('nome') ? document.getElementById('nome').value.trim() : '';
+  const celular = document.getElementById('celular') ? document.getElementById('celular').value.trim() : '';
+  const tipo = document.getElementById('tipo') ? document.getElementById('tipo').value : '';
+
+  const tipoLabels = { residencial: 'Residencial', comercial: 'Comercial', rural: 'Rural / Industrial' };
+  const tipoLabel = tipoLabels[tipo] || '';
 
   if (!uf || !conta || conta <= 0) {
     alert('Preencha o estado e o valor da conta de energia.');
@@ -626,7 +632,40 @@ function calcularSolar() {
   const results = document.getElementById('sim-results');
   results.classList.add('show');
   results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  window.__simulacaoSolar = {
+    nome, celular, cidade, tipoLabel,
+    economiaMensal: fmtR$(economia_mensal),
+    economiaAnual: fmtR$(economia_anual),
+    kwp: kwp.toFixed(2),
+    paineis,
+    payback: paybackStr
+  };
 }
+
+function enviarSimulacaoWhatsApp() {
+  const dados = window.__simulacaoSolar;
+  const whatsappNumero = "5533988845152";
+
+  if (!dados) {
+    window.open(`https://wa.me/${whatsappNumero}?text=${encodeURIComponent('Olá! Vim pelo site da ProSol Energia Solar e gostaria de um orçamento gratuito.')}`, '_blank');
+    return;
+  }
+
+  let texto = `Olá! Fiz a simulação solar no site da ProSol Energia Solar e quero um orçamento detalhado.\n\n`;
+  if (dados.nome) texto += `👤 Nome: ${dados.nome}\n`;
+  if (dados.celular) texto += `📱 Celular: ${dados.celular}\n`;
+  if (dados.cidade) texto += `📍 Cidade: ${dados.cidade}\n`;
+  if (dados.tipoLabel) texto += `🏠 Tipo de imóvel: ${dados.tipoLabel}\n`;
+  texto += `\n📊 Resultado da simulação:\n`;
+  texto += `💰 Economia mensal estimada: ${dados.economiaMensal}\n`;
+  texto += `💰 Economia anual estimada: ${dados.economiaAnual}\n`;
+  texto += `⚡ Sistema necessário: ${dados.kwp} kWp (${dados.paineis} painéis)\n`;
+  texto += `⏱️ Payback estimado: ${dados.payback}\n`;
+
+  window.open(`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener,noreferrer');
+}
+
 /* ============================================================
    UTILITÁRIOS / MÁSCARAS
    ============================================================ */
@@ -885,11 +924,6 @@ function mascaraCelular(input) {
 
     // Fase 6: Toast + Confetti em vez de alert()
     form.reset();
-    // Reseta o visual do slider após o reset do form
-    const sliderEl = document.getElementById('conta-slider');
-    if (sliderEl) {
-      sliderEl.dispatchEvent(new Event('input'));
-    }
     showFormToast();
     launchConfetti();
   });
