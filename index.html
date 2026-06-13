@@ -385,251 +385,290 @@
           stroke-width="2.5">
           <path d="M6 9l6 6 6-6" />
         </svg>
-      </div>
-    </div>
-  </section>
-  <!-- Seção 3: Calculadora (Fase 3) -->
-  <section id="calculadora" class="calc-section">
-    <div class="container">
-      <h2 class="sim-title">Simule sua economia com energia solar</h2>
-      <p class="sim-sub">Preencha os campos abaixo e veja o resultado em segundos</p>
+            <h2 class="sim-title">Simule sua economia com energia solar</h2>
+      <p class="sim-sub">Responda algumas perguntas e veja o resultado em segundos</p>
 
       <div class="sim-card">
-        <div class="row row-2">
-          <div class="field">
-            <label>Nome</label>
-            <input type="text" id="nome" placeholder="Seu nome completo" />
-          </div>
-          <div class="field">
-            <label>Celular</label>
-            <input type="tel" id="celular" placeholder="(21) 99999-9999" oninput="mascaraCelular(this)" />
+        <!-- Barra de progresso -->
+        <div class="quiz-progress">
+          <div class="quiz-progress-step active"></div>
+          <div class="quiz-progress-step"></div>
+          <div class="quiz-progress-step"></div>
+          <div class="quiz-progress-step"></div>
+          <div class="quiz-progress-step"></div>
+        </div>
+
+        <!-- Passo 1: Tipo de imóvel -->
+        <div class="quiz-step active" data-step="1">
+          <h3 class="quiz-step-title">Qual o tipo do seu imóvel?</h3>
+          <div class="quiz-cards">
+            <button type="button" class="quiz-card" data-value="residencial" data-target="tipo">
+              <span class="quiz-card-icon">🏠</span>
+              <span class="quiz-card-label">Residencial</span>
+            </button>
+            <button type="button" class="quiz-card" data-value="comercial" data-target="tipo">
+              <span class="quiz-card-icon">🏢</span>
+              <span class="quiz-card-label">Comercial</span>
+            </button>
+            <button type="button" class="quiz-card" data-value="rural" data-target="tipo">
+              <span class="quiz-card-icon">🌾</span>
+              <span class="quiz-card-label">Rural / Industrial</span>
+            </button>
           </div>
         </div>
 
-        <div class="row row-3">
-          <div class="field">
-            <label>Estado (UF)</label>
-            <select id="uf">
-              <option value="">Selecione o estado</option>
-              <option value="AC">AC &ndash; Acre</option>
-              <option value="AL">AL &ndash; Alagoas</option>
-              <option value="AM">AM &ndash; Amazonas</option>
-              <option value="AP">AP &ndash; Amap&aacute;</option>
-              <option value="BA">BA &ndash; Bahia</option>
-              <option value="CE">CE &ndash; Cear&aacute;</option>
-              <option value="DF">DF &ndash; Distrito Federal</option>
-              <option value="ES">ES &ndash; Esp&iacute;rito Santo</option>
-              <option value="GO">GO &ndash; Goi&aacute;s</option>
-              <option value="MA">MA &ndash; Maranh&atilde;o</option>
-              <option value="MG">MG &ndash; Minas Gerais</option>
-              <option value="MS">MS &ndash; Mato Grosso do Sul</option>
-              <option value="MT">MT &ndash; Mato Grosso</option>
-              <option value="PA">PA &ndash; Par&aacute;</option>
-              <option value="PB">PB &ndash; Para&iacute;ba</option>
-              <option value="PE">PE &ndash; Pernambuco</option>
-              <option value="PI">PI &ndash; Piau&iacute;</option>
-              <option value="PR">PR &ndash; Paran&aacute;</option>
-              <option value="RJ">RJ &ndash; Rio de Janeiro</option>
-              <option value="RN">RN &ndash; Rio Grande do Norte</option>
-              <option value="RO">RO &ndash; Rond&ocirc;nia</option>
-              <option value="RR">RR &ndash; Roraima</option>
-              <option value="RS">RS &ndash; Rio Grande do Sul</option>
-              <option value="SC">SC &ndash; Santa Catarina</option>
-              <option value="SE">SE &ndash; Sergipe</option>
-              <option value="SP">SP &ndash; S&atilde;o Paulo</option>
-              <option value="TO">TO &ndash; Tocantins</option>
-            </select>
+        <!-- Passo 2: Valor da conta -->
+        <div class="quiz-step" data-step="2">
+          <h3 class="quiz-step-title">Qual o valor médio da sua conta de luz?</h3>
+          <div class="quiz-slider-value">R$ <span id="quiz-conta-display">300</span></div>
+          <input type="range" id="quiz-conta-slider" min="50" max="2000" step="10" value="300" class="quiz-slider">
+          <div class="quiz-slider-labels">
+            <span>R$ 50</span>
+            <span>R$ 2.000+</span>
           </div>
-          <div class="field">
-            <label>Cidade</label>
-            <input type="text" id="cidade" placeholder="Ex: São Paulo" />
-          </div>
-          <div class="field">
-            <label>Tipo de imóvel</label>
-            <select id="tipo">
-              <option value="residencial">Residencial</option>
-              <option value="comercial">Comercial</option>
-              <option value="rural">Rural / Industrial</option>
-            </select>
-          </div>
+          <div class="quiz-analise-msg" id="quiz-analise-conta"></div>
+          <button type="button" class="quiz-btn-next" data-next="3">Continuar →</button>
+          <button type="button" class="quiz-btn-back">← Voltar</button>
         </div>
 
-        <div class="row row-3">
-          <div class="field">
-            <label>Modalidade tarif&aacute;ria</label>
-            <select id="modalidade">
-              <option value="B">Grupo B (Baixa Tens&atilde;o)</option>
-              <option value="A">Grupo A (Alta Tens&atilde;o)</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Tipo de liga&ccedil;&atilde;o</label>
-            <select id="ligacao">
-              <option value="mono">Monof&aacute;sico</option>
-              <option value="bi">Bif&aacute;sico</option>
-              <option value="tri">Trif&aacute;sico</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Valor da conta (R$)</label>
-            <div class="prefix">
-              <span>R$</span>
-              <input type="number" id="conta" placeholder="0,00" min="0" step="1" />
+        <!-- Passo 3: Estado + Cidade -->
+        <div class="quiz-step" data-step="3">
+          <h3 class="quiz-step-title">Onde fica o imóvel?</h3>
+          <div class="quiz-fields-row">
+            <div class="field">
+              <label>Estado (UF)</label>
+              <select id="uf">
+                <option value="">Selecione o estado</option>
+                <option value="AC">AC &ndash; Acre</option>
+                <option value="AL">AL &ndash; Alagoas</option>
+                <option value="AM">AM &ndash; Amazonas</option>
+                <option value="AP">AP &ndash; Amap&aacute;</option>
+                <option value="BA">BA &ndash; Bahia</option>
+                <option value="CE">CE &ndash; Cear&aacute;</option>
+                <option value="DF">DF &ndash; Distrito Federal</option>
+                <option value="ES">ES &ndash; Esp&iacute;rito Santo</option>
+                <option value="GO">GO &ndash; Goi&aacute;s</option>
+                <option value="MA">MA &ndash; Maranh&atilde;o</option>
+                <option value="MG" selected>MG &ndash; Minas Gerais</option>
+                <option value="MS">MS &ndash; Mato Grosso do Sul</option>
+                <option value="MT">MT &ndash; Mato Grosso</option>
+                <option value="PA">PA &ndash; Par&aacute;</option>
+                <option value="PB">PB &ndash; Para&iacute;ba</option>
+                <option value="PE">PE &ndash; Pernambuco</option>
+                <option value="PI">PI &ndash; Piau&iacute;</option>
+                <option value="PR">PR &ndash; Paran&aacute;</option>
+                <option value="RJ">RJ &ndash; Rio de Janeiro</option>
+                <option value="RN">RN &ndash; Rio Grande do Norte</option>
+                <option value="RO">RO &ndash; Rond&ocirc;nia</option>
+                <option value="RR">RR &ndash; Roraima</option>
+                <option value="RS">RS &ndash; Rio Grande do Sul</option>
+                <option value="SC">SC &ndash; Santa Catarina</option>
+                <option value="SE">SE &ndash; Sergipe</option>
+                <option value="SP">SP &ndash; S&atilde;o Paulo</option>
+                <option value="TO">TO &ndash; Tocantins</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Cidade</label>
+              <input type="text" id="cidade" placeholder="Ex: Almenara">
             </div>
           </div>
+          <div class="quiz-analise-msg" id="quiz-analise-cidade"></div>
+          <button type="button" class="quiz-btn-next" data-next="4">Continuar →</button>
+          <button type="button" class="quiz-btn-back">← Voltar</button>
         </div>
 
-        <button class="btn-calc" onclick="calcularSolar()">
-          CALCULAR MINHA ECONOMIA
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4" />
-            <line x1="12" y1="2" x2="12" y2="5" />
-            <line x1="12" y1="19" x2="12" y2="22" />
-            <line x1="2" y1="12" x2="5" y2="12" />
-            <line x1="19" y1="12" x2="22" y2="12" />
-            <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" />
-            <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" />
-            <line x1="19.78" y1="4.22" x2="17.66" y2="6.34" />
-            <line x1="6.34" y1="17.66" x2="4.22" y2="19.78" />
-          </svg>
-        </button>
-
-        <div class="sim-results" id="sim-results">
-          <div class="results-title">☀️ Resultado da simula&ccedil;&atilde;o</div>
-          <div class="metrics">
-            <div class="metric highlight">
-              <div class="metric-label">Economia mensal</div>
-              <div class="metric-value" id="res-economia">&mdash;</div>
-              <div class="metric-unit">reais/m&ecirc;s</div>
+        <!-- Passo 4: Nome + WhatsApp -->
+        <div class="quiz-step" data-step="4">
+          <h3 class="quiz-step-title">Quase lá! Para onde enviamos o resultado?</h3>
+          <div class="quiz-fields-row">
+            <div class="field">
+              <label>Nome</label>
+              <input type="text" id="nome" placeholder="Seu nome completo">
             </div>
-            <div class="metric highlight">
-              <div class="metric-label">Economia anual</div>
-              <div class="metric-value" id="res-anual">&mdash;</div>
-              <div class="metric-unit">reais/ano</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">Pot&ecirc;ncia do sistema</div>
-              <div class="metric-value" id="res-kwp">&mdash;</div>
-              <div class="metric-unit">kWp necess&aacute;rios</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">N&ordm; de pain&eacute;is</div>
-              <div class="metric-value" id="res-paineis">&mdash;</div>
-              <div class="metric-unit">pain&eacute;is de 550W</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">Gera&ccedil;&atilde;o mensal</div>
-              <div class="metric-value" id="res-geracao">&mdash;</div>
-              <div class="metric-unit">kWh/m&ecirc;s</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">Investimento est.</div>
-              <div class="metric-value" id="res-invest">&mdash;</div>
-              <div class="metric-unit">custo m&eacute;dio</div>
-            </div>
-          </div>
-          <div class="payback-wrap">
-            <div class="payback-label">Retorno do investimento (payback):
-              <strong id="res-payback">&mdash;</strong>
-            </div>
-            <div class="payback-bar-bg">
-              <div class="payback-bar-fill" id="payback-bar" style="width:0%"></div>
-            </div>
-            <div class="payback-scale">
-              <span>0 anos</span><span>10 anos</span><span>20 anos</span>
+            <div class="field">
+              <label>WhatsApp</label>
+              <input type="tel" id="celular" placeholder="(33) 99999-9999" oninput="mascaraCelular(this)">
             </div>
           </div>
 
-          <!-- Detalhes Financeiros Adicionais -->
-          <div class="calc-finance-item">
-            <div class="calc-finance-label">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
-                <polyline points="13 2 13 9 20 9" />
-              </svg>
-              Conta atual (sem solar)
+          <!-- Campos avançados — manter mas como opcionais/secundários -->
+          <details class="quiz-advanced">
+            <summary>Detalhes técnicos (opcional)</summary>
+            <div class="quiz-fields-row">
+              <div class="field">
+                <label>Modalidade tarifária</label>
+                <select id="modalidade">
+                  <option value="B">Grupo B (Baixa Tensão)</option>
+                  <option value="A">Grupo A (Alta Tensão)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Tipo de ligação</label>
+                <select id="ligacao">
+                  <option value="mono">Monofásico</option>
+                  <option value="bi" selected>Bifásico</option>
+                  <option value="tri">Trifásico</option>
+                </select>
+              </div>
             </div>
-            <div class="calc-finance-value" id="res-sem-solar">—</div>
-            <div class="calc-finance-desc">Valor mensal que você paga hoje</div>
-          </div>
+          </details>
 
-          <div class="calc-finance-item">
-            <div class="calc-finance-label">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                <polyline points="17 6 23 6 23 12" />
-              </svg>
-              Conta com solar
-            </div>
-            <div class="calc-finance-value" id="res-com-solar">—</div>
-            <div class="calc-finance-desc">Apenas a taxa de disponibilidade mínima</div>
+          <button type="button" class="quiz-btn-finish" id="quiz-btn-finish">Ver minha economia →</button>
+          <button type="button" class="quiz-btn-back">← Voltar</button>
+        </div>
+
+        <!-- Passo 5: Tela de revelação (análise simulada + resultado) -->
+        <div class="quiz-step quiz-step-revelacao" data-step="5">
+          <div class="quiz-revelacao-loading" id="quiz-revelacao-loading">
+            <div class="quiz-spinner"></div>
+            <div class="quiz-revelacao-msg" id="quiz-revelacao-msg">Processando dados...</div>
           </div>
-          <div class="calc-finance-details">
+          
+          <div class="sim-results" id="sim-results" style="display:none;">
+            <div class="results-title">☀️ Resultado da simula&ccedil;&atilde;o</div>
+            <div class="metrics">
+              <div class="metric highlight">
+                <div class="metric-label">Economia mensal</div>
+                <div class="metric-value" id="res-economia">&mdash;</div>
+                <div class="metric-unit">reais/m&ecirc;s</div>
+              </div>
+              <div class="metric highlight">
+                <div class="metric-label">Economia anual</div>
+                <div class="metric-value" id="res-anual">&mdash;</div>
+                <div class="metric-unit">reais/ano</div>
+              </div>
+              <div class="metric">
+                <div class="metric-label">Pot&ecirc;ncia do sistema</div>
+                <div class="metric-value" id="res-kwp">&mdash;</div>
+                <div class="metric-unit">kWp necess&aacute;rios</div>
+              </div>
+              <div class="metric">
+                <div class="metric-label">N&ordm; de pain&eacute;is</div>
+                <div class="metric-value" id="res-paineis">&mdash;</div>
+                <div class="metric-unit">pain&eacute;is de 550W</div>
+              </div>
+              <div class="metric">
+                <div class="metric-label">Gera&ccedil;&atilde;o mensal</div>
+                <div class="metric-value" id="res-geracao">&mdash;</div>
+                <div class="metric-unit">kWh/m&ecirc;s</div>
+              </div>
+              <div class="metric">
+                <div class="metric-label">Investimento est.</div>
+                <div class="metric-value" id="res-invest">&mdash;</div>
+                <div class="metric-unit">custo m&eacute;dio</div>
+              </div>
+            </div>
+            <div class="payback-wrap">
+              <div class="payback-label">Retorno do investimento (payback):
+                <strong id="res-payback">&mdash;</strong>
+              </div>
+              <div class="payback-bar-bg">
+                <div class="payback-bar-fill" id="payback-bar" style="width:0%"></div>
+              </div>
+              <div class="payback-scale">
+                <span>0 anos</span><span>10 anos</span><span>20 anos</span>
+              </div>
+            </div>
+
+            <!-- Detalhes Financeiros Adicionais -->
             <div class="calc-finance-item">
               <div class="calc-finance-label">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2v20M2 12h20M8.5 15.5l7-7M15.5 15.5l7-7" />
+                  <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                  <polyline points="13 2 13 9 20 9" />
                 </svg>
-                Economia Mensal Est.
+                Conta atual (sem solar)
               </div>
-              <div class="calc-finance-value" id="res-economia-mensal">—</div>
-              <div class="calc-finance-desc">Valor aproximado de redução na conta de luz</div>
-            </div>
-
-            <div class="calc-finance-item">
-              <div class="calc-finance-label">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                </svg>
-                Economia em 25 anos
-              </div>
-              <div class="calc-finance-value" id="res-economia-total">—</div>
-              <div class="calc-finance-desc">Considerando vida útil dos painéis solares</div>
-            </div>
-
-            <div class="calc-finance-item">
-              <div class="calc-finance-label">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 8v8" />
-                  <path d="m8 12 4 4 4-4" />
-                </svg>
-                ROI (Retorno sobre Investimento)
-              </div>
-              <div class="calc-finance-value" id="res-roi">—</div>
-              <div class="calc-finance-desc">Retorno total após período de payback</div>
+              <div class="calc-finance-value" id="res-sem-solar">—</div>
+              <div class="calc-finance-desc">Valor mensal que você paga hoje</div>
             </div>
 
             <div class="calc-finance-item">
               <div class="calc-finance-label">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z" />
-                  <path d="m9 12 2 2 4-4" />
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                  <polyline points="17 6 23 6 23 12" />
                 </svg>
-                Benefícios ESG
+                Conta com solar
               </div>
-              <div class="calc-finance-value" id="res-co2">—</div>
-              <div class="calc-finance-desc">Toneladas de CO₂ evitadas em 25 anos</div>
+              <div class="calc-finance-value" id="res-com-solar">—</div>
+              <div class="calc-finance-desc">Apenas a taxa de disponibilidade mínima</div>
             </div>
-          </div>
+            <div class="calc-finance-details">
+              <div class="calc-finance-item">
+                <div class="calc-finance-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v20M2 12h20M8.5 15.5l7-7M15.5 15.5l7-7" />
+                  </svg>
+                  Economia Mensal Est.
+                </div>
+                <div class="calc-finance-value" id="res-economia-mensal">—</div>
+                <div class="calc-finance-desc">Valor aproximado de redução na conta de luz</div>
+              </div>
 
-          <button class="btn-cta" onclick="enviarSimulacaoWhatsApp()">
-            📲 Quero receber um or&ccedil;amento detalhado
-          </button>
-          <p class="sim-disclaimer">* Simula&ccedil;&atilde;o estimativa com base em dados m&eacute;dios de
-            irradia&ccedil;&atilde;o solar
-            (INPE/CRESESB), tarifa m&eacute;dia estadual e performance ratio de 78%.
-            Os valores reais podem variar conforme concession&aacute;ria local, inclina&ccedil;&atilde;o
-            do telhado, sombreamento e equipamentos escolhidos.</p>
+              <div class="calc-finance-item">
+                <div class="calc-finance-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                  </svg>
+                  Economia em 25 anos
+                </div>
+                <div class="calc-finance-value" id="res-economia-total">—</div>
+                <div class="calc-finance-desc">Considerando vida útil dos painéis solares</div>
+              </div>
+
+              <div class="calc-finance-item">
+                <div class="calc-finance-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 8v8" />
+                    <path d="m8 12 4 4 4-4" />
+                  </svg>
+                  ROI (Retorno sobre Investimento)
+                </div>
+                <div class="calc-finance-value" id="res-roi">—</div>
+                <div class="calc-finance-desc">Retorno total após período de payback</div>
+              </div>
+
+              <div class="calc-finance-item">
+                <div class="calc-finance-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z" />
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                  Benefícios ESG
+                </div>
+                <div class="calc-finance-value" id="res-co2">—</div>
+                <div class="calc-finance-desc">Toneladas de CO₂ evitadas em 25 anos</div>
+              </div>
+            </div>
+
+            <button type="button" class="btn-cta" onclick="enviarSimulacaoWhatsApp()">
+              📲 Quero receber um or&ccedil;amento detalhado
+            </button>
+            <p class="sim-disclaimer">* Simula&ccedil;&atilde;o estimativa com base em dados m&eacute;dios de
+              irradia&ccedil;&atilde;o solar
+              (INPE/CRESESB), tarifa m&eacute;dia estadual e performance ratio de 78%.
+              Os valores reais podem variar conforme concession&aacute;ria local, inclina&ccedil;&atilde;o
+              do telhado, sombreamento e equipamentos escolhidos.</p>
+          </div>
         </div>
+
+        <!-- selects ocultos para calcularSolar() ler -->
+        <select id="tipo" style="display:none;">
+          <option value="residencial" selected>Residencial</option>
+          <option value="comercial">Comercial</option>
+          <option value="rural">Rural / Industrial</option>
+        </select>
+        <input type="number" id="conta" value="300" style="display:none;" />
       </div>
     </div>
   </section>

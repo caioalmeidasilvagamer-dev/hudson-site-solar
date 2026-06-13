@@ -1476,7 +1476,189 @@ document.addEventListener('DOMContentLoaded', function () {
   setTimeout(() => {
     balloon.classList.add('visible');
     setTimeout(() => balloon.classList.remove('visible'), 5000);
-  }, 15000);
+  }, 20000);
+})();
+
+/* ===== QUIZ WIZARD DA CALCULADORA ===== */
+(function initQuizWizard() {
+  const steps = document.querySelectorAll('.quiz-step');
+  if (!steps.length) return;
+
+  let currentStep = 1;
+
+  function goToStep(n) {
+    steps.forEach(s => s.classList.remove('active'));
+    const target = document.querySelector(`.quiz-step[data-step="${n}"]`);
+    if (target) target.classList.add('active');
+    currentStep = n;
+    updateProgress();
+  }
+
+  function updateProgress() {
+    document.querySelectorAll('.quiz-progress-step').forEach((el, i) => {
+      const stepNum = i + 1;
+      el.classList.toggle('active', stepNum === currentStep);
+      el.classList.toggle('completed', stepNum < currentStep);
+    });
+  }
+
+  // Passo 1 — cards de tipo de imóvel
+  document.querySelectorAll('.quiz-card[data-target="tipo"]').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.quiz-card[data-target="tipo"]').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      document.getElementById('tipo').value = card.dataset.value;
+      setTimeout(() => goToStep(2), 400);
+    });
+  });
+
+  // Passo 2 — slider de conta
+  const slider = document.getElementById('quiz-conta-slider');
+  const display = document.getElementById('quiz-conta-display');
+  const contaInput = document.getElementById('conta');
+  const analiseConta = document.getElementById('quiz-analise-conta');
+
+  const mensagensConta = [
+    'Analisando perfil de consumo...',
+    'Calculando irradiação solar para sua região...',
+    'Estimando potência necessária...'
+  ];
+
+  let analiseIndex = 0;
+  let analiseInterval = null;
+  let analiseTimeout = null;
+
+  if (slider) {
+    // Sincroniza o valor inicial
+    display.textContent = parseInt(slider.value).toLocaleString('pt-BR');
+    contaInput.value = slider.value;
+
+    slider.addEventListener('input', () => {
+      const val = slider.value;
+      display.textContent = parseInt(val).toLocaleString('pt-BR');
+      contaInput.value = val;
+
+      if (!analiseInterval) {
+        analiseConta.classList.add('visible');
+        analiseConta.textContent = mensagensConta[0];
+        analiseIndex = 0;
+        analiseInterval = setInterval(() => {
+          analiseIndex = (analiseIndex + 1) % mensagensConta.length;
+          analiseConta.textContent = mensagensConta[analiseIndex];
+        }, 1200);
+      }
+
+      clearTimeout(analiseTimeout);
+      analiseTimeout = setTimeout(() => {
+        clearInterval(analiseInterval);
+        analiseInterval = null;
+        analiseConta.classList.remove('visible');
+      }, 1500);
+    });
+  }
+
+  // Passo 3 — cidade
+  const cidadeInput = document.getElementById('cidade');
+  const analiseCidade = document.getElementById('quiz-analise-cidade');
+  let cidadeTimeout = null;
+
+  if (cidadeInput) {
+    cidadeInput.addEventListener('input', () => {
+      clearTimeout(cidadeTimeout);
+      const cidade = cidadeInput.value.trim();
+      if (!cidade) {
+        analiseCidade.classList.remove('visible');
+        return;
+      }
+      cidadeTimeout = setTimeout(() => {
+        analiseCidade.textContent = `Consultando índice solar de ${cidade}...`;
+        analiseCidade.classList.add('visible');
+        setTimeout(() => {
+          if (cidadeInput.value.trim() === cidade) {
+            analiseCidade.textContent = 'Região com ótima incidência solar ✓';
+          }
+        }, 1200);
+      }, 600);
+    });
+  }
+
+  // Botões "Continuar"
+  document.querySelectorAll('.quiz-btn-next').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const next = parseInt(btn.dataset.next);
+      goToStep(next);
+    });
+  });
+
+  // Botões "Voltar" (sem resetar nenhum valor)
+  document.querySelectorAll('.quiz-btn-back').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (currentStep > 1) {
+        goToStep(currentStep - 1);
+      }
+    });
+  });
+
+  // Botão finalizar (Passo 4 -> Passo 5 revelação)
+  const btnFinish = document.getElementById('quiz-btn-finish');
+  if (btnFinish) {
+    btnFinish.addEventListener('click', () => {
+      const nome = document.getElementById('nome').value.trim();
+      const celular = document.getElementById('celular').value.trim();
+
+      if (!nome || !celular) {
+        alert('Preencha seu nome e WhatsApp para ver o resultado.');
+        return;
+      }
+
+      goToStep(5);
+      iniciarRevelacao();
+    });
+  }
+
+  // Tela de revelação
+  function iniciarRevelacao() {
+    const loadingEl = document.getElementById('quiz-revelacao-loading');
+    const msgEl = document.getElementById('quiz-revelacao-msg');
+    const resultsEl = document.getElementById('sim-results');
+
+    const cidade = (document.getElementById('cidade') ? document.getElementById('cidade').value.trim() : '') || 'sua região';
+    const uf = (document.getElementById('uf') ? document.getElementById('uf').value : '') || 'MG';
+
+    const mensagensRevelacao = [
+      'Processando dados do imóvel...',
+      `Calculando irradiação solar para ${cidade}/${uf}...`,
+      'Dimensionando sistema fotovoltaico ideal...',
+      'Gerando relatório de economia...'
+    ];
+
+    resultsEl.classList.remove('show');
+    loadingEl.style.display = 'flex';
+    resultsEl.style.display = 'none';
+
+    let idx = 0;
+    msgEl.textContent = mensagensRevelacao[0];
+    const revInterval = setInterval(() => {
+      idx++;
+      if (idx < mensagensRevelacao.length) {
+        msgEl.textContent = mensagensRevelacao[idx];
+      }
+    }, 750);
+
+    setTimeout(() => {
+      clearInterval(revInterval);
+      loadingEl.style.display = 'none';
+      resultsEl.style.display = 'block';
+
+      // Chama a função de cálculo existente — já popula os resultados
+      calcularSolar();
+
+      requestAnimationFrame(() => resultsEl.classList.add('show'));
+    }, 3000);
+  }
+
+  // Inicializa
+  goToStep(1);
 })();
 
 // === TOAST DE PROVA SOCIAL ===
@@ -1526,4 +1708,5 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(showToast, 45000);
   }, 20000);
 })();
+
 
