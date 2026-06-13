@@ -1,5 +1,12 @@
 # ===== ProSol Energia Solar — .htaccess para Hostinger =====
 
+# Forçar UTF-8 em todos os arquivos de texto servidos
+AddDefaultCharset UTF-8
+
+<IfModule mod_mime.c>
+  AddCharset UTF-8 .html .css .js .json .xml .svg
+</IfModule>
+
 # Forçar HTTPS
 RewriteEngine On
 RewriteCond %{HTTPS} off

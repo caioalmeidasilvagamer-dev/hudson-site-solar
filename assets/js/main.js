@@ -653,15 +653,15 @@ function enviarSimulacaoWhatsApp() {
   }
 
   let texto = `Olá! Fiz a simulação solar no site da ProSol Energia Solar e quero um orçamento detalhado.\n\n`;
-  if (dados.nome) texto += `👤 Nome: ${dados.nome}\n`;
-  if (dados.celular) texto += `📱 Celular: ${dados.celular}\n`;
-  if (dados.cidade) texto += `📍 Cidade: ${dados.cidade}\n`;
-  if (dados.tipoLabel) texto += `🏠 Tipo de imóvel: ${dados.tipoLabel}\n`;
-  texto += `\n📊 Resultado da simulação:\n`;
-  texto += `💰 Economia mensal estimada: ${dados.economiaMensal}\n`;
-  texto += `💰 Economia anual estimada: ${dados.economiaAnual}\n`;
-  texto += `⚡ Sistema necessário: ${dados.kwp} kWp (${dados.paineis} painéis)\n`;
-  texto += `⏱️ Payback estimado: ${dados.payback}\n`;
+  if (dados.nome) texto += `\u{1F464} Nome: ${dados.nome}\n`;
+  if (dados.celular) texto += `\u{1F4F1} Celular: ${dados.celular}\n`;
+  if (dados.cidade) texto += `\u{1F4CD} Cidade: ${dados.cidade}\n`;
+  if (dados.tipoLabel) texto += `\u{1F3E0} Tipo de im\u00F3vel: ${dados.tipoLabel}\n`;
+  texto += `\n\u{1F4CA} Resultado da simula\u00E7\u00E3o:\n`;
+  texto += `\u{1F4B0} Economia mensal estimada: ${dados.economiaMensal}\n`;
+  texto += `\u{1F4B0} Economia anual estimada: ${dados.economiaAnual}\n`;
+  texto += `\u{26A1} Sistema necess\u00E1rio: ${dados.kwp} kWp (${dados.paineis} pain\u00E9is)\n`;
+  texto += `\u{23F1}\u{FE0F} Payback estimado: ${dados.payback}\n`;
 
   window.open(`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener,noreferrer');
 }
@@ -910,10 +910,10 @@ function mascaraCelular(input) {
 
     // Formatação da mensagem em formato URL-encoded
     const textoMensagem = `Olá! Vim pelo site da ProSol Energia Solar e gostaria de solicitar um orçamento gratuito.\n\n` +
-      `👤 Nome: ${nome}\n` +
-      `📱 WhatsApp: ${tel}\n` +
-      `📍 Localidade: ${cidade}\n` +
-      `⚡ Valor Conta de Luz atual: R$ ${conta}`;
+      `\u{1F464} Nome: ${nome}\n` +
+      `\u{1F4F1} WhatsApp: ${tel}\n` +
+      `\u{1F4CD} Localidade: ${cidade}\n` +
+      `\u{26A1} Valor Conta de Luz atual: R$ ${conta}`;
 
     const urlencodedText = encodeURIComponent(textoMensagem);
     const linkWhats = `https://wa.me/${whatsappNumero}?text=${urlencodedText}`;
