@@ -1104,6 +1104,10 @@ html:not(.dark) .stat-label {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  color: #000000;
+}
+
+html.dark .footer-col-title {
   color: #ffffff;
 }
 
