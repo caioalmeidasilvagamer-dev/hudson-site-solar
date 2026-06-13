@@ -5624,6 +5624,9 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
 }
 
 /* === WHATSAPP FLUTUANTE === */
+.float-whats {
+  position: relative;
+}
 
 .float-whats-pulse {
   position: absolute;
