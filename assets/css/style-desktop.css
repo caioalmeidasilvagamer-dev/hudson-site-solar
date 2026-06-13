@@ -475,7 +475,7 @@
   }
 
   .back-to-top-btn {
-    bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(160px + env(safe-area-inset-bottom, 0px));
   }
 }
 

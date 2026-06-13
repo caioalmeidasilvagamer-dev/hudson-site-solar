@@ -1311,7 +1311,7 @@ html:not(.dark) .stat-label {
   border: 1px solid var(--border);
   color: var(--text-muted);
   cursor: pointer;
-  z-index: 99;
+  z-index: 210;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4806,7 +4806,7 @@ html:not(.dark) .form-card-glass {
     right: 24px;
     bottom: 96px;
     /* Fica acima do WhatsApp flutuante ou equilibrado no canto */
-    z-index: 99;
+  z-index: 210;
     width: 48px;
     height: 48px;
     border-radius: 14px;
@@ -5624,9 +5624,6 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
 }
 
 /* === WHATSAPP FLUTUANTE === */
-.float-whats {
-  position: relative;
-}
 
 .float-whats-pulse {
   position: absolute;
