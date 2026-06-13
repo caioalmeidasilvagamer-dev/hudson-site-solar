@@ -5622,3 +5622,56 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
 .equipe-reveal[data-delay="1"] {
   transition-delay: 0.15s;
 }
+
+/* === WHATSAPP FLUTUANTE === */
+
+.float-whats-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--whatsapp);
+  animation: whats-pulse 2.5s ease-out infinite;
+  z-index: -1;
+}
+
+@keyframes whats-pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  70% { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.float-whats-balloon {
+  position: absolute;
+  right: calc(100% + 12px);
+  bottom: 50%;
+  transform: translateY(50%);
+  background: #ffffff;
+  color: #0f1118;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 8px 14px;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: translateY(50%) translateX(8px);
+}
+
+.float-whats-balloon.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(50%) translateX(0);
+}
+
+.float-whats-balloon::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-right: none;
+  border-left-color: #ffffff;
+}

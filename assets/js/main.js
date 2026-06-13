@@ -1439,3 +1439,91 @@ document.addEventListener('DOMContentLoaded', function () {
   reveals.forEach(el => obs.observe(el));
 })();
 
+// === CONTADOR ANIMADO NOS STATS ===
+(function () {
+  function animateCounter(el, target, duration, suffix) {
+    let start = 0;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) {
+        start = target;
+        clearInterval(timer);
+      }
+      el.textContent = Math.floor(start) + suffix;
+    }, 16);
+  }
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const raw = el.dataset.countTarget;
+      const suffix = el.dataset.countSuffix || '';
+      if (!raw) return;
+      animateCounter(el, parseFloat(raw), 1800, suffix);
+      statsObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('[data-count-target]').forEach(el => statsObserver.observe(el));
+})();
+
+// === BALÃO WHATSAPP ===
+(function () {
+  const balloon = document.getElementById('float-balloon');
+  if (!balloon) return;
+  setTimeout(() => {
+    balloon.classList.add('visible');
+    setTimeout(() => balloon.classList.remove('visible'), 5000);
+  }, 15000);
+})();
+
+// === TOAST DE PROVA SOCIAL ===
+(function () {
+  const toast = document.getElementById('social-toast');
+  if (!toast) return;
+
+  const leads = [
+    { nome: 'Carlos', cidade: 'Almenara' },
+    { nome: 'Márcia', cidade: 'Jacinto' },
+    { nome: 'Roberto', cidade: 'Mata Verde' },
+    { nome: 'Fernanda', cidade: 'Almenara' },
+    { nome: 'Paulo', cidade: 'Salto da Divisa' },
+  ];
+
+  const acoes = [
+    'acabou de solicitar um orçamento',
+    'acabou de simular a economia',
+    'entrou em contato pelo WhatsApp',
+  ];
+
+  const tempos = ['agora mesmo', 'há 2 minutos', 'há 5 minutos', 'há 8 minutos'];
+
+  function showToast() {
+    const lead = leads[Math.floor(Math.random() * leads.length)];
+    const acao = acoes[Math.floor(Math.random() * acoes.length)];
+    const tempo = tempos[Math.floor(Math.random() * tempos.length)];
+
+    const spans = toast.querySelectorAll('span');
+    spans[0].textContent = lead.nome + ' de ' + lead.cidade;
+    spans[1].textContent = acao;
+    spans[2].textContent = tempo;
+
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateY(0)';
+    toast.style.pointerEvents = 'auto';
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(20px)';
+      toast.style.pointerEvents = 'none';
+    }, 5000);
+  }
+
+  setTimeout(() => {
+    showToast();
+    setInterval(showToast, 45000);
+  }, 20000);
+})();
+
