@@ -663,7 +663,7 @@ html:not(.dark) .theme-icon--moon {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('../images/bg-hero-mobile.jpeg') center top / cover no-repeat;
+  background: url('../images/bg-hero-mobile.webp') center top / cover no-repeat;
   mask-image: linear-gradient(to bottom, black 30%, transparent 75%);
   -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 75%);
   pointer-events: none;

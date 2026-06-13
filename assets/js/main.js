@@ -652,18 +652,17 @@ function enviarSimulacaoWhatsApp() {
     return;
   }
 
-  let texto = `Olá! Fiz a simulação solar no site da ProSol Energia Solar e quero um orçamento detalhado.\n\n`;
+  const localCompl = dados.cidade ? ` em ${dados.cidade}` : '';
 
-  if (dados.nome) texto += `*Nome:* ${dados.nome}\n`;
-  if (dados.celular) texto += `*Celular:* ${dados.celular}\n`;
-  if (dados.cidade) texto += `*Cidade:* ${dados.cidade}\n`;
-  if (dados.tipoLabel) texto += `*Tipo de imóvel:* ${dados.tipoLabel}\n`;
+  let texto = `Olá! Fiz a simulação de energia solar no site da ProSol e a economia estimada foi de ${dados.economiaMensal} por mês.\n\n`;
+  texto += `Gostaria de entender melhor como isso funcionaria na prática${dados.tipoLabel ? ` no meu imóvel ${dados.tipoLabel.toLowerCase()}` : ' no meu imóvel'}${localCompl}.\n\n`;
+  texto += `Podem me ajudar com os próximos passos?`;
 
-  texto += `\n*Resultado da simulação:*\n`;
-  texto += `Economia mensal estimada: ${dados.economiaMensal}\n`;
-  texto += `Economia anual estimada: ${dados.economiaAnual}\n`;
-  texto += `Sistema necessário: ${dados.kwp} kWp (${dados.paineis} painéis)\n`;
-  texto += `Payback estimado: ${dados.payback}\n`;
+  if (dados.nome) {
+    texto += `\n\n_Nome: ${dados.nome}`;
+    if (dados.celular) texto += ` | ${dados.celular}`;
+    texto += `_`;
+  }
 
   window.open(`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener,noreferrer');
 }
