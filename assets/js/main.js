@@ -866,12 +866,11 @@ function mascaraCelular(input) {
       return;
     }
 
-    // Número de WhatsApp de destino (placehoder substituível pelo cliente)
-    // Usamos um número padrão internacional fictício ou limpo
+    // Número de WhatsApp do Hudson (ProSol Energia Solar) — já configurado, não é placeholder
     const whatsappNumero = "5533988845152";
 
     // Formatação da mensagem em formato URL-encoded
-    const textoMensagem = `Olá! Vim pelo site da SolarTech e gostaria de solicitar um orçamento gratuito.\n\n` +
+    const textoMensagem = `Olá! Vim pelo site da ProSol Energia Solar e gostaria de solicitar um orçamento gratuito.\n\n` +
       `👤 Nome: ${nome}\n` +
       `📱 WhatsApp: ${tel}\n` +
       `📍 Localidade: ${cidade}\n` +
