@@ -1305,7 +1305,7 @@ function showFormToast() {
   revealsToObserve.forEach(el => revealObserver.observe(el));
 
   // Para debug: mostra quantos elementos estão sendo observados
-  console.log(`[Reveal Observer] Observando ${revealsToObserve.length} elementos`);
+
 })();
 
 // ===== EXECUTAR MÓDULOS NÃO AUTOEXECUTÁVEIS QUANDO O DOM ESTIVER PRONTO =====
