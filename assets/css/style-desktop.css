@@ -238,13 +238,18 @@
   /* Depoimentos — lado a lado, sem slider */
   .depoimentos-slider {
     transform: none;
-    gap: var(--gap);
+    gap: 20px;
     cursor: default;
+    flex-wrap: nowrap;
+    overflow: visible;
+    align-items: stretch;
   }
 
   .depoimento-card {
-    flex: 1;
+    flex: 1 1 0;
     width: auto;
+    min-width: 0;
+    height: auto;
   }
 
   .depo-controls {
@@ -377,7 +382,8 @@
     padding: 24px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
     gap: 16px;
     transition: all var(--transition-normal) var(--ease);
   }
@@ -401,7 +407,7 @@
     gap: 32px;
     margin-top: 48px;
     padding: 24px;
-    background: rgba(5, 5, 5, 0.3);
+    background: var(--bg-card);
     border-radius: var(--radius-2xl);
     border: 1px solid var(--border-subtle);
   }
@@ -526,15 +532,26 @@
 
   .contato-mapa-wrap {
     flex-direction: row !important;
+    height: 400px;
+    gap: 16px;
   }
 
-  .contato-mapa-wrap > div {
+  .contato-mapa-wrap > div,
+  .contato-mapa-wrap > a {
     flex: 1;
     min-width: 0;
+    height: 100%;
   }
 
   .contato-mapa-wrap > div video,
+  .contato-mapa-wrap > a video,
   .contato-mapa-wrap > div iframe {
+    width: 100%;
     height: 100% !important;
+    object-fit: cover;
+  }
+
+  .contato-mapa-wrap > a {
+    aspect-ratio: auto;
   }
 }
