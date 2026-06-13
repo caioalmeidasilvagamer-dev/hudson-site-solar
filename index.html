@@ -216,6 +216,10 @@
 
 
   <!-- ========== HEADER FIXO ========== -->
+<body>
+
+
+  <!-- ========== HEADER FIXO ========== -->
   <header class="site-header" id="site-header">
     <div class="header-inner">
       <a href="#hero" class="logo" aria-label="Início">
@@ -384,8 +388,594 @@
       </div>
     </div>
   </section>
+  <!-- Seção 3: Calculadora (Fase 3) -->
+  <section id="calculadora" class="calc-section">
+    <div class="container">
+      <h2 class="sim-title">Simule sua economia com energia solar</h2>
+      <p class="sim-sub">Preencha os campos abaixo e veja o resultado em segundos</p>
 
-  <!-- ========== PLACEHOLDER SEÇÕES FUTURAS ========== -->
+      <div class="sim-card">
+        <div class="row row-2">
+          <div class="field">
+            <label>Nome</label>
+            <input type="text" id="nome" placeholder="Seu nome completo" />
+          </div>
+          <div class="field">
+            <label>Celular</label>
+            <input type="tel" id="celular" placeholder="(21) 99999-9999" oninput="mascaraCelular(this)" />
+          </div>
+        </div>
+
+        <div class="row row-3">
+          <div class="field">
+            <label>Estado (UF)</label>
+            <select id="uf">
+              <option value="">Selecione o estado</option>
+              <option value="AC">AC &ndash; Acre</option>
+              <option value="AL">AL &ndash; Alagoas</option>
+              <option value="AM">AM &ndash; Amazonas</option>
+              <option value="AP">AP &ndash; Amap&aacute;</option>
+              <option value="BA">BA &ndash; Bahia</option>
+              <option value="CE">CE &ndash; Cear&aacute;</option>
+              <option value="DF">DF &ndash; Distrito Federal</option>
+              <option value="ES">ES &ndash; Esp&iacute;rito Santo</option>
+              <option value="GO">GO &ndash; Goi&aacute;s</option>
+              <option value="MA">MA &ndash; Maranh&atilde;o</option>
+              <option value="MG">MG &ndash; Minas Gerais</option>
+              <option value="MS">MS &ndash; Mato Grosso do Sul</option>
+              <option value="MT">MT &ndash; Mato Grosso</option>
+              <option value="PA">PA &ndash; Par&aacute;</option>
+              <option value="PB">PB &ndash; Para&iacute;ba</option>
+              <option value="PE">PE &ndash; Pernambuco</option>
+              <option value="PI">PI &ndash; Piau&iacute;</option>
+              <option value="PR">PR &ndash; Paran&aacute;</option>
+              <option value="RJ">RJ &ndash; Rio de Janeiro</option>
+              <option value="RN">RN &ndash; Rio Grande do Norte</option>
+              <option value="RO">RO &ndash; Rond&ocirc;nia</option>
+              <option value="RR">RR &ndash; Roraima</option>
+              <option value="RS">RS &ndash; Rio Grande do Sul</option>
+              <option value="SC">SC &ndash; Santa Catarina</option>
+              <option value="SE">SE &ndash; Sergipe</option>
+              <option value="SP">SP &ndash; S&atilde;o Paulo</option>
+              <option value="TO">TO &ndash; Tocantins</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Cidade</label>
+            <input type="text" id="cidade" placeholder="Ex: São Paulo" />
+          </div>
+          <div class="field">
+            <label>Tipo de imóvel</label>
+            <select id="tipo">
+              <option value="residencial">Residencial</option>
+              <option value="comercial">Comercial</option>
+              <option value="rural">Rural / Industrial</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row row-3">
+          <div class="field">
+            <label>Modalidade tarif&aacute;ria</label>
+            <select id="modalidade">
+              <option value="B">Grupo B (Baixa Tens&atilde;o)</option>
+              <option value="A">Grupo A (Alta Tens&atilde;o)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Tipo de liga&ccedil;&atilde;o</label>
+            <select id="ligacao">
+              <option value="mono">Monof&aacute;sico</option>
+              <option value="bi">Bif&aacute;sico</option>
+              <option value="tri">Trif&aacute;sico</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Valor da conta (R$)</label>
+            <div class="prefix">
+              <span>R$</span>
+              <input type="number" id="conta" placeholder="0,00" min="0" step="1" />
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-calc" onclick="calcularSolar()">
+          CALCULAR MINHA ECONOMIA
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <line x1="12" y1="2" x2="12" y2="5" />
+            <line x1="12" y1="19" x2="12" y2="22" />
+            <line x1="2" y1="12" x2="5" y2="12" />
+            <line x1="19" y1="12" x2="22" y2="12" />
+            <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" />
+            <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" />
+            <line x1="19.78" y1="4.22" x2="17.66" y2="6.34" />
+            <line x1="6.34" y1="17.66" x2="4.22" y2="19.78" />
+          </svg>
+        </button>
+
+        <div class="sim-results" id="sim-results">
+          <div class="results-title">☀️ Resultado da simula&ccedil;&atilde;o</div>
+          <div class="metrics">
+            <div class="metric highlight">
+              <div class="metric-label">Economia mensal</div>
+              <div class="metric-value" id="res-economia">&mdash;</div>
+              <div class="metric-unit">reais/m&ecirc;s</div>
+            </div>
+            <div class="metric highlight">
+              <div class="metric-label">Economia anual</div>
+              <div class="metric-value" id="res-anual">&mdash;</div>
+              <div class="metric-unit">reais/ano</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Pot&ecirc;ncia do sistema</div>
+              <div class="metric-value" id="res-kwp">&mdash;</div>
+              <div class="metric-unit">kWp necess&aacute;rios</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">N&ordm; de pain&eacute;is</div>
+              <div class="metric-value" id="res-paineis">&mdash;</div>
+              <div class="metric-unit">pain&eacute;is de 550W</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Gera&ccedil;&atilde;o mensal</div>
+              <div class="metric-value" id="res-geracao">&mdash;</div>
+              <div class="metric-unit">kWh/m&ecirc;s</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Investimento est.</div>
+              <div class="metric-value" id="res-invest">&mdash;</div>
+              <div class="metric-unit">custo m&eacute;dio</div>
+            </div>
+          </div>
+          <div class="payback-wrap">
+            <div class="payback-label">Retorno do investimento (payback):
+              <strong id="res-payback">&mdash;</strong>
+            </div>
+            <div class="payback-bar-bg">
+              <div class="payback-bar-fill" id="payback-bar" style="width:0%"></div>
+            </div>
+            <div class="payback-scale">
+              <span>0 anos</span><span>10 anos</span><span>20 anos</span>
+            </div>
+          </div>
+
+          <!-- Detalhes Financeiros Adicionais -->
+          <div class="calc-finance-item">
+            <div class="calc-finance-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                <polyline points="13 2 13 9 20 9" />
+              </svg>
+              Conta atual (sem solar)
+            </div>
+            <div class="calc-finance-value" id="res-sem-solar">—</div>
+            <div class="calc-finance-desc">Valor mensal que você paga hoje</div>
+          </div>
+
+          <div class="calc-finance-item">
+            <div class="calc-finance-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                <polyline points="17 6 23 6 23 12" />
+              </svg>
+              Conta com solar
+            </div>
+            <div class="calc-finance-value" id="res-com-solar">—</div>
+            <div class="calc-finance-desc">Apenas a taxa de disponibilidade mínima</div>
+          </div>
+          <div class="calc-finance-details">
+            <div class="calc-finance-item">
+              <div class="calc-finance-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v20M2 12h20M8.5 15.5l7-7M15.5 15.5l7-7" />
+                </svg>
+                Economia Mensal Est.
+              </div>
+              <div class="calc-finance-value" id="res-economia-mensal">—</div>
+              <div class="calc-finance-desc">Valor aproximado de redução na conta de luz</div>
+            </div>
+
+            <div class="calc-finance-item">
+              <div class="calc-finance-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                </svg>
+                Economia em 25 anos
+              </div>
+              <div class="calc-finance-value" id="res-economia-total">—</div>
+              <div class="calc-finance-desc">Considerando vida útil dos painéis solares</div>
+            </div>
+
+            <div class="calc-finance-item">
+              <div class="calc-finance-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 8v8" />
+                  <path d="m8 12 4 4 4-4" />
+                </svg>
+                ROI (Retorno sobre Investimento)
+              </div>
+              <div class="calc-finance-value" id="res-roi">—</div>
+              <div class="calc-finance-desc">Retorno total após período de payback</div>
+            </div>
+
+            <div class="calc-finance-item">
+              <div class="calc-finance-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+                Benefícios ESG
+              </div>
+              <div class="calc-finance-value" id="res-co2">—</div>
+              <div class="calc-finance-desc">Toneladas de CO₂ evitadas em 25 anos</div>
+            </div>
+          </div>
+
+          <button class="btn-cta" onclick="enviarSimulacaoWhatsApp()">
+            📲 Quero receber um or&ccedil;amento detalhado
+          </button>
+          <p class="sim-disclaimer">* Simula&ccedil;&atilde;o estimativa com base em dados m&eacute;dios de
+            irradia&ccedil;&atilde;o solar
+            (INPE/CRESESB), tarifa m&eacute;dia estadual e performance ratio de 78%.
+            Os valores reais podem variar conforme concession&aacute;ria local, inclina&ccedil;&atilde;o
+            do telhado, sombreamento e equipamentos escolhidos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="depoimentos" class="depoimentos-section">
+    <div class="container">
+      <div class="depoimentos-header text-center depoimentos-reveal" data-delay="0">
+        <span class="section-badge">Depoimentos</span>
+        <h2 class="section-title">O que nossos clientes dizem</h2>
+        <p class="section-subtitle">A satisfação de quem gera a própria energia e lucra com o sol todos os meses</p>
+      </div>
+
+      <div class="depoimentos-wrapper">
+        <div class="depoimentos-slider" id="depoimentos-slider">
+          <!-- Card 1 -->
+          <div class="depoimento-card depo-reveal active" data-index="0">
+            <div class="depo-quote-bg">"</div>
+            <div class="depo-rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </div>
+            <p class="depo-text">Ótimo pós venda e excelente atendimento!!!</p>
+            <div class="depo-user">
+              <div class="depo-avatar flex-center" style="overflow:hidden;">
+                <img src="assets/avatars/luis-gustavo-aguilar.png" alt="Luis Gustavo Aguilar" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div class="depo-meta">
+                <span class="depo-name">Luis Gustavo Aguilar</span>
+                <span class="depo-city">Almenara, MG</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="depoimento-card depo-reveal" data-index="1">
+            <div class="depo-quote-bg">"</div>
+            <div class="depo-rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </div>
+            <p class="depo-text">Empresa séria, que visa atender o cliente com qualidade e transparência!!</p>
+            <div class="depo-user">
+              <div class="depo-avatar flex-center" style="overflow:hidden;">
+                <img src="assets/avatars/alessandra-aguilar-freitas.png" alt="Alessandra Aguilar Freitas" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div class="depo-meta">
+                <span class="depo-name">Alessandra Aguilar Freitas</span>
+                <span class="depo-city">Almenara, MG</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="depoimento-card depo-reveal" data-index="2">
+            <div class="depo-quote-bg">"</div>
+            <div class="depo-rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </div>
+            <p class="depo-text">Bom atendimento, ótimos produtos e preços...</p>
+            <div class="depo-user">
+              <div class="depo-avatar flex-center" style="overflow:hidden;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:#0a1445;">
+                E
+              </div>
+              <div class="depo-meta">
+                <span class="depo-name">Esmeralda Batista Dias Oliveira</span>
+                <span class="depo-city">Almenara, MG</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="depoimento-card depo-reveal" data-index="3">
+            <div class="depo-quote-bg">"</div>
+            <div class="depo-rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </div>
+            <p class="depo-text">Ótimo atendimento.</p>
+            <div class="depo-user">
+              <div class="depo-avatar flex-center" style="overflow:hidden;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:#0a1445;">
+                T
+              </div>
+              <div class="depo-meta">
+                <span class="depo-name">Telma Carvalho</span>
+                <span class="depo-city">Almenara, MG</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="depoimento-card depo-reveal" data-index="4">
+            <div class="depo-quote-bg">"</div>
+            <div class="depo-rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </div>
+            <p class="depo-text">Excelente empresa.</p>
+            <div class="depo-user">
+              <div class="depo-avatar flex-center" style="overflow:hidden;">
+                <img src="assets/avatars/empire-leonardo-vargas.png" alt="Empire Leonardo Vargas" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div class="depo-meta">
+                <span class="depo-name">Empire Leonardo Vargas</span>
+                <span class="depo-city">Almenara, MG</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controles do Slider -->
+        <div class="depo-controls">
+          <button class="depo-btn depo-btn--prev" id="depo-prev" aria-label="Depoimento anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <div class="depo-dots" id="depo-dots">
+            <span class="depo-dot active" data-index="0"></span>
+            <span class="depo-dot" data-index="1"></span>
+            <span class="depo-dot" data-index="2"></span>
+            <span class="depo-dot" data-index="3"></span>
+            <span class="depo-dot" data-index="4"></span>
+          </div>
+          <button class="depo-btn depo-btn--next" id="depo-next" aria-label="Próximo depoimento">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VÍDEO EXPLICATIVO ========== -->
+  <section class="video-section">
+    <div class="container">
+
+      <!-- Container do vídeo — layout lado a lado no desktop -->
+      <div class="video-wrapper mt-16">
+        <div class="video-col-video">
+          <video autoplay muted loop playsinline
+            poster="assets/images/bg-hero-desktop.webp"
+            style="width: 100%; border-radius: 12px; object-fit: cover; border: 1px solid rgba(240, 210, 143, 0.2); aspect-ratio: 9/16;"
+            class="video-preview">
+            <source src="assets/videos/AQOTkrQw8qKnanMEvCLIS9NTsfbjAb3lw64NBd4DKLnk5-NA2hRaG3uKmW1dKpfFhRnmaus4ra9TzT_0vEd34_d6UQ5NO8jkOY9b-Q8.mp4" type="video/mp4">
+            Seu navegador não suporta a reprodução de vídeos.
+          </video>
+        </div>
+
+        <!-- Descrição do vídeo -->
+        <div class="video-col-info">
+          <h3 style="font-size: 1.2rem; margin-bottom: 12px; color: #0050A0;">O que você vai ver no vídeo:</h3>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0050A0"
+                style="margin-right: 8px; flex-shrink: 0;">
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+              <span>Como os painéis solares captam a luz do sol mesmo em dias nublados</span>
+            </li>
+            <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#f0d28f"
+                style="margin-right: 8px; flex-shrink: 0;">
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+              <span>Processo de conversão da energia DC para AC pelo inversor</span>
+            </li>
+            <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#f0d28f"
+                style="margin-right: 8px; flex-shrink: 0;">
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+              <span>Sistema de medição bidirecional e compensação de créditos</span>
+            </li>
+            <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#f0d28f"
+                style="margin-right: 8px; flex-shrink: 0;">
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+              <span>Monitoramento em tempo real pelo aplicativo do fabricante do inversor</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 5: Projetos (Fase 4) -->
+  <section id="projetos" class="projetos-section" aria-labelledby="projetos-title">
+    <div class="container">
+      <div class="projetos-header text-center projetos-reveal" data-delay="0">
+        <span class="section-badge">Projetos</span>
+        <h2 id="projetos-title" class="section-title">Projetos Realizados</h2>
+        <p class="section-subtitle">Instalações reais realizadas pela ProSol Energia Solar em Almenara/MG e região</p>
+      </div>
+
+      <div class="projetos-carrosseis" id="projetos-carrosseis">
+
+        <!-- Carrossel 1: move para ESQUERDA -->
+        <div class="proj-track-wrap">
+          <div class="proj-track" id="proj-track-1" data-direction="left">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.41.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.42.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.43.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.44.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.45.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <!-- duplicatas para loop infinito -->
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.41.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.42.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.43.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.44.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.45.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+          </div>
+        </div>
+
+        <!-- Carrossel 2: move para DIREITA -->
+        <div class="proj-track-wrap">
+          <div class="proj-track" id="proj-track-2" data-direction="right">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.46.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.47.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.48.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.49.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.50.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <!-- duplicatas para loop infinito -->
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.46.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.47.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.48.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.49.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.50.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+          </div>
+        </div>
+
+        <!-- Carrossel 3: move para ESQUERDA -->
+        <div class="proj-track-wrap">
+          <div class="proj-track" id="proj-track-3" data-direction="left">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.51.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.52.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.53.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.54.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.55.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <!-- duplicatas para loop infinito -->
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.51.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.52.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.53.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.54.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.55.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- SEÇÃO 1.5: Selos e Certificações (Antes dos Benefícios) -->
+  <section class="selos-section" id="selos">
+    <div class="container">
+      <div class="section-header text-center" style="margin-bottom:48px;">
+        <span class="section-badge">Selos e Credenciais</span>
+        <h2 class="section-title">Garantias de um trabalho confiável</h2>
+      </div>
+
+      <!-- PRÊMIO EMBRAPECIL — destaque central -->
+      <div class="embrapecil-destaque" style="display:flex;flex-direction:column;align-items:center;gap:24px;margin-bottom:56px;padding:32px;background:var(--bg-card);border:2px solid var(--gold);border-radius:var(--radius-2xl);box-shadow:0 8px 32px var(--gold-glow);max-width:700px;margin-left:auto;margin-right:auto;margin-bottom:56px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;">
+          <span style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--gold);">🏆 Reconhecimento Oficial</span>
+          <h3 style="font-size:1.4rem;font-weight:700;color:var(--text);margin:0;">Prêmio Destaque do Ano — EMBRAPECIL</h3>
+          <p style="font-size:0.9rem;color:var(--text-muted);margin:0;">Reconhecida como empresa destaque em Almenara/MG, premiada em cerimônia oficial em 2025.</p>
+        </div>
+        <div style="width:100%;max-width:420px;border-radius:var(--radius-xl);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+          <img src="assets/images/EMBRAPECIL.jpg" alt="Prêmio Destaque EMBRAPECIL — ProSol Energia Solar" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- GRID DE SELOS -->
+      <div class="selos-grid">
+        <!-- Selo 1: INMETRO -->
+        <div class="selo-card garantia">
+          <div class="selo-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="8" width="18" height="4" rx="1" ry="1"/>
+              <rect x="3" y="3" width="18" height="5" rx="1" ry="1"/>
+              <line x1="12" y1="17" x2="12" y2="22"/>
+              <line x1="9" y1="22" x2="15" y2="22"/>
+              <circle cx="12" cy="12" r="2"/>
+            </svg>
+          </div>
+          <div class="selo-content">
+            <h3>Componentes INMETRO</h3>
+            <p>Todos os equipamentos instalados possuem selo INMETRO obrigatório, garantindo qualidade e segurança.</p>
+          </div>
+        </div>
+
+        <!-- Selo 2: CREA-MG -->
+        <div class="selo-card financimento">
+          <div class="selo-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <div class="selo-content">
+            <h3>CREA-MG Registrado</h3>
+            <p>Projetos assinados por engenheiro registrado no Conselho Regional de Engenharia de Minas Gerais.</p>
+            <div class="selo-code">CREA-MG Nº: 0001026577</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="selos-extra">
+        <div class="selos-extra-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <span>Projeto completo com acompanhamento técnico do início ao fim</span>
+        </div>
+        <div class="selos-extra-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 16v-4M12 8h.01"/>
+          </svg>
+          <span>Garantia de performance mínima de 25 anos</span>
+        </div>
+        <div class="selos-extra-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span>Equipe técnica especializada com 7+ anos de experiência no setor solar</span>
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- ========== FLUXO DE ENERGIA (Fase 2) ========== -->
   <section id="fluxo" class="fluxo-section" aria-label="Como funciona o sistema solar">
     <div class="fluxo-container">
@@ -649,477 +1239,6 @@
 
     </div><!-- /fluxo-container -->
   </section>
-
-  <!-- ========== VÍDEO EXPLICATIVO ========== -->
-  <section class="video-section">
-    <div class="container">
-
-      <!-- Container do vídeo — layout lado a lado no desktop -->
-      <div class="video-wrapper mt-16">
-        <div class="video-col-video">
-          <video autoplay muted loop playsinline
-            poster="assets/images/bg-hero-desktop.webp"
-            style="width: 100%; border-radius: 12px; object-fit: cover; border: 1px solid rgba(240, 210, 143, 0.2); aspect-ratio: 9/16;"
-            class="video-preview">
-            <source src="assets/videos/AQOTkrQw8qKnanMEvCLIS9NTsfbjAb3lw64NBd4DKLnk5-NA2hRaG3uKmW1dKpfFhRnmaus4ra9TzT_0vEd34_d6UQ5NO8jkOY9b-Q8.mp4" type="video/mp4">
-            Seu navegador não suporta a reprodução de vídeos.
-          </video>
-        </div>
-
-        <!-- Descrição do vídeo -->
-        <div class="video-col-info">
-          <h3 style="font-size: 1.2rem; margin-bottom: 12px; color: #0050A0;">O que você vai ver no vídeo:</h3>
-          <ul style="list-style: none; padding: 0; margin: 0;">
-            <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0050A0"
-                style="margin-right: 8px; flex-shrink: 0;">
-                <path d="M9 12l2 2 4-4" />
-              </svg>
-              <span>Como os painéis solares captam a luz do sol mesmo em dias nublados</span>
-            </li>
-            <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#f0d28f"
-                style="margin-right: 8px; flex-shrink: 0;">
-                <path d="M9 12l2 2 4-4" />
-              </svg>
-              <span>Processo de conversão da energia DC para AC pelo inversor</span>
-            </li>
-            <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#f0d28f"
-                style="margin-right: 8px; flex-shrink: 0;">
-                <path d="M9 12l2 2 4-4" />
-              </svg>
-              <span>Sistema de medição bidirecional e compensação de créditos</span>
-            </li>
-            <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#f0d28f"
-                style="margin-right: 8px; flex-shrink: 0;">
-                <path d="M9 12l2 2 4-4" />
-              </svg>
-              <span>Monitoramento em tempo real pelo aplicativo do fabricante do inversor</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Seção 3: Calculadora (Fase 3) -->
-  <section id="calculadora" class="calc-section">
-    <div class="container">
-      <h2 class="sim-title">Simule sua economia com energia solar</h2>
-      <p class="sim-sub">Preencha os campos abaixo e veja o resultado em segundos</p>
-
-      <div class="sim-card">
-        <div class="row row-2">
-          <div class="field">
-            <label>Nome</label>
-            <input type="text" id="nome" placeholder="Seu nome completo" />
-          </div>
-          <div class="field">
-            <label>Celular</label>
-            <input type="tel" id="celular" placeholder="(21) 99999-9999" oninput="mascaraCelular(this)" />
-          </div>
-        </div>
-
-        <div class="row row-3">
-          <div class="field">
-            <label>Estado (UF)</label>
-            <select id="uf">
-              <option value="">Selecione o estado</option>
-              <option value="AC">AC &ndash; Acre</option>
-              <option value="AL">AL &ndash; Alagoas</option>
-              <option value="AM">AM &ndash; Amazonas</option>
-              <option value="AP">AP &ndash; Amap&aacute;</option>
-              <option value="BA">BA &ndash; Bahia</option>
-              <option value="CE">CE &ndash; Cear&aacute;</option>
-              <option value="DF">DF &ndash; Distrito Federal</option>
-              <option value="ES">ES &ndash; Esp&iacute;rito Santo</option>
-              <option value="GO">GO &ndash; Goi&aacute;s</option>
-              <option value="MA">MA &ndash; Maranh&atilde;o</option>
-              <option value="MG">MG &ndash; Minas Gerais</option>
-              <option value="MS">MS &ndash; Mato Grosso do Sul</option>
-              <option value="MT">MT &ndash; Mato Grosso</option>
-              <option value="PA">PA &ndash; Par&aacute;</option>
-              <option value="PB">PB &ndash; Para&iacute;ba</option>
-              <option value="PE">PE &ndash; Pernambuco</option>
-              <option value="PI">PI &ndash; Piau&iacute;</option>
-              <option value="PR">PR &ndash; Paran&aacute;</option>
-              <option value="RJ">RJ &ndash; Rio de Janeiro</option>
-              <option value="RN">RN &ndash; Rio Grande do Norte</option>
-              <option value="RO">RO &ndash; Rond&ocirc;nia</option>
-              <option value="RR">RR &ndash; Roraima</option>
-              <option value="RS">RS &ndash; Rio Grande do Sul</option>
-              <option value="SC">SC &ndash; Santa Catarina</option>
-              <option value="SE">SE &ndash; Sergipe</option>
-              <option value="SP">SP &ndash; S&atilde;o Paulo</option>
-              <option value="TO">TO &ndash; Tocantins</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Cidade</label>
-            <input type="text" id="cidade" placeholder="Ex: São Paulo" />
-          </div>
-          <div class="field">
-            <label>Tipo de imóvel</label>
-            <select id="tipo">
-              <option value="residencial">Residencial</option>
-              <option value="comercial">Comercial</option>
-              <option value="rural">Rural / Industrial</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="row row-3">
-          <div class="field">
-            <label>Modalidade tarif&aacute;ria</label>
-            <select id="modalidade">
-              <option value="B">Grupo B (Baixa Tens&atilde;o)</option>
-              <option value="A">Grupo A (Alta Tens&atilde;o)</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Tipo de liga&ccedil;&atilde;o</label>
-            <select id="ligacao">
-              <option value="mono">Monof&aacute;sico</option>
-              <option value="bi">Bif&aacute;sico</option>
-              <option value="tri">Trif&aacute;sico</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Valor da conta (R$)</label>
-            <div class="prefix">
-              <span>R$</span>
-              <input type="number" id="conta" placeholder="0,00" min="0" step="1" />
-            </div>
-          </div>
-        </div>
-
-        <button class="btn-calc" onclick="calcularSolar()">
-          CALCULAR MINHA ECONOMIA
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4" />
-            <line x1="12" y1="2" x2="12" y2="5" />
-            <line x1="12" y1="19" x2="12" y2="22" />
-            <line x1="2" y1="12" x2="5" y2="12" />
-            <line x1="19" y1="12" x2="22" y2="12" />
-            <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" />
-            <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" />
-            <line x1="19.78" y1="4.22" x2="17.66" y2="6.34" />
-            <line x1="6.34" y1="17.66" x2="4.22" y2="19.78" />
-          </svg>
-        </button>
-
-        <div class="sim-results" id="sim-results">
-          <div class="results-title">☀️ Resultado da simula&ccedil;&atilde;o</div>
-          <div class="metrics">
-            <div class="metric highlight">
-              <div class="metric-label">Economia mensal</div>
-              <div class="metric-value" id="res-economia">&mdash;</div>
-              <div class="metric-unit">reais/m&ecirc;s</div>
-            </div>
-            <div class="metric highlight">
-              <div class="metric-label">Economia anual</div>
-              <div class="metric-value" id="res-anual">&mdash;</div>
-              <div class="metric-unit">reais/ano</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">Pot&ecirc;ncia do sistema</div>
-              <div class="metric-value" id="res-kwp">&mdash;</div>
-              <div class="metric-unit">kWp necess&aacute;rios</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">N&ordm; de pain&eacute;is</div>
-              <div class="metric-value" id="res-paineis">&mdash;</div>
-              <div class="metric-unit">pain&eacute;is de 550W</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">Gera&ccedil;&atilde;o mensal</div>
-              <div class="metric-value" id="res-geracao">&mdash;</div>
-              <div class="metric-unit">kWh/m&ecirc;s</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">Investimento est.</div>
-              <div class="metric-value" id="res-invest">&mdash;</div>
-              <div class="metric-unit">custo m&eacute;dio</div>
-            </div>
-          </div>
-          <div class="payback-wrap">
-            <div class="payback-label">Retorno do investimento (payback):
-              <strong id="res-payback">&mdash;</strong>
-            </div>
-            <div class="payback-bar-bg">
-              <div class="payback-bar-fill" id="payback-bar" style="width:0%"></div>
-            </div>
-            <div class="payback-scale">
-              <span>0 anos</span><span>10 anos</span><span>20 anos</span>
-            </div>
-          </div>
-
-          <!-- Detalhes Financeiros Adicionais -->
-          <div class="calc-finance-item">
-            <div class="calc-finance-label">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
-                <polyline points="13 2 13 9 20 9" />
-              </svg>
-              Conta atual (sem solar)
-            </div>
-            <div class="calc-finance-value" id="res-sem-solar">—</div>
-            <div class="calc-finance-desc">Valor mensal que você paga hoje</div>
-          </div>
-
-          <div class="calc-finance-item">
-            <div class="calc-finance-label">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                <polyline points="17 6 23 6 23 12" />
-              </svg>
-              Conta com solar
-            </div>
-            <div class="calc-finance-value" id="res-com-solar">—</div>
-            <div class="calc-finance-desc">Apenas a taxa de disponibilidade mínima</div>
-          </div>
-          <div class="calc-finance-details">
-            <div class="calc-finance-item">
-              <div class="calc-finance-label">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2v20M2 12h20M8.5 15.5l7-7M15.5 15.5l7-7" />
-                </svg>
-                Economia Mensal Est.
-              </div>
-              <div class="calc-finance-value" id="res-economia-mensal">—</div>
-              <div class="calc-finance-desc">Valor aproximado de redução na conta de luz</div>
-            </div>
-
-            <div class="calc-finance-item">
-              <div class="calc-finance-label">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                </svg>
-                Economia em 25 anos
-              </div>
-              <div class="calc-finance-value" id="res-economia-total">—</div>
-              <div class="calc-finance-desc">Considerando vida útil dos painéis solares</div>
-            </div>
-
-            <div class="calc-finance-item">
-              <div class="calc-finance-label">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 8v8" />
-                  <path d="m8 12 4 4 4-4" />
-                </svg>
-                ROI (Retorno sobre Investimento)
-              </div>
-              <div class="calc-finance-value" id="res-roi">—</div>
-              <div class="calc-finance-desc">Retorno total após período de payback</div>
-            </div>
-
-            <div class="calc-finance-item">
-              <div class="calc-finance-label">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z" />
-                  <path d="m9 12 2 2 4-4" />
-                </svg>
-                Benefícios ESG
-              </div>
-              <div class="calc-finance-value" id="res-co2">—</div>
-              <div class="calc-finance-desc">Toneladas de CO₂ evitadas em 25 anos</div>
-            </div>
-          </div>
-
-          <button class="btn-cta" onclick="enviarSimulacaoWhatsApp()">
-            📲 Quero receber um or&ccedil;amento detalhado
-          </button>
-          <p class="sim-disclaimer">* Simula&ccedil;&atilde;o estimativa com base em dados m&eacute;dios de
-            irradia&ccedil;&atilde;o solar
-            (INPE/CRESESB), tarifa m&eacute;dia estadual e performance ratio de 78%.
-            Os valores reais podem variar conforme concession&aacute;ria local, inclina&ccedil;&atilde;o
-            do telhado, sombreamento e equipamentos escolhidos.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SEÇÃO 1.5: Selos e Certificações (Antes dos Benefícios) -->
-  <section class="selos-section" id="selos">
-    <div class="container">
-      <div class="section-header text-center" style="margin-bottom:48px;">
-        <span class="section-badge">Selos e Credenciais</span>
-        <h2 class="section-title">Garantias de um trabalho confiável</h2>
-      </div>
-
-      <!-- PRÊMIO EMBRAPECIL — destaque central -->
-      <div class="embrapecil-destaque" style="display:flex;flex-direction:column;align-items:center;gap:24px;margin-bottom:56px;padding:32px;background:var(--bg-card);border:2px solid var(--gold);border-radius:var(--radius-2xl);box-shadow:0 8px 32px var(--gold-glow);max-width:700px;margin-left:auto;margin-right:auto;margin-bottom:56px;">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;">
-          <span style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--gold);">🏆 Reconhecimento Oficial</span>
-          <h3 style="font-size:1.4rem;font-weight:700;color:var(--text);margin:0;">Prêmio Destaque do Ano — EMBRAPECIL</h3>
-          <p style="font-size:0.9rem;color:var(--text-muted);margin:0;">Reconhecida como empresa destaque em Almenara/MG, premiada em cerimônia oficial em 2025.</p>
-        </div>
-        <div style="width:100%;max-width:420px;border-radius:var(--radius-xl);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.15);">
-          <img src="assets/images/EMBRAPECIL.jpg" alt="Prêmio Destaque EMBRAPECIL — ProSol Energia Solar" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;object-fit:cover;">
-        </div>
-      </div>
-
-      <!-- GRID DE SELOS -->
-      <div class="selos-grid">
-        <!-- Selo 1: INMETRO -->
-        <div class="selo-card garantia">
-          <div class="selo-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="8" width="18" height="4" rx="1" ry="1"/>
-              <rect x="3" y="3" width="18" height="5" rx="1" ry="1"/>
-              <line x1="12" y1="17" x2="12" y2="22"/>
-              <line x1="9" y1="22" x2="15" y2="22"/>
-              <circle cx="12" cy="12" r="2"/>
-            </svg>
-          </div>
-          <div class="selo-content">
-            <h3>Componentes INMETRO</h3>
-            <p>Todos os equipamentos instalados possuem selo INMETRO obrigatório, garantindo qualidade e segurança.</p>
-          </div>
-        </div>
-
-        <!-- Selo 2: CREA-MG -->
-        <div class="selo-card financimento">
-          <div class="selo-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-            </svg>
-          </div>
-          <div class="selo-content">
-            <h3>CREA-MG Registrado</h3>
-            <p>Projetos assinados por engenheiro registrado no Conselho Regional de Engenharia de Minas Gerais.</p>
-            <div class="selo-code">CREA-MG Nº: 0001026577</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="selos-extra">
-        <div class="selos-extra-item">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-          </svg>
-          <span>Projeto completo com acompanhamento técnico do início ao fim</span>
-        </div>
-        <div class="selos-extra-item">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 16v-4M12 8h.01"/>
-          </svg>
-          <span>Garantia de performance mínima de 25 anos</span>
-        </div>
-        <div class="selos-extra-item">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
-          </svg>
-          <span>Equipe técnica especializada com 7+ anos de experiência no setor solar</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== SEÇÃO BENEFÍCIOS ========== -->
-  <!-- ========== SEÇÃO ALTA TENSÃO + SMARTPHONE (Complementar ao Consumidor A+) ========== -->
-  <section class="alta-tensao-section" id="alta-tensao">
-    <div class="container">
-      <div class="alta-tensao-grid">
-        <!-- Coluna de Texto (esquerda) -->
-        <div class="alta-tensao-col-text" data-delay="0">
-          <div class="alta-tensao-header">
-            <h2 class="alta-tensao-title">
-              Sua empresa consome energia
-              <span class="alta-tensao-highlight">
-                em alta tensão?
-              </span>
-            </h2>
-            <p class="alta-tensao-subtitle">
-              Temos a solução ideal para consumidores de alta e média tensão (Grupo A) através do mercado livre de
-              energia.
-            </p>
-          </div>
-
-          <div class="alta-tensao-content">
-            <p class="alta-tensao-desc">
-              <strong>Ao migrar para o Mercado Livre, sua empresa pode economizar até 35% na conta de luz</strong>, além
-              de ter acesso a energia limpa, sustentável e com liberdade para negociar preços e condições.
-            </p>
-
-            <div class="alta-tensao-beneficios">
-              <div class="alta-tensao-beneficio">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-                <span>Economia garantida de até 35%</span>
-              </div>
-              <div class="alta-tensao-beneficio">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-                <span>Energia 100% limpa e renovável</span>
-              </div>
-              <div class="alta-tensao-beneficio">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-                <span>Negociação direta com geradores</span>
-              </div>
-              <div class="alta-tensao-beneficio">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-                <span>Contratos flexíveis e personalizados</span>
-              </div>
-            </div>
-
-            <div class="alta-tensao-cta">
-              <p class="alta-tensao-cta-text">
-                <strong>Quer reduzir custos</strong> e tornar sua operação mais eficiente?
-              </p>
-              <a href="https://wa.me/5533988845152?text=Ol%C3%A1!%20Minha%20empresa%20%C3%A9%20consumidora%20A%2B%20e%20gostaria%20de%20saber%20mais%20sobre%20o%20Mercado%20Livre%20de%20Energia%20com%20at%C3%A9%2035%25%20de%20economia."
-                class="btn-cta-alta-tensao" target="_blank" rel="noopener noreferrer">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 2L11 13" />
-                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                </svg>
-                Sim, quero economizar hoje mesmo!
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Coluna da Imagem (direita) -->
-        <div class="alta-tensao-col-img" data-delay="1">
-          <div class="alta-tensao-img-wrapper">
-            <img src="assets/images/smartphone_standing.webp"
-              alt="Smartphone com aplicativo de monitoramento do Mercado Livre de Energia" class="alta-tensao-img"
-              loading="lazy" decoding="async" width="800" height="1200">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ========== SEÇÃO PROCESSO (Fase 6) ========== -->
   <section id="processo" class="processo-section" aria-label="Como funciona o processo de instalação">
     <div class="container">
@@ -1211,163 +1330,35 @@
       </div>
     </div>
   </section>
-
-  <!-- ========== SEÇÃO NOSSA HISTÓRIA ========== -->
-  <section id="nossa-historia" class="projetos-section">
+  <!-- ========== SEÇÃO VÍDEO EQUIPE ========== -->
+  <section id="equipe-em-acao" class="equipe-video-section">
     <div class="container">
-      <div class="text-center historia-reveal" data-delay="0">
-        <span class="section-badge section-badge--solar">Nossa Trajetória</span>
-        <h2 class="section-title">Consolidando a energia solar em Almenara/MG e região</h2>
-        <p class="section-subtitle">7 anos de experiência no setor solar, desde 2022 com a ProSol em Almenara/MG</p>
+      <div class="text-center equipe-reveal" data-delay="0" style="margin-bottom:48px;">
+        <span class="section-badge">ProSol em Ação</span>
+        <h2 class="section-title">Veja Nossa Equipe Trabalhando</h2>
+        <p class="section-subtitle">Do planejamento com drone à instalação finalizada — veja como a ProSol transforma telhados em fontes de economia.</p>
       </div>
 
-      <!-- Timeline -->
-      <div class="historia-timeline mt-16">
-        <!-- Item 2017 -->
-        <div class="historia-item historia-reveal" data-delay="1">
-          <div class="historia-anos">2017</div>
-          <div class="historia-content">
-            <div class="historia-circle"></div>
-            <h3 class="historia-title">O Início da Trajetória</h3>
-            <p class="historia-desc">Hudson Rocha inicia sua carreira no setor de energia solar, acumulando experiência técnica e comercial que seria a base da ProSol.</p>
-          </div>
-        </div>
+      <div class="equipe-video-wrap equipe-reveal" data-delay="1">
+        <video
+          id="equipe-video"
+          src="assets/videos/WhatsApp Video 2026-06-10 at 17.57.54.mp4"
+          poster="assets/images/equipe-poster.jpg?v=2"
+          loop
+          playsinline
+          muted
+          style="width:100%;display:block;border-radius:var(--radius-2xl);"></video>
 
-        <!-- Item 2022 -->
-        <div class="historia-item historia-reveal" data-delay="2">
-          <div class="historia-anos">2022</div>
-          <div class="historia-content">
-            <div class="historia-circle"></div>
-            <h3 class="historia-title">Fundação e Foco Regional</h3>
-            <p class="historia-desc">Início das operações com foco em atender residências e pequenos
-              comércios, trazendo economia de até 95% nas contas de luz.</p>
-          </div>
+        <!-- Overlay play/pause -->
+        <div class="equipe-video-overlay" id="equipe-overlay">
+          <button class="equipe-play-btn" id="equipe-play-btn" aria-label="Reproduzir vídeo">
+            <svg id="equipe-icon-play" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="equipe-icon-pause" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
         </div>
-
-        <!-- Item 2023 -->
-        <div class="historia-item historia-reveal" data-delay="3">
-          <div class="historia-anos">2023</div>
-          <div class="historia-content">
-            <div class="historia-circle"></div>
-            <h3 class="historia-title">Crescimento Regional</h3>
-            <p class="historia-desc">Expansão do atendimento para novos municípios da região, consolidando a presença da ProSol no Vale do Jequitinhonha.</p>
-          </div>
-        </div>
-
-        <!-- Item 2024 -->
-        <div class="historia-item historia-reveal" data-delay="4">
-          <div class="historia-anos">2024</div>
-          <div class="historia-content">
-            <div class="historia-circle"></div>
-            <h3 class="historia-title">Novos Segmentos</h3>
-            <p class="historia-desc">Ampliação do portfólio com atendimento a comércios, empresas e propriedades rurais da região.</p>
-          </div>
-        </div>
-
-        <!-- Item 2025 -->
-        <div class="historia-item historia-reveal" data-delay="5">
-          <div class="historia-anos">2025</div>
-          <div class="historia-content">
-            <div class="historia-circle"></div>
-            <h3 class="historia-title">Expansão Empresarial</h3>
-            <p class="historia-desc">Lançamento de solução específica para o Grupo A (Consumidor A+), atendendo empresas
-              de médio e grande porte com até 35% de economia.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Estatísticas -->
-      <div class="historia-stats mt-24">
-        <div class="historia-stat historia-reveal" data-delay="5">
-          <div class="stat-number">7+</div>
-          <div class="stat-label">Anos de Experiência</div>
-        </div>
-        <div class="historia-stat historia-reveal" data-delay="6">
-          <div class="stat-number">MG</div>
-          <div class="stat-label">Vale do Jequitinhonha</div>
-        </div>
-        <div class="historia-stat historia-reveal" data-delay="7">
-          <div class="stat-number">95%</div>
-          <div class="stat-label">Economia Máxima</div>
-        </div>
-        <div class="historia-stat historia-reveal" data-delay="8">
-          <div class="stat-number">25</div>
-          <div class="stat-label">Anos de Garantia</div>
-        </div>
-      </div>
-
-      <div class="text-center mt-12">
-        <a href="#contato" class="btn btn-outline-gold">Conheça Nossa Missão Completa</a>
       </div>
     </div>
   </section>
-
-  <!-- Seção 5: Projetos (Fase 4) -->
-  <section id="projetos" class="projetos-section" aria-labelledby="projetos-title">
-    <div class="container">
-      <div class="projetos-header text-center projetos-reveal" data-delay="0">
-        <span class="section-badge">Projetos</span>
-        <h2 id="projetos-title" class="section-title">Projetos Realizados</h2>
-        <p class="section-subtitle">Instalações reais realizadas pela ProSol Energia Solar em Almenara/MG e região</p>
-      </div>
-
-      <div class="projetos-carrosseis" id="projetos-carrosseis">
-
-        <!-- Carrossel 1: move para ESQUERDA -->
-        <div class="proj-track-wrap">
-          <div class="proj-track" id="proj-track-1" data-direction="left">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.41.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.42.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.43.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.44.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.45.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <!-- duplicatas para loop infinito -->
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.41.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.42.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.43.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.44.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.45.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-          </div>
-        </div>
-
-        <!-- Carrossel 2: move para DIREITA -->
-        <div class="proj-track-wrap">
-          <div class="proj-track" id="proj-track-2" data-direction="right">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.46.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.47.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.48.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.49.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.50.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <!-- duplicatas para loop infinito -->
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.46.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.47.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.48.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.49.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.50.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-          </div>
-        </div>
-
-        <!-- Carrossel 3: move para ESQUERDA -->
-        <div class="proj-track-wrap">
-          <div class="proj-track" id="proj-track-3" data-direction="left">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.51.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.52.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.53.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.54.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.55.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <!-- duplicatas para loop infinito -->
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.51.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.52.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.53.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.54.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-            <img src="assets/images/WhatsApp Image 2026-06-10 at 17.45.55.jpeg" alt="Projeto realizado" loading="lazy" decoding="async">
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- ========== SEÇÃO PARCEIROS (Fase 6) ========== -->
   <section id="parceiros" class="parceiros-section" aria-label="Marcas parceiras e certificações">
     <div class="container">
@@ -1486,183 +1477,183 @@
       </div>
     </div>
   </section>
-
-  <!-- Seção 6: Depoimentos (Fase 4) -->
-  <!-- ========== SEÇÃO VÍDEO EQUIPE ========== -->
-  <section id="equipe-em-acao" class="equipe-video-section">
+  <!-- ========== SEÇÃO NOSSA HISTÓRIA ========== -->
+  <section id="nossa-historia" class="projetos-section">
     <div class="container">
-      <div class="text-center equipe-reveal" data-delay="0" style="margin-bottom:48px;">
-        <span class="section-badge">ProSol em Ação</span>
-        <h2 class="section-title">Veja Nossa Equipe Trabalhando</h2>
-        <p class="section-subtitle">Do planejamento com drone à instalação finalizada — veja como a ProSol transforma telhados em fontes de economia.</p>
+      <div class="text-center historia-reveal" data-delay="0">
+        <span class="section-badge section-badge--solar">Nossa Trajetória</span>
+        <h2 class="section-title">Consolidando a energia solar em Almenara/MG e região</h2>
+        <p class="section-subtitle">7 anos de experiência no setor solar, desde 2022 com a ProSol em Almenara/MG</p>
       </div>
 
-      <div class="equipe-video-wrap equipe-reveal" data-delay="1">
-        <video
-          id="equipe-video"
-          src="assets/videos/WhatsApp Video 2026-06-10 at 17.57.54.mp4"
-          poster="assets/images/equipe-poster.jpg?v=2"
-          loop
-          playsinline
-          muted
-          style="width:100%;display:block;border-radius:var(--radius-2xl);"></video>
+      <!-- Timeline -->
+      <div class="historia-timeline mt-16">
+        <!-- Item 2017 -->
+        <div class="historia-item historia-reveal" data-delay="1">
+          <div class="historia-anos">2017</div>
+          <div class="historia-content">
+            <div class="historia-circle"></div>
+            <h3 class="historia-title">O Início da Trajetória</h3>
+            <p class="historia-desc">Hudson Rocha inicia sua carreira no setor de energia solar, acumulando experiência técnica e comercial que seria a base da ProSol.</p>
+          </div>
+        </div>
 
-        <!-- Overlay play/pause -->
-        <div class="equipe-video-overlay" id="equipe-overlay">
-          <button class="equipe-play-btn" id="equipe-play-btn" aria-label="Reproduzir vídeo">
-            <svg id="equipe-icon-play" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            <svg id="equipe-icon-pause" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
+        <!-- Item 2022 -->
+        <div class="historia-item historia-reveal" data-delay="2">
+          <div class="historia-anos">2022</div>
+          <div class="historia-content">
+            <div class="historia-circle"></div>
+            <h3 class="historia-title">Fundação e Foco Regional</h3>
+            <p class="historia-desc">Início das operações com foco em atender residências e pequenos
+              comércios, trazendo economia de até 95% nas contas de luz.</p>
+          </div>
+        </div>
+
+        <!-- Item 2023 -->
+        <div class="historia-item historia-reveal" data-delay="3">
+          <div class="historia-anos">2023</div>
+          <div class="historia-content">
+            <div class="historia-circle"></div>
+            <h3 class="historia-title">Crescimento Regional</h3>
+            <p class="historia-desc">Expansão do atendimento para novos municípios da região, consolidando a presença da ProSol no Vale do Jequitinhonha.</p>
+          </div>
+        </div>
+
+        <!-- Item 2024 -->
+        <div class="historia-item historia-reveal" data-delay="4">
+          <div class="historia-anos">2024</div>
+          <div class="historia-content">
+            <div class="historia-circle"></div>
+            <h3 class="historia-title">Novos Segmentos</h3>
+            <p class="historia-desc">Ampliação do portfólio com atendimento a comércios, empresas e propriedades rurais da região.</p>
+          </div>
+        </div>
+
+        <!-- Item 2025 -->
+        <div class="historia-item historia-reveal" data-delay="5">
+          <div class="historia-anos">2025</div>
+          <div class="historia-content">
+            <div class="historia-circle"></div>
+            <h3 class="historia-title">Expansão Empresarial</h3>
+            <p class="historia-desc">Lançamento de solução específica para o Grupo A (Consumidor A+), atendendo empresas
+              de médio e grande porte com até 35% de economia.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estatísticas -->
+      <div class="historia-stats mt-24">
+        <div class="historia-stat historia-reveal" data-delay="5">
+          <div class="stat-number">7+</div>
+          <div class="stat-label">Anos de Experiência</div>
+        </div>
+        <div class="historia-stat historia-reveal" data-delay="6">
+          <div class="stat-number">MG</div>
+          <div class="stat-label">Vale do Jequitinhonha</div>
+        </div>
+        <div class="historia-stat historia-reveal" data-delay="7">
+          <div class="stat-number">95%</div>
+          <div class="stat-label">Economia Máxima</div>
+        </div>
+        <div class="historia-stat historia-reveal" data-delay="8">
+          <div class="stat-number">25</div>
+          <div class="stat-label">Anos de Garantia</div>
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="#contato" class="btn btn-outline-gold">Conheça Nossa Missão Completa</a>
+      </div>
+    </div>
+  </section>
+  <!-- ========== SEÇÃO ALTA TENSÃO + SMARTPHONE (Complementar ao Consumidor A+) ========== -->
+  <section class="alta-tensao-section" id="alta-tensao">
+    <div class="container">
+      <div class="alta-tensao-grid">
+        <!-- Coluna de Texto (esquerda) -->
+        <div class="alta-tensao-col-text" data-delay="0">
+          <div class="alta-tensao-header">
+            <h2 class="alta-tensao-title">
+              Sua empresa consome energia
+              <span class="alta-tensao-highlight">
+                em alta tensão?
+              </span>
+            </h2>
+            <p class="alta-tensao-subtitle">
+              Temos a solução ideal para consumidores de alta e média tensão (Grupo A) através do mercado livre de
+              energia.
+            </p>
+          </div>
+
+          <div class="alta-tensao-content">
+            <p class="alta-tensao-desc">
+              <strong>Ao migrar para o Mercado Livre, sua empresa pode economizar até 35% na conta de luz</strong>, além
+              de ter acesso a energia limpa, sustentável e com liberdade para negociar preços e condições.
+            </p>
+
+            <div class="alta-tensao-beneficios">
+              <div class="alta-tensao-beneficio">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                <span>Economia garantida de até 35%</span>
+              </div>
+              <div class="alta-tensao-beneficio">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                <span>Energia 100% limpa e renovável</span>
+              </div>
+              <div class="alta-tensao-beneficio">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                <span>Negociação direta com geradores</span>
+              </div>
+              <div class="alta-tensao-beneficio">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                <span>Contratos flexíveis e personalizados</span>
+              </div>
+            </div>
+
+            <div class="alta-tensao-cta">
+              <p class="alta-tensao-cta-text">
+                <strong>Quer reduzir custos</strong> e tornar sua operação mais eficiente?
+              </p>
+              <a href="https://wa.me/5533988845152?text=Ol%C3%A1!%20Minha%20empresa%20%C3%A9%20consumidora%20A%2B%20e%20gostaria%20de%20saber%20mais%20sobre%20o%20Mercado%20Livre%20de%20Energia%20com%20at%C3%A9%2035%25%20de%20economia."
+                class="btn-cta-alta-tensao" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 2L11 13" />
+                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+                Sim, quero economizar hoje mesmo!
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coluna da Imagem (direita) -->
+        <div class="alta-tensao-col-img" data-delay="1">
+          <div class="alta-tensao-img-wrapper">
+            <img src="assets/images/smartphone_standing.webp"
+              alt="Smartphone com aplicativo de monitoramento do Mercado Livre de Energia" class="alta-tensao-img"
+              loading="lazy" decoding="async" width="800" height="1200">
+          </div>
         </div>
       </div>
     </div>
   </section>
-
-  <section id="depoimentos" class="depoimentos-section">
-    <div class="container">
-      <div class="depoimentos-header text-center depoimentos-reveal" data-delay="0">
-        <span class="section-badge">Depoimentos</span>
-        <h2 class="section-title">O que nossos clientes dizem</h2>
-        <p class="section-subtitle">A satisfação de quem gera a própria energia e lucra com o sol todos os meses</p>
-      </div>
-
-      <div class="depoimentos-wrapper">
-        <div class="depoimentos-slider" id="depoimentos-slider">
-          <!-- Card 1 -->
-          <div class="depoimento-card depo-reveal active" data-index="0">
-            <div class="depo-quote-bg">"</div>
-            <div class="depo-rating">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </div>
-            <p class="depo-text">Ótimo pós venda e excelente atendimento!!!</p>
-            <div class="depo-user">
-              <div class="depo-avatar flex-center" style="overflow:hidden;">
-                <img src="assets/avatars/luis-gustavo-aguilar.png" alt="Luis Gustavo Aguilar" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
-              </div>
-              <div class="depo-meta">
-                <span class="depo-name">Luis Gustavo Aguilar</span>
-                <span class="depo-city">Almenara, MG</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="depoimento-card depo-reveal" data-index="1">
-            <div class="depo-quote-bg">"</div>
-            <div class="depo-rating">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </div>
-            <p class="depo-text">Empresa séria, que visa atender o cliente com qualidade e transparência!!</p>
-            <div class="depo-user">
-              <div class="depo-avatar flex-center" style="overflow:hidden;">
-                <img src="assets/avatars/alessandra-aguilar-freitas.png" alt="Alessandra Aguilar Freitas" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
-              </div>
-              <div class="depo-meta">
-                <span class="depo-name">Alessandra Aguilar Freitas</span>
-                <span class="depo-city">Almenara, MG</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="depoimento-card depo-reveal" data-index="2">
-            <div class="depo-quote-bg">"</div>
-            <div class="depo-rating">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </div>
-            <p class="depo-text">Bom atendimento, ótimos produtos e preços...</p>
-            <div class="depo-user">
-              <div class="depo-avatar flex-center" style="overflow:hidden;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:#0a1445;">
-                E
-              </div>
-              <div class="depo-meta">
-                <span class="depo-name">Esmeralda Batista Dias Oliveira</span>
-                <span class="depo-city">Almenara, MG</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 4 -->
-          <div class="depoimento-card depo-reveal" data-index="3">
-            <div class="depo-quote-bg">"</div>
-            <div class="depo-rating">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </div>
-            <p class="depo-text">Ótimo atendimento.</p>
-            <div class="depo-user">
-              <div class="depo-avatar flex-center" style="overflow:hidden;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:#0a1445;">
-                T
-              </div>
-              <div class="depo-meta">
-                <span class="depo-name">Telma Carvalho</span>
-                <span class="depo-city">Almenara, MG</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 5 -->
-          <div class="depoimento-card depo-reveal" data-index="4">
-            <div class="depo-quote-bg">"</div>
-            <div class="depo-rating">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </div>
-            <p class="depo-text">Excelente empresa.</p>
-            <div class="depo-user">
-              <div class="depo-avatar flex-center" style="overflow:hidden;">
-                <img src="assets/avatars/empire-leonardo-vargas.png" alt="Empire Leonardo Vargas" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
-              </div>
-              <div class="depo-meta">
-                <span class="depo-name">Empire Leonardo Vargas</span>
-                <span class="depo-city">Almenara, MG</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Controles do Slider -->
-        <div class="depo-controls">
-          <button class="depo-btn depo-btn--prev" id="depo-prev" aria-label="Depoimento anterior">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          <div class="depo-dots" id="depo-dots">
-            <span class="depo-dot active" data-index="0"></span>
-            <span class="depo-dot" data-index="1"></span>
-            <span class="depo-dot" data-index="2"></span>
-            <span class="depo-dot" data-index="3"></span>
-            <span class="depo-dot" data-index="4"></span>
-          </div>
-          <button class="depo-btn depo-btn--next" id="depo-next" aria-label="Próximo depoimento">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ========== SEÇÃO FAQ (Fase 6) ========== -->
   <section id="faq" class="faq-section" aria-label="Perguntas frequentes sobre energia solar">
     <div class="container">
@@ -1772,7 +1763,6 @@
       </div><!-- /faq-list -->
     </div>
   </section>
-
   <!-- Seção 7: CTA Final / Contato (Fase 4) -->
   <section id="contato" class="contato-section">
     <div class="container">
@@ -1878,7 +1868,6 @@
       </div>
     </div>
   </section>
-
   <!-- ========== MAPA / LOCALIZAÇÃO ========== -->
   <section class="mapa-section" id="mapa" style="padding: 0 16px; margin: 0;">
     <div class="contato-mapa-wrap" style="display:flex;flex-direction:column;gap:16px;">
@@ -1908,7 +1897,6 @@
 
     </div>
   </section>
-
   <!-- Modal Lightbox (Fase 4) -->
   <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog">
     <button class="lightbox-close" id="lightbox-close" aria-label="Fechar galeria">
@@ -1922,7 +1910,6 @@
         decoding="async">
     </div>
   </div>
-
   <!-- ========== RODAPÉ ========== -->
   <footer class="site-footer" id="site-footer">
     <div class="footer-inner">
