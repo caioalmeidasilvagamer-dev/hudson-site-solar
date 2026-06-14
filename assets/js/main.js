@@ -761,7 +761,7 @@ function initDepoimentosSlider() {
 }
 
 /* ===== 3. FORMULÁRIO DE CONTATO (WhatsApp Integration) ===== */
-(function initContatoForm() {
+function initContatoForm() {
   const form = document.getElementById('contato-form-solar');
   const inputTel = document.getElementById('form-telefone');
 
@@ -817,7 +817,7 @@ function initDepoimentosSlider() {
     showFormToast();
     launchConfetti();
   });
-})();
+}
 
 /* ===== 4. POLISH: PROGRESS BAR, SCROLLSPY, BACK TO TOP & HERO CHEVRON FADE ===== */
 (function initScrollPolish() {
@@ -1130,7 +1130,7 @@ function showFormToast() {
 })();
 
 /* ===== REVEAL OBSERVER PARA TODAS AS SEÇÕES ===== */
-(function initAllReveals() {
+function initAllReveals() {
   // Seleciona TODOS os elementos com classes que terminam em -reveal
   // Exceto aqueles que já têm observers específicos (fluxo-reveal, processo-reveal, faq-reveal)
   const allRevealElements = document.querySelectorAll('[class*="-reveal"]');
@@ -1176,7 +1176,7 @@ function showFormToast() {
 
   // Para debug: mostra quantos elementos estão sendo observados
 
-})();
+}
 
 // ===== EXECUTAR MÓDULOS NÃO AUTOEXECUTÁVEIS QUANDO O DOM ESTIVER PRONTO =====
 document.addEventListener('DOMContentLoaded', function () {
