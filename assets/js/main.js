@@ -1262,6 +1262,21 @@ document.querySelectorAll('[data-video-player]').forEach(wrap => {
   updateMuteIcons();
 });
 
+// === AUTOPLAY AO ENTRAR NA VIEWPORT ===
+const videoObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const video = entry.target.querySelector('video');
+    if (!video) return;
+    if (entry.isIntersecting) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('[data-video-player]').forEach(el => videoObserver.observe(el));
+
 // === REVEAL DA SEÇÃO EQUIPE ===
 (function() {
   const reveals = document.querySelectorAll('.equipe-reveal');
