@@ -1,47 +1,206 @@
-# ===== ProSol Energia Solar — .htaccess para Hostinger =====
+# ============================================================
+# ProSol Energia Solar — .htaccess Completo
+# Hostinger / Apache
+# Segurança + Performance + SEO
+# ============================================================
 
-# Forçar UTF-8 em todos os arquivos de texto servidos
-AddDefaultCharset UTF-8
 
-<IfModule mod_mime.c>
-  AddCharset UTF-8 .html .css .js .json .xml .svg
+# ============================================================
+# 1. REDIRECIONAR HTTP → HTTPS (obrigatório para SEO e segurança)
+# ============================================================
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Redireciona HTTP para HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Redireciona www → sem www (escolha um padrão — aqui: sem www)
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 </IfModule>
 
-# Forçar HTTPS
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
 
-# TODO: Descomentar a regra abaixo e escolher www OU non-www após definir o domínio
-# RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-# RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
-
-# Compressão GZIP
-<IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
-</IfModule>
-
-# Cache de assets estáticos
-<IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresByType image/webp "access plus 1 year"
-  ExpiresByType image/png "access plus 1 year"
-  ExpiresByType image/jpeg "access plus 1 year"
-  ExpiresByType image/svg+xml "access plus 1 year"
-  ExpiresByType text/css "access plus 1 month"
-  ExpiresByType application/javascript "access plus 1 month"
-  ExpiresByType font/woff2 "access plus 1 year"
-  ExpiresByType text/html "access plus 0 seconds"
-</IfModule>
+# ============================================================
+# 2. SEGURANÇA — Headers HTTP
+# ============================================================
 
 <IfModule mod_headers.c>
-  <FilesMatch "\.(webp|png|jpe?g|svg|css|js|woff2)$">
+
+  # Anti-clickjacking — impede o site de ser embedado em iframes externos
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # Anti MIME-sniffing — impede browser de adivinhar tipo de arquivo
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Referrer — controla o que é enviado ao navegar para outros sites
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Desabilita recursos não usados no site
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+
+  # XSS Protection (para browsers legados)
+  Header always set X-XSS-Protection "1; mode=block"
+
+  # HSTS — força HTTPS por 1 ano após primeira visita
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+  # Content Security Policy — ajustada para todos os recursos do site
+  Header always set Content-Security-Policy "\
+default-src 'self'; \
+script-src 'self' 'unsafe-inline' https://ajax.googleapis.com; \
+style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; \
+font-src 'self' https://fonts.gstatic.com data:; \
+img-src 'self' data: blob: https://www.google.com https://maps.gstatic.com https://maps.googleapis.com; \
+media-src 'self'; \
+frame-src https://www.google.com https://wa.me; \
+connect-src 'self' https://www.google.com; \
+object-src 'none'; \
+base-uri 'self'; \
+worker-src blob:; \
+form-action 'self' https://wa.me;"
+
+</IfModule>
+
+
+# ============================================================
+# 3. PROTEÇÃO DE ARQUIVOS SENSÍVEIS
+# ============================================================
+
+# Bloqueia acesso direto ao .htaccess
+<Files ".htaccess">
+  Require all denied
+</Files>
+
+# Bloqueia acesso a arquivos de configuração e logs
+<FilesMatch "\.(env|log|sh|sql|bak|conf|config|ini|yml|yaml|json)$">
+  Require all denied
+</FilesMatch>
+
+# Permite acesso ao sitemap.xml e robots.txt (precisam ser públicos)
+<Files "sitemap.xml">
+  Require all granted
+</Files>
+<Files "robots.txt">
+  Require all granted
+</Files>
+
+# Bloqueia acesso a arquivos ocultos (começando com ponto)
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+
+# ============================================================
+# 4. CACHE — Assets estáticos (melhora performance e PageSpeed)
+# ============================================================
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Imagens — 1 ano (não mudam, têm nomes fixos)
+  ExpiresByType image/webp              "access plus 1 year"
+  ExpiresByType image/jpeg              "access plus 1 year"
+  ExpiresByType image/png               "access plus 1 year"
+  ExpiresByType image/svg+xml           "access plus 1 year"
+  ExpiresByType image/x-icon            "access plus 1 year"
+
+  # Fontes — 1 ano
+  ExpiresByType font/woff               "access plus 1 year"
+  ExpiresByType font/woff2              "access plus 1 year"
+  ExpiresByType application/font-woff   "access plus 1 year"
+  ExpiresByType application/font-woff2  "access plus 1 year"
+
+  # Modelos 3D e vídeos
+  ExpiresByType model/gltf-binary       "access plus 1 month"
+  ExpiresByType video/mp4               "access plus 1 week"
+
+  # CSS e JS — 1 mês (o site usa cache-busting com ?v=)
+  ExpiresByType text/css                "access plus 1 month"
+  ExpiresByType application/javascript  "access plus 1 month"
+  ExpiresByType text/javascript         "access plus 1 month"
+
+  # HTML — sem cache (sempre atualizado)
+  ExpiresByType text/html               "access plus 0 seconds"
+
+  # JSON e XML
+  ExpiresByType application/json        "access plus 1 hour"
+  ExpiresByType application/xml         "access plus 1 hour"
+</IfModule>
+
+# Cache-Control como fallback
+<IfModule mod_headers.c>
+  <FilesMatch "\.(webp|jpg|jpeg|png|svg|ico|woff|woff2)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
-  <FilesMatch "\.html$">
-    Header set Cache-Control "public, max-age=0, must-revalidate"
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(mp4)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
   </FilesMatch>
 </IfModule>
 
-# Página de erro 404 customizada (opcional — só se existir 404.html)
-# ErrorDocument 404 /404.html
+
+# ============================================================
+# 5. COMPRESSÃO GZIP — reduz tamanho dos arquivos transferidos
+# ============================================================
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE text/xml
+
+  # Não comprime o que já está comprimido
+  SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|webp|mp4|woff2?)$ no-gzip dont-vary
+</IfModule>
+
+
+# ============================================================
+# 6. PERFORMANCE — Extras
+# ============================================================
+
+# Remove ETag (evita requisições desnecessárias de validação)
+<IfModule mod_headers.c>
+  Header unset ETag
+</IfModule>
+FileETag None
+
+# Keep-Alive — mantém conexão aberta para múltiplos recursos
+<IfModule mod_headers.c>
+  Header set Connection keep-alive
+</IfModule>
+
+
+# ============================================================
+# 7. ERROS PERSONALIZADOS
+# ============================================================
+
+ErrorDocument 404 /index.html
+ErrorDocument 403 /index.html
+ErrorDocument 500 /index.html
+
+
+# ============================================================
+# 8. MIME TYPES — garante que o servidor serve os tipos corretos
+# ============================================================
+
+<IfModule mod_mime.c>
+  AddType image/webp                    .webp
+  AddType font/woff                     .woff
+  AddType font/woff2                    .woff2
+  AddType application/javascript        .js
+  AddType video/mp4                     .mp4
+  AddType model/gltf-binary             .glb
+</IfModule>
