@@ -1171,7 +1171,6 @@ document.querySelectorAll('[data-video-player]').forEach(wrap => {
   const fwdBtn = wrap.querySelector('[data-ctrl="fwd"]');
   const seek = wrap.querySelector('.video-seek');
   const timeEl = wrap.querySelector('.video-time');
-  const overlay = wrap.querySelector('.equipe-video-overlay');
 
   function fmtTime(s) {
     if (!isFinite(s)) return '0:00';
@@ -1212,28 +1211,13 @@ document.querySelectorAll('[data-video-player]').forEach(wrap => {
   function togglePlay() {
     if (video.paused) {
       video.play();
-      if (overlay) {
-        wrap.classList.add('playing');
-        overlay.style.opacity = '0';
-        overlay.style.pointerEvents = 'none';
-      }
     } else {
       video.pause();
-      if (overlay) {
-        wrap.classList.remove('playing');
-        overlay.style.opacity = '';
-        overlay.style.pointerEvents = '';
-      }
     }
     updateIcons();
   }
 
   if (playBtn) playBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
-  if (overlay) {
-    const overlayBtn = overlay.querySelector('.equipe-play-btn');
-    if (overlayBtn) overlayBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
-  }
-  // Click no vídeo também faz play/pause
   video.addEventListener('click', togglePlay);
 
   // Mute / Unmute
