@@ -1531,48 +1531,5 @@ document.addEventListener('DOMContentLoaded', function () {
   goToStep(1);
 })();
 
-// === TOAST DE PROVA SOCIAL ===
-(function () {
-  const toast = document.getElementById('social-toast');
-  if (!toast) return;
-
-  const leads = [
-    { nome: 'Carlos', cidade: 'Almenara' },
-    { nome: 'Márcia', cidade: 'Jacinto' },
-    { nome: 'Roberto', cidade: 'Mata Verde' },
-    { nome: 'Fernanda', cidade: 'Almenara' },
-    { nome: 'Paulo', cidade: 'Salto da Divisa' },
-  ];
-
-  const acoes = [
-    'acabou de solicitar um orçamento',
-    'acabou de simular a economia',
-    'entrou em contato pelo WhatsApp',
-  ];
-
-  const tempos = ['agora mesmo', 'há 2 minutos', 'há 5 minutos', 'há 8 minutos'];
-
-  function showToast() {
-    const lead = leads[Math.floor(Math.random() * leads.length)];
-    const acao = acoes[Math.floor(Math.random() * acoes.length)];
-    const tempo = tempos[Math.floor(Math.random() * tempos.length)];
-
-    const spans = toast.querySelectorAll('span');
-    spans[0].textContent = lead.nome + ' de ' + lead.cidade;
-    spans[1].textContent = acao;
-    spans[2].textContent = tempo;
-
-    toast.classList.add('visible');
-
-    setTimeout(() => {
-      toast.classList.remove('visible');
-    }, 5000);
-  }
-
-  setTimeout(() => {
-    showToast();
-    setInterval(showToast, 45000);
-  }, 20000);
-})();
 
 
