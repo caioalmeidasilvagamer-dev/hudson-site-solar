@@ -361,7 +361,7 @@
 
     <!-- COLUNA DIREITA: model-viewer contido -->
     <div class="hero-model-col" aria-hidden="true">
-      <model-viewer id="solar-model" src="assets/models/solar-panel.glb" alt="Painel solar 3D" interaction-prompt="none"
+      <model-viewer id="solar-model" src="assets/models/solar-panel1.glb" alt="Painel solar 3D" interaction-prompt="none"
         auto-rotate rotation-per-second="8deg" shadow-intensity="0" environment-image="neutral" exposure="1.5"
         loading="lazy" reveal="auto" camera-orbit="15deg 65deg 18m" field-of-view="90deg" min-field-of-view="30deg"
         max-field-of-view="60deg" draco-decoder-location="https://www.gstatic.com/draco/versioned/decoders/1.5.7/">
@@ -670,7 +670,7 @@
           <option value="comercial">Comercial</option>
           <option value="rural">Rural / Industrial</option>
         </select>
-        <input type="number" id="conta" value="300" style="display:none;" />
+        <input type="number" id="conta" value="300" min="50" max="50000" style="display:none;" />
       </div>
     </div>
   </section>
@@ -1879,7 +1879,7 @@
 
               <div class="form-group">
                 <label for="form-conta" class="form-label">Valor Médio da Conta de Luz (R$)</label>
-                <input type="number" id="form-conta" class="form-input" placeholder="Ex: R$ 500" required>
+                <input type="number" id="form-conta" class="form-input" placeholder="Ex: R$ 500" min="50" max="50000" required>
               </div>
 
               <button type="submit" class="btn-primary btn-submit-form" id="btn-submit-solar">

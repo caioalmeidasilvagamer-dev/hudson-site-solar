@@ -356,7 +356,7 @@ const SimulacaoSolar = (function () {
     const tipoLabel = tipoLabels[tipo] || '';
 
     if (!uf || !conta || conta <= 0) {
-      alert('Preencha o estado e o valor da conta de energia.');
+      showErrorToast('Preencha o estado e o valor da conta de energia.');
       return;
     }
 
@@ -675,7 +675,13 @@ function initContatoForm() {
     const conta = sanitize(document.getElementById('form-conta').value.trim());
 
     if (!nome || !tel || !cidade || !conta) {
-      alert('Por favor, preencha todos os campos do formulário para prosseguir.');
+      showErrorToast('Por favor, preencha todos os campos do formulário para prosseguir.');
+      return;
+    }
+
+    const telDigits = tel.replace(/\D/g, '');
+    if (telDigits.length < 10 || telDigits.length > 11) {
+      showErrorToast('Digite um número de WhatsApp válido com DDD. Ex: (33) 99999-0000');
       return;
     }
 
@@ -986,6 +992,30 @@ function showFormToast() {
     closeBtn.addEventListener('click', () => {
       clearTimeout(timer);
       toast.classList.remove('show');
+    }, { once: true });
+  }
+}
+
+function showErrorToast(msg) {
+  const toast = document.getElementById('form-toast');
+  const toastMsg = toast ? toast.querySelector('.toast-msg') : null;
+  const closeBtn = document.getElementById('toast-close');
+  if (!toast) { alert(msg); return; }
+
+  toast.style.setProperty('background', '#b91c1c');
+  if (toastMsg) toastMsg.textContent = msg;
+  toast.classList.add('show');
+
+  const timer = setTimeout(() => {
+    toast.classList.remove('show');
+    toast.style.removeProperty('background');
+  }, 4000);
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      clearTimeout(timer);
+      toast.classList.remove('show');
+      toast.style.removeProperty('background');
     }, { once: true });
   }
 }
@@ -1357,7 +1387,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const celular = document.getElementById('celular').value.trim();
 
       if (!nome || !celular) {
-        alert('Preencha seu nome e WhatsApp para ver o resultado.');
+        showErrorToast('Preencha seu nome e WhatsApp para ver o resultado.');
         return;
       }
 
