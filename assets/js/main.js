@@ -3,6 +3,17 @@
    Fase 1: Partículas de luz dourada + interações do hero
    ============================================================ */
 
+function throttle(fn, delay) {
+  let last = 0;
+  return function(...args) {
+    const now = Date.now();
+    if (now - last >= delay) {
+      last = now;
+      fn.apply(this, args);
+    }
+  };
+}
+
 'use strict';
 
 /* ===== TEMA DIA/NOITE ===== */
@@ -168,10 +179,10 @@ if (anoEl) anoEl.textContent = new Date().getFullYear();
       }
     }, { threshold: 0 });
 
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', throttle(() => {
       resize();
       // Não recriar partículas, apenas ajustar tela
-    }, { passive: true });
+    }, 150), { passive: true });
 
     resize();
     initParticles();
@@ -365,7 +376,6 @@ function desenharLinhasFluxo() {
   });
 }
 window.addEventListener('load', desenharLinhasFluxo);
-window.addEventListener('resize', desenharLinhasFluxo);
 document.fonts.ready.then(() => {
   desenharLinhasFluxo();
 });
@@ -864,9 +874,9 @@ function mascaraCelular(input) {
   });
 
   // Atualiza slider em caso de redimensionamento de janela
-  window.addEventListener('resize', () => {
+  window.addEventListener('resize', throttle(() => {
     updateSlider();
-  });
+  }, 150));
 
   updateSlider();
 })();
@@ -1238,26 +1248,6 @@ function showFormToast() {
       });
     });
   }
-
-  // Comportamento do botão voltar ao topo flutuante
-  const floatBackToTopBtn = document.getElementById('back-to-top');
-  if (floatBackToTopBtn) {
-    floatBackToTopBtn.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-
-    // Controla visibilidade com base no scroll
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 400) {
-        floatBackToTopBtn.classList.add('visible');
-      } else {
-        floatBackToTopBtn.classList.remove('visible');
-      }
-    }, { passive: true });
-  }
 })();
 
 /* ===== REVEAL OBSERVER PARA TODAS AS SEÇÕES ===== */
@@ -1322,7 +1312,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Inicializar fluxo de energia
   desenharLinhasFluxo();
-  window.addEventListener('resize', desenharLinhasFluxo);
+  window.addEventListener('resize', throttle(desenharLinhasFluxo, 150));
 
   // Inicializar slider de depoimentos
   initDepoimentosSlider();
