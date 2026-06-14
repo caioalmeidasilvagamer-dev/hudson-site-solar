@@ -1,3 +1,13 @@
+'use strict';
+
+const WHATSAPP_NUMBER = '5533988845152';
+
+function sanitize(str) {
+  if (typeof str !== 'string') return '';
+  const map = { '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '&': '&amp;' };
+  return str.replace(/[<>"'&]/g, c => map[c]);
+}
+
 /* ============================================================
    SOLAR LANDING PAGE — main.js
    Fase 1: Partículas de luz dourada + interações do hero
@@ -14,8 +24,6 @@ function throttle(fn, delay) {
   };
 }
 
-'use strict';
-
 /* ===== TEMA DIA/NOITE ===== */
 (function initThemeToggle() {
   const btn = document.getElementById('theme-toggle');
@@ -31,10 +39,6 @@ function throttle(fn, delay) {
     localStorage.setItem('solarTheme', isDark ? 'dark' : 'light');
   });
 })();
-
-/* ===== ANO NO RODAPÉ ===== */
-const anoEl = document.getElementById('ano');
-if (anoEl) anoEl.textContent = new Date().getFullYear();
 
 /* ===== HEADER: scroll effect ===== */
 (function initHeader() {
@@ -71,72 +75,6 @@ if (anoEl) anoEl.textContent = new Date().getFullYear();
 })();
 
 /* ===== COUNTERS ANIMADOS (hero stats) ===== */
-function initCounters() {
-  // SUBSTITUIR: valores reais do cliente
-  const targets = {
-    'stat-projetos': 150,
-    'stat-kwh': 5,
-    'stat-economias': 2,
-  };
-
-  let started = false;
-
-  function easeOut(t) {
-    return 1 - Math.pow(1 - t, 3);
-  }
-
-  function animateCounters() {
-    if (started) return;
-    started = true;
-
-    const duration = 2200; // ms
-    const start = performance.now();
-
-    function formatNumber(id, value) {
-      if (id === 'stat-projetos') return Math.round(value) + '+';
-      if (id === 'stat-kwh') return Math.round(value) + 'M+';
-      if (id === 'stat-economias') return Math.round(value) + 'M+';
-      return Math.round(value).toLocaleString('pt-BR');
-    }
-
-    function tick(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOut(progress);
-
-      for (const id in targets) {
-        const target = targets[id];
-        const element = document.getElementById(id);
-        if (!element) continue;
-
-        const current = eased * target;
-        element.textContent = formatNumber(id, current);
-      }
-
-      if (progress < 1) {
-        requestAnimationFrame(tick);
-      }
-    }
-
-    requestAnimationFrame(tick);
-  }
-
-  // Inicia quando a seção entrar na viewport
-  const heroSection = document.querySelector('.hero');
-  if (!heroSection) return;
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        setTimeout(animateCounters, 300); // Pequeno delay para melhor UX
-        observer.disconnect();
-      }
-    });
-  }, { threshold: 0.3 });
-
-  observer.observe(heroSection);
-}
-
 function initModelViewer() {
   const mv = document.getElementById('solar-model');
   if (!mv) return;
@@ -254,13 +192,9 @@ function desenharLinhasFluxo() {
     setPath(`raio-fork-${dest}`, d);
   });
 }
-window.addEventListener('load', desenharLinhasFluxo);
 document.fonts.ready.then(() => {
   desenharLinhasFluxo();
 });
-setTimeout(() => {
-  desenharLinhasFluxo();
-}, 800);
 
 
 /* ===== REVEAL + ATIVAÇÃO DO FLUXO (scroll trigger) ===== */
@@ -403,158 +337,154 @@ const INFLACAO_ANUAL = 0.10;
    FUNÇÃO PRINCIPAL
    ---------------------------------------------------------- */
 
-function calcularSolar() {
-  const uf = document.getElementById('uf').value;
-  const conta = parseFloat(document.getElementById('conta').value);
-  const ligacao = document.getElementById('ligacao').value;
-  const cidade = document.getElementById('cidade') ? document.getElementById('cidade').value.trim() : '';
-  const nome = document.getElementById('nome') ? document.getElementById('nome').value.trim() : '';
-  const celular = document.getElementById('celular') ? document.getElementById('celular').value.trim() : '';
-  const tipo = document.getElementById('tipo') ? document.getElementById('tipo').value : '';
+/* ============================================================
+   SIMULAÇÃO SOLAR — closures privadas (expõe apenas calcularSolar e enviarSimulacaoWhatsApp)
+   ============================================================ */
+const SimulacaoSolar = (function () {
+  let _dados = null;
 
-  const tipoLabels = { residencial: 'Residencial', comercial: 'Comercial', rural: 'Rural / Industrial' };
-  const tipoLabel = tipoLabels[tipo] || '';
+  function calcularSolar() {
+    const uf = document.getElementById('uf').value;
+    const conta = parseFloat(document.getElementById('conta').value);
+    const ligacao = document.getElementById('ligacao').value;
+    const cidade = document.getElementById('cidade') ? sanitize(document.getElementById('cidade').value.trim()) : '';
+    const nome = document.getElementById('nome') ? sanitize(document.getElementById('nome').value.trim()) : '';
+    const celular = document.getElementById('celular') ? sanitize(document.getElementById('celular').value.trim()) : '';
+    const tipo = document.getElementById('tipo') ? document.getElementById('tipo').value : '';
 
-  if (!uf || !conta || conta <= 0) {
-    alert('Preencha o estado e o valor da conta de energia.');
-    return;
-  }
+    const tipoLabels = { residencial: 'Residencial', comercial: 'Comercial', rural: 'Rural / Industrial' };
+    const tipoLabel = tipoLabels[tipo] || '';
 
-  /* ---- 1. VARIÁVEIS BASE ---- */
-  const hsp = HSP_UF[uf] || 5.0;
-  const tarifa = TARIFA_UF[uf] || 0.95;
-  const taxaDisp = TAXA_DISP[ligacao] || 30;
-
-  /* ---- 2. CONSUMO (equivalente ao avgConsumption do Azume) ----
-     avgConsumption = valor_conta / kwhPrice
-     Desconta a taxa de disponibilidade para obter o consumo
-     efetivamente compensável pelo sistema solar.                  */
-  const consumo_kwh = conta / tarifa;                         // kWh/mês total faturado
-  const consumo_util = Math.max(consumo_kwh - taxaDisp, 0);   // kWh/mês compensável
-
-  /* ---- 3. DIMENSIONAMENTO DO SISTEMA ----
-     kWp = consumo_kwh / (HSP × 30dias × PR)
-     Equivalente ao dimensionamento interno do Azume para Grupo B  */
-  const kwp = consumo_kwh / (hsp * 30 * PR);
-  const geracao_mensal = Math.round(kwp * hsp * 30 * PR);     // kWh/mês gerado
-  const paineis = Math.ceil((kwp * 1000) / PAINEL_W);  // quantidade de painéis
-
-  /* ---- 4. PREÇO FINAL DO SISTEMA (equivalente a finalPrice) ---- */
-  const finalPrice = Math.round(kwp * CUSTO_KWP);
-
-  /* ---- 5. ECONOMIA MENSAL ----
-     Azume: noSystemMonthlyPrice - systemMonthlyPrice
-     noSystemMonthlyPrice = valor da conta atual
-     systemMonthlyPrice   = taxa de disponibilidade × tarifa (o mínimo que ainda paga)
-     Economia = consumo_util × tarifa                                 */
-  const noSystemMonthlyPrice = Math.round(conta);
-  const systemMonthlyPrice = Math.round(taxaDisp * tarifa);
-  const economia_mensal = Math.round(consumo_util * tarifa);
-  const economia_anual = economia_mensal * 12;
-
-  /* ---- 6. PAYBACK (equivalente a paybackYears / paybackMonths) ----
-     Azume calcula o ponto onde o cashFlow acumulado cruza zero.
-     Aqui fazemos o mesmo com projeção de inflação.                   */
-  let acumulado = -finalPrice;
-  let paybackAnos = 0;
-  let paybackMeses = 0;
-  let economia_ano = economia_anual;
-
-  for (let ano = 1; ano <= 25; ano++) {
-    const anterior = acumulado;
-    acumulado += economia_ano;
-    if (anterior < 0 && acumulado >= 0 && paybackAnos === 0) {
-      // interpolação para meses exatos
-      paybackAnos = ano - 1;
-      paybackMeses = Math.round((-anterior / economia_ano) * 12);
-      if (paybackMeses === 12) { paybackAnos++; paybackMeses = 0; }
+    if (!uf || !conta || conta <= 0) {
+      alert('Preencha o estado e o valor da conta de energia.');
+      return;
     }
-    economia_ano = economia_ano * (1 + INFLACAO_ANUAL); // corrige pela inflação
+
+    /* ---- 1. VARIÁVEIS BASE ---- */
+    const hsp = HSP_UF[uf] || 5.0;
+    const tarifa = TARIFA_UF[uf] || 0.95;
+    const taxaDisp = TAXA_DISP[ligacao] || 30;
+
+    /* ---- 2. CONSUMO ---- */
+    const consumo_kwh = conta / tarifa;
+    const consumo_util = Math.max(consumo_kwh - taxaDisp, 0);
+
+    /* ---- 3. DIMENSIONAMENTO ---- */
+    const kwp = consumo_kwh / (hsp * 30 * PR);
+    const geracao_mensal = Math.round(kwp * hsp * 30 * PR);
+    const paineis = Math.ceil((kwp * 1000) / PAINEL_W);
+
+    /* ---- 4. PREÇO FINAL ---- */
+    const finalPrice = Math.round(kwp * CUSTO_KWP);
+
+    /* ---- 5. ECONOMIA ---- */
+    const noSystemMonthlyPrice = Math.round(conta);
+    const systemMonthlyPrice = Math.round(taxaDisp * tarifa);
+    const economia_mensal = Math.round(consumo_util * tarifa);
+    const economia_anual = economia_mensal * 12;
+
+    /* ---- 6. PAYBACK ---- */
+    let acumulado = -finalPrice;
+    let paybackAnos = 0;
+    let paybackMeses = 0;
+    let economia_ano = economia_anual;
+
+    for (let ano = 1; ano <= 25; ano++) {
+      const anterior = acumulado;
+      acumulado += economia_ano;
+      if (anterior < 0 && acumulado >= 0 && paybackAnos === 0) {
+        paybackAnos = ano - 1;
+        paybackMeses = Math.round((-anterior / economia_ano) * 12);
+        if (paybackMeses === 12) { paybackAnos++; paybackMeses = 0; }
+      }
+      economia_ano = economia_ano * (1 + INFLACAO_ANUAL);
+    }
+
+    /* ---- 7. CASH FLOW 25 ANOS ---- */
+    const cashFlow = [];
+    let fluxo = -finalPrice;
+    let eco = economia_anual;
+    for (let ano = 1; ano <= 25; ano++) {
+      fluxo += eco;
+      cashFlow.push(Math.round(fluxo));
+      eco = eco * (1 + INFLACAO_ANUAL);
+    }
+
+    /* ---- 8. TOTAIS FINAIS ---- */
+    const totalEconomy = cashFlow[24] + finalPrice;
+    const roi = Math.round((cashFlow[24] / finalPrice / 25) * 100);
+    const co2_evitado = Math.round(geracao_mensal * 12 * 25 * 0.000084);
+
+    /* ---- 9. FORMATAÇÃO ---- */
+    const fmt = n => Math.round(n).toLocaleString('pt-BR');
+    const fmtR$ = n => 'R$ ' + fmt(n);
+
+    /* ---- 10. ATUALIZAR DOM ---- */
+    document.getElementById('res-economia').textContent = fmtR$(economia_mensal);
+    document.getElementById('res-anual').textContent = fmtR$(economia_anual);
+    document.getElementById('res-kwp').textContent = kwp.toFixed(2) + ' kWp';
+    document.getElementById('res-paineis').textContent = paineis;
+    document.getElementById('res-geracao').textContent = fmt(geracao_mensal) + ' kWh';
+    document.getElementById('res-invest').textContent = fmtR$(finalPrice);
+
+    const paybackStr = paybackAnos > 0
+      ? paybackMeses > 0
+        ? `${paybackAnos} anos e ${paybackMeses} meses`
+        : `${paybackAnos} anos`
+      : `${paybackMeses} meses`;
+    document.getElementById('res-payback').textContent = paybackStr;
+    document.getElementById('payback-bar').style.width =
+      Math.min(((paybackAnos + paybackMeses / 12) / 20) * 100, 100) + '%';
+
+    document.getElementById('res-economia-mensal').textContent = fmtR$(economia_mensal);
+    document.getElementById('res-economia-total').textContent = fmtR$(Math.round(totalEconomy));
+    document.getElementById('res-roi').textContent = roi + '%';
+    document.getElementById('res-sem-solar').textContent = fmtR$(noSystemMonthlyPrice);
+    document.getElementById('res-com-solar').textContent = fmtR$(systemMonthlyPrice);
+    document.getElementById('res-co2').textContent = fmt(co2_evitado) + ' t';
+
+    /* ---- 11. MOSTRAR RESULTADOS ---- */
+    const results = document.getElementById('sim-results');
+    results.classList.add('show');
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    _dados = {
+      nome, celular, cidade, tipoLabel,
+      economiaMensal: fmtR$(economia_mensal),
+      economiaAnual: fmtR$(economia_anual),
+      kwp: kwp.toFixed(2),
+      paineis,
+      payback: paybackStr
+    };
   }
 
-  /* ---- 7. CASH FLOW 25 ANOS (equivalente ao array cashFlow do Azume) ---- */
-  const cashFlow = [];
-  let fluxo = -finalPrice;
-  let eco = economia_anual;
-  for (let ano = 1; ano <= 25; ano++) {
-    fluxo += eco;
-    cashFlow.push(Math.round(fluxo));
-    eco = eco * (1 + INFLACAO_ANUAL);
+  function enviarSimulacaoWhatsApp() {
+    if (!_dados) {
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Olá! Vim pelo site da ProSol Energia Solar e gostaria de um orçamento gratuito.')}`, '_blank');
+      return;
+    }
+
+    const localCompl = _dados.cidade ? ` em ${_dados.cidade}` : '';
+
+    let texto = `Olá! Fiz a simulação de energia solar no site da ProSol e a economia estimada foi de ${_dados.economiaMensal} por mês.\n\n`;
+    texto += `Gostaria de entender melhor como isso funcionaria na prática${_dados.tipoLabel ? ` no meu imóvel ${_dados.tipoLabel.toLowerCase()}` : ' no meu imóvel'}${localCompl}.\n\n`;
+    texto += `Podem me ajudar com os próximos passos?`;
+
+    if (_dados.nome) {
+      texto += `\n\n_Nome: ${_dados.nome}`;
+      if (_dados.celular) texto += ` | ${_dados.celular}`;
+      texto += `_`;
+    }
+
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener,noreferrer');
   }
 
-  /* ---- 8. TOTAIS FINAIS ---- */
-  const totalEconomy = cashFlow[24] + finalPrice; // economia bruta em 25 anos
-  const roi = Math.round((cashFlow[24] / finalPrice / 25) * 100);
-  const co2_evitado = Math.round(geracao_mensal * 12 * 25 * 0.000084); // toneladas CO₂
+  // Expõe globalmente para onclick inline no HTML
+  return { calcularSolar, enviarSimulacaoWhatsApp };
+})();
 
-  /* ---- 9. FORMATAÇÃO ---- */
-  const fmt = n => Math.round(n).toLocaleString('pt-BR');
-  const fmtR$ = n => 'R$ ' + fmt(n);
-
-  /* ---- 10. ATUALIZAR DOM — mesmos IDs do HTML original ---- */
-  document.getElementById('res-economia').textContent = fmtR$(economia_mensal);
-  document.getElementById('res-anual').textContent = fmtR$(economia_anual);
-  document.getElementById('res-kwp').textContent = kwp.toFixed(2) + ' kWp';
-  document.getElementById('res-paineis').textContent = paineis;
-  document.getElementById('res-geracao').textContent = fmt(geracao_mensal) + ' kWh';
-  document.getElementById('res-invest').textContent = fmtR$(finalPrice);
-
-  // Payback
-  const paybackStr = paybackAnos > 0
-    ? paybackMeses > 0
-      ? `${paybackAnos} anos e ${paybackMeses} meses`
-      : `${paybackAnos} anos`
-    : `${paybackMeses} meses`;
-  document.getElementById('res-payback').textContent = paybackStr;
-  document.getElementById('payback-bar').style.width =
-    Math.min(((paybackAnos + paybackMeses / 12) / 20) * 100, 100) + '%';
-
-  // Detalhes financeiros ampliados
-  document.getElementById('res-economia-mensal').textContent = fmtR$(economia_mensal);
-  document.getElementById('res-economia-total').textContent = fmtR$(Math.round(totalEconomy));
-  document.getElementById('res-roi').textContent = roi + '%';
-  document.getElementById('res-sem-solar').textContent = fmtR$(noSystemMonthlyPrice);
-  document.getElementById('res-com-solar').textContent = fmtR$(systemMonthlyPrice);
-  document.getElementById('res-co2').textContent = fmt(co2_evitado) + ' t';
-
-  /* ---- 11. MOSTRAR RESULTADOS ---- */
-  const results = document.getElementById('sim-results');
-  results.classList.add('show');
-  results.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-  window.__simulacaoSolar = {
-    nome, celular, cidade, tipoLabel,
-    economiaMensal: fmtR$(economia_mensal),
-    economiaAnual: fmtR$(economia_anual),
-    kwp: kwp.toFixed(2),
-    paineis,
-    payback: paybackStr
-  };
-}
-
-function enviarSimulacaoWhatsApp() {
-  const dados = window.__simulacaoSolar;
-  const whatsappNumero = "5533988845152";
-
-  if (!dados) {
-    window.open(`https://wa.me/${whatsappNumero}?text=${encodeURIComponent('Olá! Vim pelo site da ProSol Energia Solar e gostaria de um orçamento gratuito.')}`, '_blank');
-    return;
-  }
-
-  const localCompl = dados.cidade ? ` em ${dados.cidade}` : '';
-
-  let texto = `Olá! Fiz a simulação de energia solar no site da ProSol e a economia estimada foi de ${dados.economiaMensal} por mês.\n\n`;
-  texto += `Gostaria de entender melhor como isso funcionaria na prática${dados.tipoLabel ? ` no meu imóvel ${dados.tipoLabel.toLowerCase()}` : ' no meu imóvel'}${localCompl}.\n\n`;
-  texto += `Podem me ajudar com os próximos passos?`;
-
-  if (dados.nome) {
-    texto += `\n\n_Nome: ${dados.nome}`;
-    if (dados.celular) texto += ` | ${dados.celular}`;
-    texto += `_`;
-  }
-
-  window.open(`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener,noreferrer');
-}
+function calcularSolar() { SimulacaoSolar.calcularSolar(); }
+function enviarSimulacaoWhatsApp() { SimulacaoSolar.enviarSimulacaoWhatsApp(); }
 
 /* ============================================================
    UTILITÁRIOS / MÁSCARAS
@@ -570,52 +500,6 @@ function mascaraCelular(input) {
 /* ============================================================
    FASE 4 — GALERIA LIGHTBOX, SLIDER & FORMULÁRIO DE CONTATO
    ============================================================ */
-
-/* ===== 1. MODAL LIGHTBOX PARA PROJETOS ===== */
-(function initLightbox() {
-  const modal = document.getElementById('lightbox-modal');
-  const modalImg = document.getElementById('lightbox-img');
-  const closeBtn = document.getElementById('lightbox-close');
-  const triggers = document.querySelectorAll('.projeto-img-wrap');
-
-  if (!modal || !modalImg || !closeBtn) return;
-
-  function openLightbox(e) {
-    const imgUrl = this.dataset.img;
-    if (!imgUrl) return;
-
-    modalImg.src = imgUrl;
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden'; // Trava scroll da página
-  }
-
-  function closeLightbox() {
-    modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = ''; // Destrava scroll
-    setTimeout(() => {
-      modalImg.src = ''; // Limpa a imagem após transição para poupar RAM
-    }, 350);
-  }
-
-  triggers.forEach(trigger => trigger.addEventListener('click', openLightbox));
-  closeBtn.addEventListener('click', closeLightbox);
-
-  // Fecha clicando no fundo/overlay do modal
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal || e.target.classList.contains('lightbox-content')) {
-      closeLightbox();
-    }
-  });
-
-  // Tecla ESC fecha
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
-      closeLightbox();
-    }
-  });
-})();
 
 /* ===== 2. SLIDER DE DEPOIMENTOS (Navegação & Swipe Mobile) ===== */
 function initDepoimentosSlider() {
@@ -785,10 +669,10 @@ function initContatoForm() {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const nome = document.getElementById('form-nome').value.trim();
-    const tel = document.getElementById('form-telefone').value.trim();
-    const cidade = document.getElementById('form-cidade').value.trim();
-    const conta = document.getElementById('form-conta').value.trim();
+    const nome = sanitize(document.getElementById('form-nome').value.trim());
+    const tel = sanitize(document.getElementById('form-telefone').value.trim());
+    const cidade = sanitize(document.getElementById('form-cidade').value.trim());
+    const conta = sanitize(document.getElementById('form-conta').value.trim());
 
     if (!nome || !tel || !cidade || !conta) {
       alert('Por favor, preencha todos os campos do formulário para prosseguir.');
@@ -796,7 +680,6 @@ function initContatoForm() {
     }
 
     // Número de WhatsApp do Hudson (ProSol Energia Solar) — já configurado, não é placeholder
-    const whatsappNumero = "5533988845152";
 
     // Formatação da mensagem em formato URL-encoded
     const textoMensagem = `Olá! Vim pelo site da ProSol Energia Solar e gostaria de solicitar um orçamento gratuito.\n\n` +
@@ -806,7 +689,7 @@ function initContatoForm() {
       `Valor Conta de Luz atual: R$ ${conta}`;
 
     const urlencodedText = encodeURIComponent(textoMensagem);
-    const linkWhats = `https://wa.me/${whatsappNumero}?text=${urlencodedText}`;
+    const linkWhats = `https://wa.me/${WHATSAPP_NUMBER}?text=${urlencodedText}`;
 
     // Dispara pixel/track de analytics se houver futuramente
     // Abre a aba do WhatsApp
@@ -1180,9 +1063,6 @@ function initAllReveals() {
 
 // ===== EXECUTAR MÓDULOS NÃO AUTOEXECUTÁVEIS QUANDO O DOM ESTIVER PRONTO =====
 document.addEventListener('DOMContentLoaded', function () {
-  // Inicializar contadores do hero
-  initCounters();
-
   // Inicializar model viewer 3D
   initModelViewer();
 
