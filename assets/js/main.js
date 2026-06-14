@@ -1173,6 +1173,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function togglePlay() {
     if (video.paused) {
+      video.muted = false;
       video.play();
       wrap.classList.add('playing');
       iconPlay.style.display = 'none';
@@ -1185,6 +1186,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }, 1000);
     } else {
       video.pause();
+      video.muted = true;
       wrap.classList.remove('playing');
       iconPlay.style.display = 'block';
       iconPause.style.display = 'none';
