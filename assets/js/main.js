@@ -618,7 +618,7 @@ function mascaraCelular(input) {
 })();
 
 /* ===== 2. SLIDER DE DEPOIMENTOS (Navegação & Swipe Mobile) ===== */
-(function initDepoimentosSlider() {
+function initDepoimentosSlider() {
   const slider = document.getElementById('depoimentos-slider');
   const cards = document.querySelectorAll('.depoimento-card');
   const dots = document.querySelectorAll('.depo-dot');
@@ -758,7 +758,7 @@ function mascaraCelular(input) {
   }, 150));
 
   updateSlider();
-})();
+}
 
 /* ===== 3. FORMULÁRIO DE CONTATO (WhatsApp Integration) ===== */
 (function initContatoForm() {
