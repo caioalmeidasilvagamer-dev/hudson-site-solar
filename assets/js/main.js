@@ -1260,6 +1260,10 @@ document.querySelectorAll('[data-video-player]').forEach(wrap => {
   // Estado inicial
   updateIcons();
   updateMuteIcons();
+
+  // Sincroniza ícones com eventos reais do vídeo
+  video.addEventListener('play', updateIcons);
+  video.addEventListener('pause', updateIcons);
 });
 
 // === AUTOPLAY AO ENTRAR NA VIEWPORT ===
