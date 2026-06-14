@@ -825,18 +825,26 @@
 
       <!-- Container do vídeo — layout lado a lado no desktop -->
       <div class="video-wrapper mt-16">
-        <div class="video-col-video">
-          <video autoplay muted loop playsinline aria-hidden="true"
+        <div class="video-col-video" data-video-player>
+          <video loop playsinline
             poster="assets/images/bg-hero-desktop.webp"
             style="width: 100%; border-radius: 12px; object-fit: cover; border: 1px solid rgba(240, 210, 143, 0.2); aspect-ratio: 9/16;"
             class="video-preview">
             <source src="assets/videos/hero-preview.mp4" type="video/mp4">
             Seu navegador não suporta a reprodução de vídeos.
           </video>
-          <button class="video-mute-btn" aria-label="Ativar som do vídeo" data-video-mute>
-            <svg class="icon-unmuted" viewBox="0 0 24 24" style="display:none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-            <svg class="icon-muted" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-          </button>
+          <div class="video-controls">
+            <button class="video-ctrl-btn" data-ctrl="play" aria-label="Reproduzir vídeo">
+              <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+            <input type="range" class="video-seek" min="0" max="100" value="0" step="0.1" aria-label="Posição do vídeo">
+            <span class="video-time">0:00</span>
+            <button class="video-ctrl-btn" data-ctrl="mute" aria-label="Ativar som">
+              <svg class="icon-unmuted" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+              <svg class="icon-muted" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+            </button>
+          </div>
         </div>
 
         <!-- Descrição do vídeo -->
@@ -1384,7 +1392,7 @@
         <p class="section-subtitle">Do planejamento com drone à instalação finalizada — veja como a ProSol transforma telhados em fontes de economia.</p>
       </div>
 
-      <div class="equipe-video-wrap equipe-reveal" data-delay="1">
+      <div class="equipe-video-wrap equipe-reveal" data-delay="1" data-video-player>
         <video
           id="equipe-video"
           src="assets/videos/equipe-em-acao.mp4"
@@ -1393,15 +1401,28 @@
           playsinline
           style="width:100%;display:block;border-radius:var(--radius-2xl);"></video>
 
-        <!-- Overlay play/pause -->
+        <!-- Overlay play/pause central -->
         <div class="equipe-video-overlay" id="equipe-overlay">
           <button class="equipe-play-btn" id="equipe-play-btn" aria-label="Reproduzir vídeo">
-            <svg id="equipe-icon-play" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            <svg id="equipe-icon-pause" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            <svg class="icon-play" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
-          <button class="video-mute-btn" id="equipe-mute-btn" style="position:absolute;bottom:16px;right:16px;" aria-label="Ativar som do vídeo" data-video-mute>
-            <svg class="icon-unmuted" viewBox="0 0 24 24" style="display:none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-            <svg class="icon-muted" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+        </div>
+
+        <!-- Barra de controles -->
+        <div class="video-controls">
+          <button class="video-ctrl-btn" data-ctrl="play" aria-label="Reproduzir vídeo">
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <button class="video-ctrl-btn" data-ctrl="fwd" aria-label="Avançar 10 segundos">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
+          </button>
+          <input type="range" class="video-seek" min="0" max="100" value="0" step="0.1" aria-label="Posição do vídeo">
+          <span class="video-time">0:00</span>
+          <button class="video-ctrl-btn" data-ctrl="mute" aria-label="Ativar som">
+            <svg class="icon-unmuted" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            <svg class="icon-muted" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
           </button>
         </div>
       </div>
@@ -1921,25 +1942,30 @@
     <div class="contato-mapa-wrap" style="display:flex;flex-direction:column;gap:16px;">
 
       <!-- Vídeo: como chegar -->
-      <div style="position:relative;border-radius:var(--radius-xl);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.12);aspect-ratio:3/4;">
+      <div style="position:relative;border-radius:var(--radius-xl);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.12);aspect-ratio:3/4;" data-video-player>
         <a href="assets/videos/contato-video.mp4" target="_blank" rel="noopener noreferrer" style="display:block;text-decoration:none;">
           <div style="position:absolute;top:12px;left:12px;z-index:2;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);border-radius:var(--radius-pill);padding:6px 14px;display:flex;align-items:center;gap:6px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           <span style="font-size:0.75rem;font-weight:600;color:#ffffff;letter-spacing:0.04em;">Como chegar</span>
         </div>
         </a>
-        <a href="assets/videos/contato-video.mp4" target="_blank" rel="noopener noreferrer" style="position:absolute;bottom:12px;right:60px;z-index:2;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;text-decoration:none;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff"><polygon points="5,3 19,12 5,21"/></svg>
-        </a>
         <video
           src="assets/videos/contato-video.mp4"
-          autoplay muted loop playsinline aria-hidden="true"
-          style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;">
+          loop playsinline
+          style="width:100%;height:100%;object-fit:cover;display:block;">
         </video>
-        <button class="video-mute-btn" style="position:absolute;bottom:12px;right:12px;" aria-label="Ativar som do vídeo" data-video-mute>
-          <svg class="icon-unmuted" viewBox="0 0 24 24" style="display:none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-          <svg class="icon-muted" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-        </button>
+        <div class="video-controls">
+          <button class="video-ctrl-btn" data-ctrl="play" aria-label="Reproduzir vídeo">
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <input type="range" class="video-seek" min="0" max="100" value="0" step="0.1" aria-label="Posição do vídeo">
+          <span class="video-time">0:00</span>
+          <button class="video-ctrl-btn" data-ctrl="mute" aria-label="Ativar som">
+            <svg class="icon-unmuted" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            <svg class="icon-muted" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+          </button>
+        </div>
       </div>
 
       <!-- Mapa Google -->

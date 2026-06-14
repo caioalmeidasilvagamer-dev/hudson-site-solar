@@ -1161,88 +1161,131 @@ document.addEventListener('DOMContentLoaded', function () {
   requestAnimationFrame(tick);
 })();
 
-(function() {
-  const wrap = document.querySelector('.equipe-video-wrap');
-  const video = document.getElementById('equipe-video');
-  const overlay = document.getElementById('equipe-overlay');
-  const iconPlay = document.getElementById('equipe-icon-play');
-  const iconPause = document.getElementById('equipe-icon-pause');
-  let hideTimer = null;
-
+// === VIDEO PLAYER UNIFICADO — play/pause, seek, mute, fwd ===
+document.querySelectorAll('[data-video-player]').forEach(wrap => {
+  const video = wrap.querySelector('video');
   if (!video) return;
 
-  function togglePlay() {
-    if (video.paused) {
-      video.muted = false;
-      video.play();
-      wrap.classList.add('playing');
-      iconPlay.style.display = 'none';
-      iconPause.style.display = 'block';
+  const playBtn = wrap.querySelector('[data-ctrl="play"]');
+  const muteBtn = wrap.querySelector('[data-ctrl="mute"]');
+  const fwdBtn = wrap.querySelector('[data-ctrl="fwd"]');
+  const seek = wrap.querySelector('.video-seek');
+  const timeEl = wrap.querySelector('.video-time');
+  const overlay = wrap.querySelector('.equipe-video-overlay');
 
-      clearTimeout(hideTimer);
-      hideTimer = setTimeout(() => {
-        overlay.style.opacity = '0';
-        overlay.style.pointerEvents = 'none';
-      }, 1000);
+  function fmtTime(s) {
+    if (!isFinite(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+
+  function updateIcons() {
+    if (!playBtn) return;
+    const ip = playBtn.querySelector('.icon-play');
+    const ipa = playBtn.querySelector('.icon-pause');
+    if (video.paused) {
+      if (ip) ip.style.display = '';
+      if (ipa) ipa.style.display = 'none';
     } else {
-      video.pause();
-      video.muted = true;
-      wrap.classList.remove('playing');
-      iconPlay.style.display = 'block';
-      iconPause.style.display = 'none';
-      overlay.style.opacity = '';
-      overlay.style.pointerEvents = '';
-      clearTimeout(hideTimer);
+      if (ip) ip.style.display = 'none';
+      if (ipa) ipa.style.display = '';
     }
   }
 
-  wrap.addEventListener('mouseenter', () => {
-    if (!video.paused) {
-      overlay.style.opacity = '';
-      overlay.style.pointerEvents = '';
+  function updateMuteIcons() {
+    if (!muteBtn) return;
+    const iu = muteBtn.querySelector('.icon-unmuted');
+    const im = muteBtn.querySelector('.icon-muted');
+    if (video.muted) {
+      if (iu) iu.style.display = 'none';
+      if (im) im.style.display = '';
+      muteBtn.setAttribute('aria-label', 'Ativar som');
+    } else {
+      if (iu) iu.style.display = '';
+      if (im) im.style.display = 'none';
+      muteBtn.setAttribute('aria-label', 'Desativar som');
     }
-  });
-  wrap.addEventListener('mouseleave', () => {
-    if (!video.paused) {
-      clearTimeout(hideTimer);
-      hideTimer = setTimeout(() => {
+  }
+
+  // Play / Pause
+  function togglePlay() {
+    if (video.paused) {
+      video.play();
+      if (overlay) {
+        wrap.classList.add('playing');
         overlay.style.opacity = '0';
         overlay.style.pointerEvents = 'none';
-      }, 1000);
+      }
+    } else {
+      video.pause();
+      if (overlay) {
+        wrap.classList.remove('playing');
+        overlay.style.opacity = '';
+        overlay.style.pointerEvents = '';
+      }
     }
+    updateIcons();
+  }
+
+  if (playBtn) playBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
+  if (overlay) {
+    const overlayBtn = overlay.querySelector('.equipe-play-btn');
+    if (overlayBtn) overlayBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
+  }
+  // Click no vídeo também faz play/pause
+  video.addEventListener('click', togglePlay);
+
+  // Mute / Unmute
+  if (muteBtn) {
+    muteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      video.muted = !video.muted;
+      updateMuteIcons();
+    });
+  }
+
+  // Forward 10s
+  if (fwdBtn) {
+    fwdBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      video.currentTime = Math.min(video.currentTime + 10, video.duration || 0);
+    });
+  }
+
+  // Seek bar
+  if (seek) {
+    video.addEventListener('timeupdate', () => {
+      if (!seek.dataset.dragging && video.duration) {
+        seek.value = (video.currentTime / video.duration) * 100;
+      }
+      if (timeEl) timeEl.textContent = fmtTime(video.currentTime);
+    });
+    seek.addEventListener('input', () => { seek.dataset.dragging = '1'; });
+    seek.addEventListener('change', () => {
+      if (video.duration) video.currentTime = (seek.value / 100) * video.duration;
+      delete seek.dataset.dragging;
+    });
+  }
+
+  // Atualiza duração total quando metadata carrega
+  video.addEventListener('loadedmetadata', () => {
+    if (timeEl) timeEl.textContent = fmtTime(video.currentTime);
   });
 
-  wrap.addEventListener('click', togglePlay);
+  // Estado inicial
+  updateIcons();
+  updateMuteIcons();
+});
 
+// === REVEAL DA SEÇÃO EQUIPE ===
+(function() {
   const reveals = document.querySelectorAll('.equipe-reveal');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.15 });
   reveals.forEach(el => obs.observe(el));
 })();
-
-// === MUTE/UNMUTE TOGGLE PARA TODOS OS VÍDEOS ===
-document.querySelectorAll('[data-video-mute]').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const wrap = btn.closest('.video-col-video, .equipe-video-wrap, div[style*="position:relative"]') || btn.parentElement;
-    const video = wrap ? wrap.querySelector('video') : null;
-    if (!video) return;
-
-    video.muted = !video.muted;
-    const iconUnmuted = btn.querySelector('.icon-unmuted');
-    const iconMuted = btn.querySelector('.icon-muted');
-    if (video.muted) {
-      if (iconUnmuted) iconUnmuted.style.display = 'none';
-      if (iconMuted) iconMuted.style.display = 'block';
-      btn.setAttribute('aria-label', 'Ativar som do vídeo');
-    } else {
-      if (iconUnmuted) iconUnmuted.style.display = 'block';
-      if (iconMuted) iconMuted.style.display = 'none';
-      btn.setAttribute('aria-label', 'Desativar som do vídeo');
-    }
-  });
-});
 
 // === CONTADOR ANIMADO NOS STATS ===
 (function () {
