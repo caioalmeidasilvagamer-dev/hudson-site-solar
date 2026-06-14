@@ -1221,6 +1221,29 @@ document.addEventListener('DOMContentLoaded', function () {
   reveals.forEach(el => obs.observe(el));
 })();
 
+// === MUTE/UNMUTE TOGGLE PARA TODOS OS VÍDEOS ===
+document.querySelectorAll('[data-video-mute]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const wrap = btn.closest('.video-col-video, .equipe-video-wrap, div[style*="position:relative"]') || btn.parentElement;
+    const video = wrap ? wrap.querySelector('video') : null;
+    if (!video) return;
+
+    video.muted = !video.muted;
+    const iconUnmuted = btn.querySelector('.icon-unmuted');
+    const iconMuted = btn.querySelector('.icon-muted');
+    if (video.muted) {
+      if (iconUnmuted) iconUnmuted.style.display = 'none';
+      if (iconMuted) iconMuted.style.display = 'block';
+      btn.setAttribute('aria-label', 'Ativar som do vídeo');
+    } else {
+      if (iconUnmuted) iconUnmuted.style.display = 'block';
+      if (iconMuted) iconMuted.style.display = 'none';
+      btn.setAttribute('aria-label', 'Desativar som do vídeo');
+    }
+  });
+});
+
 // === CONTADOR ANIMADO NOS STATS ===
 (function () {
   function animateCounter(el, target, duration, suffix) {

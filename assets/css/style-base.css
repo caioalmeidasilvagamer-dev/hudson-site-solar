@@ -5527,6 +5527,39 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   width: 100%;
   max-width: 320px;
   flex-shrink: 0;
+  position: relative;
+}
+
+.video-mute-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  padding: 0;
+}
+
+.video-mute-btn:hover {
+  background: rgba(0, 0, 0, 0.75);
+  transform: scale(1.1);
+}
+
+.video-mute-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
 }
 
 .video-col-info {
