@@ -1267,17 +1267,37 @@ document.querySelectorAll('[data-video-player]').forEach(wrap => {
 });
 
 // === AUTOPLAY AO ENTRAR NA VIEWPORT ===
+function tryPlay(video) {
+  if (video.paused && video.readyState >= 2) {
+    video.play().catch(() => {
+      // Autoplay bloqueado — aguarda primeira interação do usuário
+      const handler = () => {
+        video.play().catch(() => {});
+        document.removeEventListener('click', handler);
+        document.removeEventListener('touchstart', handler);
+      };
+      document.addEventListener('click', handler, { once: true });
+      document.addEventListener('touchstart', handler, { once: true });
+    });
+  }
+}
+
 const videoObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     const video = entry.target.querySelector('video');
     if (!video) return;
     if (entry.isIntersecting) {
-      video.play().catch(() => {});
+      // Retry: espera readyState >= 2 (dados suficientes para playback)
+      if (video.readyState >= 2) {
+        tryPlay(video);
+      } else {
+        video.addEventListener('loadeddata', () => tryPlay(video), { once: true });
+      }
     } else {
       video.pause();
     }
   });
-}, { threshold: 0.3 });
+}, { threshold: 0.1 });
 
 document.querySelectorAll('[data-video-player]').forEach(el => videoObserver.observe(el));
 
