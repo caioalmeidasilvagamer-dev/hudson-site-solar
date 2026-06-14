@@ -5909,6 +5909,67 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   transition-delay: 0.15s;
 }
 
+/* ===== SOCIAL TOAST ===== */
+.social-toast {
+  position: fixed;
+  bottom: 100px;
+  left: 20px;
+  z-index: 9999;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--sombra-card);
+  max-width: 280px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s var(--ease-spring), transform 0.5s var(--ease-spring);
+  pointer-events: none;
+}
+
+.social-toast-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--gradiente-dourado);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+.social-toast-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.social-toast-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.social-toast-action {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.social-toast-time {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+}
+
+.social-toast.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
 /* === WHATSAPP FLUTUANTE === */
 
 .float-whats-pulse {

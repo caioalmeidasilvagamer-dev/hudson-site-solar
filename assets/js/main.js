@@ -70,127 +70,6 @@ if (anoEl) anoEl.textContent = new Date().getFullYear();
   });
 })();
 
-/* ===== PARTÍCULAS DE LUZ DOURADA ===== */
-(function initParticles() {
-  const canvas = document.getElementById('particles-canvas');
-  if (!canvas) return;
-
-  // Só inicializa partículas no desktop — mobile não precisa
-  if (window.innerWidth >= 900) {
-    const ctx = canvas.getContext('2d');
-    let W, H, particles = [], raf;
-
-    // Configurações
-    const COUNT = 80;    // número de partículas
-    const MAX_SIZE = 2.8;   // raio máximo em px
-    const MIN_SPEED = 0.08;
-    const MAX_SPEED = 0.28;
-    const COLORS = [
-      'rgba(240, 192, 64,',   // dourado
-      'rgba(255, 200, 80,',   // dourado claro
-      'rgba(255, 160, 40,',   // âmbar
-      'rgba(255, 255, 200,',  // branco quente
-    ];
-
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-
-    function randomParticle(forceY) {
-      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-      return {
-        x: Math.random() * W,
-        y: forceY !== undefined ? forceY : Math.random() * H,
-        r: Math.random() * MAX_SIZE + 0.4,
-        vx: (Math.random() - 0.5) * MAX_SPEED,
-        vy: -(Math.random() * (MAX_SPEED - MIN_SPEED) + MIN_SPEED), // sobe
-        alpha: Math.random() * 0.6 + 0.1,
-        dAlpha: (Math.random() * 0.004 + 0.001) * (Math.random() > 0.5 ? 1 : -1),
-        minA: 0.05,
-        maxA: 0.75,
-        color,
-        pulse: Math.random() * Math.PI * 2,
-        pulseSpeed: Math.random() * 0.015 + 0.005,
-      };
-    }
-
-    function initParticles() {
-      particles = Array.from({ length: COUNT }, () => randomParticle());
-    }
-
-    function update() {
-      for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.pulse += p.pulseSpeed;
-
-        // Alpha pulsante
-        p.alpha += p.dAlpha;
-        if (p.alpha >= p.maxA || p.alpha <= p.minA) p.dAlpha *= -1;
-
-        // Reposicionar ao sair da tela pelo topo
-        if (p.y < -10 || p.x < -10 || p.x > W + 10) {
-          Object.assign(p, randomParticle(H + 10)); // reaparece na base
-          p.y = H + 10;
-        }
-      }
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-
-      for (const p of particles) {
-        // Tamanho pulsante sutil
-        const radius = p.r + Math.sin(p.pulse) * 0.3;
-        const alpha = Math.max(0, Math.min(1, p.alpha));
-
-        // Glow suave
-        ctx.beginPath();
-        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, radius * 3);
-        grd.addColorStop(0, `${p.color}${alpha})`);
-        grd.addColorStop(0.5, `${p.color}${alpha * 0.3})`);
-        grd.addColorStop(1, `${p.color}0)`);
-        ctx.fillStyle = grd;
-        ctx.arc(p.x, p.y, radius * 3, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Núcleo mais brilhante
-        ctx.beginPath();
-        ctx.fillStyle = `${p.color}${Math.min(1, alpha * 1.8)})`;
-        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function loop() {
-      update();
-      draw();
-      raf = requestAnimationFrame(loop);
-    }
-
-    // Parar animação quando fora da viewport (performance)
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        if (!raf) loop();
-      } else {
-        cancelAnimationFrame(raf);
-        raf = null;
-      }
-    }, { threshold: 0 });
-
-    window.addEventListener('resize', throttle(() => {
-      resize();
-      // Não recriar partículas, apenas ajustar tela
-    }, 150), { passive: true });
-
-    resize();
-    initParticles();
-    observer.observe(canvas);
-    loop();
-  }
-})();
-
 /* ===== COUNTERS ANIMADOS (hero stats) ===== */
 function initCounters() {
   // SUBSTITUIR: valores reais do cliente
@@ -1683,14 +1562,10 @@ document.addEventListener('DOMContentLoaded', function () {
     spans[1].textContent = acao;
     spans[2].textContent = tempo;
 
-    toast.style.opacity = '1';
-    toast.style.transform = 'translateY(0)';
-    toast.style.pointerEvents = 'auto';
+    toast.classList.add('visible');
 
     setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transform = 'translateY(20px)';
-      toast.style.pointerEvents = 'none';
+      toast.classList.remove('visible');
     }, 5000);
   }
 

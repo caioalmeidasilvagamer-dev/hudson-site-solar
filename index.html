@@ -54,8 +54,8 @@
   <script type="module" defer
     src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
 
-  <link rel="stylesheet" href="assets/css/style-base.css?v=7" />
-  <link rel="stylesheet" href="assets/css/style-desktop.css?v=7" />
+  <link rel="stylesheet" href="assets/css/style-base.css?v=8" />
+  <link rel="stylesheet" href="assets/css/style-desktop.css?v=8" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/images/cropped_image (1).png">
@@ -832,11 +832,11 @@
       <!-- Container do vídeo — layout lado a lado no desktop -->
       <div class="video-wrapper mt-16">
         <div class="video-col-video">
-          <video autoplay muted loop playsinline
+          <video autoplay muted loop playsinline aria-hidden="true"
             poster="assets/images/bg-hero-desktop.webp"
             style="width: 100%; border-radius: 12px; object-fit: cover; border: 1px solid rgba(240, 210, 143, 0.2); aspect-ratio: 9/16;"
             class="video-preview">
-            <source src="assets/videos/AQOTkrQw8qKnanMEvCLIS9NTsfbjAb3lw64NBd4DKLnk5-NA2hRaG3uKmW1dKpfFhRnmaus4ra9TzT_0vEd34_d6UQ5NO8jkOY9b-Q8.mp4" type="video/mp4">
+            <source src="assets/videos/hero-preview.mp4" type="video/mp4">
             Seu navegador não suporta a reprodução de vídeos.
           </video>
         </div>
@@ -1389,7 +1389,7 @@
       <div class="equipe-video-wrap equipe-reveal" data-delay="1">
         <video
           id="equipe-video"
-          src="assets/videos/WhatsApp Video 2026-06-10 at 17.57.54.mp4"
+          src="assets/videos/equipe-em-acao.mp4"
           poster="assets/images/equipe-poster.jpg?v=2"
           loop
           playsinline
@@ -1929,8 +1929,8 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff"><polygon points="5,3 19,12 5,21"/></svg>
         </div>
         <video
-          src="assets/videos/AQPqAHWRsIXJXxbhIQrXr7cx6W26UjBFezrUwJPJ21TW76JvO_9RSnrV_FAJGesQfHw90hnmgedoNqW6-BMIppd8eELlqrbz4bawi4A.mp4"
-          autoplay muted loop playsinline
+          src="assets/videos/contato-video.mp4"
+          autoplay muted loop playsinline aria-hidden="true"
           style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;">
         </video>
       </a>
@@ -1938,6 +1938,7 @@
       <!-- Mapa Google -->
       <div style="border-radius:var(--radius-xl);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.12);">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3831.755780234519!2d-40.696972325080566!3d-16.18153978451438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x74979020c9dbd4b%3A0x38863b926bb21b55!2sProSol%20Energia%20Solar!5e0!3m2!1spt-BR!2sbr!4v1781121787446!5m2!1spt-BR!2sbr"
+          title="Localização da ProSol Energia Solar em Almenara/MG no Google Maps"
           width="100%" height="280" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
         </iframe>
       </div>
@@ -2149,7 +2150,7 @@
     class="float-whats" id="float-whats" target="_blank" rel="noopener noreferrer"
     aria-label="Falar pelo WhatsApp">
     <div class="float-whats-pulse"></div>
-    <div class="float-whats-balloon" id="float-balloon">💬 Fale agora!</div>
+    <div class="float-whats-balloon" id="float-balloon">Fale agora!</div>
     <svg width="28" height="28" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
       <path d="M16 2C8.28 2 2 8.28 2 16c0 2.46.66 4.84 1.9 6.94L2 30l7.3-1.88A13.94 13.94 0 0 0 16 30c7.72 0 14-6.28 14-14S23.72 2 16 2zm0 25.5a11.5 11.5 0 0 1-5.86-1.6l-.42-.25-4.33 1.12 1.15-4.2-.28-.44A11.47 11.47 0 0 1 4.5 16C4.5 9.6 9.6 4.5 16 4.5S27.5 9.6 27.5 16 22.4 27.5 16 27.5zm6.3-8.6c-.34-.17-2.03-1-2.34-1.12-.32-.1-.55-.17-.78.17-.23.34-.9 1.12-1.1 1.35-.2.22-.4.25-.74.08-.34-.17-1.44-.53-2.74-1.69a10.3 10.3 0 0 1-1.9-2.36c-.2-.34 0-.52.15-.69.14-.15.34-.4.5-.6.17-.2.23-.34.34-.56.12-.23.06-.43-.02-.6-.09-.17-.78-1.88-1.07-2.57-.28-.67-.57-.58-.78-.59H11c-.2 0-.52.08-.8.4-.26.3-1.02 1-1.02 2.43s1.05 2.82 1.2 3.02c.14.2 2.07 3.16 5.01 4.43.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.09 1.73-.71 1.97-1.39.25-.68.25-1.27.17-1.39-.07-.12-.27-.19-.6-.36z"/>
     </svg>
@@ -2174,16 +2175,16 @@
   </button>
 
   <!-- Toast de Prova Social -->
-  <div id="social-toast" style="position:fixed;bottom:100px;left:20px;z-index:9999;background:#ffffff;border:1px solid rgba(74,93,249,0.15);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);max-width:280px;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;">
-    <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#4a5df9,#68a519);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;">&#9728;&#65039;</div>
-    <div style="display:flex;flex-direction:column;gap:2px;">
-      <span style="font-size:0.78rem;font-weight:700;color:#0f1118;">Carlos de Almenara</span>
-      <span style="font-size:0.72rem;color:#4b5563;">acabou de solicitar um or&#231;amento</span>
-      <span style="font-size:0.68rem;color:#9ca3af;">h&#225; 3 minutos</span>
+  <div id="social-toast" class="social-toast" role="status" aria-live="polite" aria-atomic="true">
+    <div class="social-toast-icon">&#9728;</div>
+    <div class="social-toast-body">
+      <span class="social-toast-name">Carlos de Almenara</span>
+      <span class="social-toast-action">acabou de solicitar um or&#231;amento</span>
+      <span class="social-toast-time">h&#225; 3 minutos</span>
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=7" defer></script>
+  <script src="assets/js/main.js?v=8" defer></script>
 </body>
 
 </html>
