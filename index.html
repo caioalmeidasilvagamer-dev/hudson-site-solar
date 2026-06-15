@@ -403,38 +403,6 @@
       <p class="sim-sub">Responda algumas perguntas e veja o resultado em segundos</p>
 
       <div class="sim-card">
-        <!-- Parâmetros editáveis -->
-        <details class="quiz-params" id="quiz-params">
-          <summary class="quiz-params-summary">⚙️ Parâmetros da simulação</summary>
-          <div class="quiz-params-grid">
-            <div class="field">
-              <label for="param-kwh">Valor do kWh (R$)</label>
-              <input type="number" id="param-kwh" value="1.13" step="0.01" min="0.50" max="3.00">
-            </div>
-            <div class="field">
-              <label for="param-hsp">Horas Sol Pico (HSP)</label>
-              <input type="number" id="param-hsp" value="5.2" step="0.1" min="3.0" max="7.0">
-            </div>
-            <div class="field">
-              <label for="param-pr">Eficiência do sistema (%)</label>
-              <input type="number" id="param-pr" value="78" step="1" min="60" max="95">
-            </div>
-            <div class="field">
-              <label for="param-custo-kwp">Custo por kWp (R$)</label>
-              <input type="number" id="param-custo-kwp" value="4500" step="100" min="2000" max="9000">
-            </div>
-            <div class="field">
-              <label for="param-taxa-disp">Taxa mínima mensal (R$)</label>
-              <input type="number" id="param-taxa-disp" value="45" step="1" min="10" max="200">
-            </div>
-            <div class="field">
-              <label for="param-inflacao">Inflação anual estimada (%)</label>
-              <input type="number" id="param-inflacao" value="10" step="1" min="0" max="30">
-            </div>
-          </div>
-          <p class="quiz-params-hint">Valores padrão calibrados para Minas Gerais (CEMIG, mai/2025). Edite apenas se necessário.</p>
-        </details>
-
         <!-- Barra de progresso -->
         <div class="quiz-progress">
           <div class="quiz-progress-step active"></div>
@@ -446,7 +414,20 @@
 
         <!-- Passo 1: Tipo de imóvel -->
         <div class="quiz-step active" data-step="1">
-          <h3 class="quiz-step-title">Qual o tipo do seu imóvel?</h3>
+          <h3 class="quiz-step-title">
+            Qual o tipo do seu imóvel?
+            <button class="quiz-tooltip-btn" data-tooltip="tipo-imovel" aria-label="O que é isso?">?</button>
+          </h3>
+          <div class="quiz-tooltip-box" id="tooltip-tipo-imovel">
+            <strong>Por que isso importa?</strong>
+            <p>O tipo do imóvel determina a tarifa de energia aplicada pela CEMIG e a forma de cálculo do sistema solar ideal.</p>
+            <ul>
+              <li><strong>Residencial:</strong> Tarifa B1 da CEMIG — para casas e apartamentos</li>
+              <li><strong>Comercial:</strong> Tarifa B3 — para lojas, escritórios e empresas do Grupo B</li>
+              <li><strong>Rural/Industrial:</strong> Tarifa B2 Rural ou Grupo A — para fazendas e indústrias</li>
+            </ul>
+            <p class="quiz-tooltip-fonte">📄 Fonte: Tabela de tarifas CEMIG — <a href="https://www.cemig.com.br/atendimento/tarifas-e-servicos/tarifas/" target="_blank" rel="noopener">cemig.com.br/tarifas</a></p>
+          </div>
           <div class="quiz-cards">
             <button type="button" class="quiz-card" data-value="residencial" data-target="tipo">
               <span class="quiz-card-icon">🏠</span>
@@ -465,7 +446,21 @@
 
         <!-- Passo 2: Valor da conta -->
         <div class="quiz-step" data-step="2">
-          <h3 class="quiz-step-title">Qual o valor médio da sua conta de luz?</h3>
+          <h3 class="quiz-step-title">
+            Qual o valor médio da sua conta de luz?
+            <button class="quiz-tooltip-btn" data-tooltip="valor-conta" aria-label="O que é isso?">?</button>
+          </h3>
+          <div class="quiz-tooltip-box" id="tooltip-valor-conta">
+            <strong>Como encontrar o valor correto?</strong>
+            <p>Use o valor médio dos últimos 3 meses — ele fica na própria conta de luz da CEMIG.</p>
+            <ul>
+              <li>Na conta física: campo <strong>"Valor a Pagar"</strong> ou <strong>"Total da Fatura"</strong></li>
+              <li>No app CEMIG Atende ou site: <a href="https://www.cemig.com.br" target="_blank" rel="noopener">cemig.com.br</a> → "Segunda via de conta"</li>
+              <li>Use a média de 3 meses pois o consumo varia entre verão (mais ventiladores/ar-condicionado) e inverno</li>
+            </ul>
+            <p><strong>Dica:</strong> Se sua conta tem custo de demanda, bandeira tarifária ou outros itens, some tudo — use o valor total que você paga.</p>
+            <p class="quiz-tooltip-fonte">📄 Fonte: <a href="https://www.cemig.com.br/atendimento/segunda-via-de-conta/" target="_blank" rel="noopener">Segunda via CEMIG</a></p>
+          </div>
           <div class="quiz-slider-value">R$ <span id="quiz-conta-display">300</span></div>
           <label for="quiz-conta-slider" class="sr-only">Valor médio da conta de luz</label>
           <input type="range" id="quiz-conta-slider" min="50" max="2000" step="10" value="300" class="quiz-slider">
@@ -478,46 +473,30 @@
           <button type="button" class="quiz-btn-back">← Voltar</button>
         </div>
 
-        <!-- Passo 3: Estado + Cidade -->
+        <!-- Passo 3: Cidade em MG -->
         <div class="quiz-step" data-step="3">
-          <h3 class="quiz-step-title">Onde fica o imóvel?</h3>
+          <h3 class="quiz-step-title">
+            Em qual cidade de Minas Gerais fica o imóvel?
+            <button class="quiz-tooltip-btn" data-tooltip="cidade-mg" aria-label="O que é isso?">?</button>
+          </h3>
+          <div class="quiz-tooltip-box" id="tooltip-cidade-mg">
+            <strong>Por que a cidade importa?</strong>
+            <p>A irradiação solar varia conforme a região de MG. O Vale do Jequitinhonha (onde fica Almenara) tem uma das melhores irradiações do estado — até <strong>5,8 kWh/m²/dia</strong> em média anual, acima da média nacional de 4,8.</p>
+            <ul>
+              <li><strong>Alto Jequitinhonha:</strong> Almenara, Jacinto, Salto da Divisa, Pedra Azul — irradiação 5.6–5.8</li>
+              <li><strong>Norte de MG:</strong> Montes Claros, Januária — irradiação 5.4–5.6</li>
+              <li><strong>Triângulo Mineiro:</strong> Uberlândia, Uberaba — irradiação 5.2–5.4</li>
+              <li><strong>Sul de MG:</strong> Poços de Caldas, Varginha — irradiação 4.8–5.2</li>
+            </ul>
+            <p class="quiz-tooltip-fonte">📄 Fonte: Atlas Brasileiro de Energia Solar — <a href="https://labren.ccst.inpe.br/atlas_brasileiro_3ed.html" target="_blank" rel="noopener">INPE/LABREN</a></p>
+          </div>
           <div class="quiz-fields-row">
-            <div class="field">
-              <label>Estado (UF)</label>
-              <select id="uf">
-                <option value="">Selecione o estado</option>
-                <option value="AC">AC &ndash; Acre</option>
-                <option value="AL">AL &ndash; Alagoas</option>
-                <option value="AM">AM &ndash; Amazonas</option>
-                <option value="AP">AP &ndash; Amap&aacute;</option>
-                <option value="BA">BA &ndash; Bahia</option>
-                <option value="CE">CE &ndash; Cear&aacute;</option>
-                <option value="DF">DF &ndash; Distrito Federal</option>
-                <option value="ES">ES &ndash; Esp&iacute;rito Santo</option>
-                <option value="GO">GO &ndash; Goi&aacute;s</option>
-                <option value="MA">MA &ndash; Maranh&atilde;o</option>
-                <option value="MG" selected>MG &ndash; Minas Gerais</option>
-                <option value="MS">MS &ndash; Mato Grosso do Sul</option>
-                <option value="MT">MT &ndash; Mato Grosso</option>
-                <option value="PA">PA &ndash; Par&aacute;</option>
-                <option value="PB">PB &ndash; Para&iacute;ba</option>
-                <option value="PE">PE &ndash; Pernambuco</option>
-                <option value="PI">PI &ndash; Piau&iacute;</option>
-                <option value="PR">PR &ndash; Paran&aacute;</option>
-                <option value="RJ">RJ &ndash; Rio de Janeiro</option>
-                <option value="RN">RN &ndash; Rio Grande do Norte</option>
-                <option value="RO">RO &ndash; Rond&ocirc;nia</option>
-                <option value="RR">RR &ndash; Roraima</option>
-                <option value="RS">RS &ndash; Rio Grande do Sul</option>
-                <option value="SC">SC &ndash; Santa Catarina</option>
-                <option value="SE">SE &ndash; Sergipe</option>
-                <option value="SP">SP &ndash; S&atilde;o Paulo</option>
-                <option value="TO">TO &ndash; Tocantins</option>
-              </select>
-            </div>
-            <div class="field">
+            <div class="field" style="flex:2">
               <label for="cidade">Cidade</label>
-              <input type="text" id="cidade" placeholder="Ex: Almenara">
+              <input type="text" id="cidade" placeholder="Ex: Almenara, Montes Claros, Uberlândia...">
+            </div>
+            <div class="field" style="flex:1;display:none">
+              <select id="uf"><option value="MG" selected>MG</option></select>
             </div>
           </div>
           <div class="quiz-analise-msg" id="quiz-analise-cidade"></div>
@@ -525,7 +504,7 @@
           <button type="button" class="quiz-btn-back">← Voltar</button>
         </div>
 
-        <!-- Passo 4: Nome + WhatsApp -->
+        <!-- Passo 4: Nome + WhatsApp + detalhes técnicos -->
         <div class="quiz-step" data-step="4">
           <h3 class="quiz-step-title">Quase lá! Para onde enviamos o resultado?</h3>
           <div class="quiz-fields-row">
@@ -539,23 +518,110 @@
             </div>
           </div>
 
-          <!-- Campos avançados — manter mas como opcionais/secundários -->
+          <!-- Detalhes técnicos com tooltips -->
           <details class="quiz-advanced">
-            <summary>Detalhes técnicos (opcional)</summary>
-            <div class="quiz-fields-row">
+            <summary>⚙️ Detalhes técnicos (opcional — aumenta precisão do cálculo)</summary>
+
+            <div class="quiz-fields-row" style="margin-top:16px;">
               <div class="field">
-                <label>Modalidade tarifária</label>
+                <label>
+                  Modalidade tarifária
+                  <button class="quiz-tooltip-btn" data-tooltip="modalidade" aria-label="O que é isso?">?</button>
+                </label>
+                <div class="quiz-tooltip-box" id="tooltip-modalidade">
+                  <strong>O que é modalidade tarifária?</strong>
+                  <p>É a categoria em que sua unidade consumidora está enquadrada na CEMIG.</p>
+                  <ul>
+                    <li><strong>Grupo B (Baixa Tensão):</strong> A grande maioria das residências, comércios pequenos e rurais. Tensão de fornecimento até 2,3 kV.</li>
+                    <li><strong>Grupo A (Alta Tensão):</strong> Indústrias, shopping centers, grandes empresas. Tensão acima de 2,3 kV. Tem cobrança de demanda separada.</li>
+                  </ul>
+                  <p><strong>Como saber o seu grupo?</strong> Olhe na conta de luz da CEMIG o campo <strong>"Classe"</strong> ou <strong>"Subgrupo"</strong>. Se não encontrar, ligue para a CEMIG: <strong>0800 721 0196</strong></p>
+                  <p class="quiz-tooltip-fonte">📄 Fonte: <a href="https://www.cemig.com.br/atendimento/tarifas-e-servicos/tarifas/" target="_blank" rel="noopener">Tarifas CEMIG</a></p>
+                </div>
                 <select id="modalidade">
-                  <option value="B">Grupo B (Baixa Tensão)</option>
+                  <option value="B">Grupo B (Baixa Tensão) — mais comum</option>
                   <option value="A">Grupo A (Alta Tensão)</option>
                 </select>
               </div>
+
               <div class="field">
-                <label>Tipo de ligação</label>
+                <label>
+                  Tipo de ligação
+                  <button class="quiz-tooltip-btn" data-tooltip="ligacao" aria-label="O que é isso?">?</button>
+                </label>
+                <div class="quiz-tooltip-box" id="tooltip-ligacao">
+                  <strong>O que é tipo de ligação?</strong>
+                  <p>É o número de fases elétricas que entram no seu imóvel — aparece na conta da CEMIG.</p>
+                  <ul>
+                    <li><strong>Monofásico (1 fase + neutro):</strong> Casas pequenas, apartamentos simples. Limite de 3 kW pelo disjuntor padrão. Na conta: "Monofásico".</li>
+                    <li><strong>Bifásico (2 fases + neutro):</strong> Casas médias, comércios pequenos. Limite de 6 kW. Na conta: "Bifásico".</li>
+                    <li><strong>Trifásico (3 fases + neutro):</strong> Casas grandes, comércios, indústrias. Acima de 6 kW. Na conta: "Trifásico".</li>
+                  </ul>
+                  <p><strong>Como saber o seu?</strong> Olhe na conta de luz no campo <strong>"Tipo de Ligação"</strong> ou verifique o disjuntor geral da sua residência — monofásico tem 1 chave, bifásico tem 2, trifásico tem 3.</p>
+                  <p><strong>Taxa mínima de disponibilidade CEMIG (2024):</strong></p>
+                  <ul>
+                    <li>Monofásico: ~R$ 54/mês</li>
+                    <li>Bifásico: ~R$ 108/mês</li>
+                    <li>Trifásico: ~R$ 162/mês</li>
+                  </ul>
+                  <p class="quiz-tooltip-fonte">📄 Fonte: <a href="https://www.cemig.com.br/atendimento/tarifas-e-servicos/tarifas/" target="_blank" rel="noopener">Tarifas CEMIG 2024</a> | Resolução ANEEL nº 1000/2021</p>
+                </div>
                 <select id="ligacao">
-                  <option value="mono">Monofásico</option>
-                  <option value="bi" selected>Bifásico</option>
-                  <option value="tri">Trifásico</option>
+                  <option value="mono">Monofásico (1 fase)</option>
+                  <option value="bi" selected>Bifásico (2 fases)</option>
+                  <option value="tri">Trifásico (3 fases)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="quiz-fields-row">
+              <div class="field">
+                <label>
+                  Bandeira tarifária atual
+                  <button class="quiz-tooltip-btn" data-tooltip="bandeira" aria-label="O que é isso?">?</button>
+                </label>
+                <div class="quiz-tooltip-box" id="tooltip-bandeira">
+                  <strong>O que é bandeira tarifária?</strong>
+                  <p>É um sistema criado pela ANEEL que adiciona um custo extra à conta de luz conforme a situação do sistema elétrico brasileiro.</p>
+                  <ul>
+                    <li>🟢 <strong>Verde:</strong> Sem cobrança extra. Sistema elétrico em boa situação.</li>
+                    <li>🟡 <strong>Amarela:</strong> R$ 1,885 por 100 kWh consumidos.</li>
+                    <li>🔴 <strong>Vermelha 1:</strong> R$ 3,971 por 100 kWh.</li>
+                    <li>🔴🔴 <strong>Vermelha 2:</strong> R$ 9,492 por 100 kWh. Situação crítica.</li>
+                    <li>⚫ <strong>Escassez Hídrica:</strong> R$ 14,20 por 100 kWh (emergência).</li>
+                  </ul>
+                  <p><strong>Como saber a bandeira atual?</strong> Ela aparece na sua conta de luz, no app da CEMIG ou no site oficial da ANEEL:</p>
+                  <p class="quiz-tooltip-fonte">📄 <a href="https://www.aneel.gov.br/bandeiras-tarifarias" target="_blank" rel="noopener">aneel.gov.br/bandeiras-tarifarias</a></p>
+                </div>
+                <select id="bandeira">
+                  <option value="0">🟢 Verde (sem adicional)</option>
+                  <option value="1.885" selected>🟡 Amarela (+R$ 1,885/100kWh)</option>
+                  <option value="3.971">🔴 Vermelha 1 (+R$ 3,971/100kWh)</option>
+                  <option value="9.492">🔴🔴 Vermelha 2 (+R$ 9,492/100kWh)</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label>
+                  Inclinação do telhado
+                  <button class="quiz-tooltip-btn" data-tooltip="telhado" aria-label="O que é isso?">?</button>
+                </label>
+                <div class="quiz-tooltip-box" id="tooltip-telhado">
+                  <strong>Por que a inclinação importa?</strong>
+                  <p>A inclinação do telhado afeta diretamente a captação de energia solar. Em Minas Gerais, o ângulo ideal de inclinação dos painéis é entre <strong>15° e 25°</strong>.</p>
+                  <ul>
+                    <li><strong>Telhado plano (0–10°):</strong> Pode precisar de estrutura adicional para inclinar os painéis. Eficiência ~90%.</li>
+                    <li><strong>Inclinação leve (10–25°):</strong> Ideal para MG. Eficiência máxima ~100%.</li>
+                    <li><strong>Inclinação alta (25–40°):</strong> Ainda bom, mas começa a perder eficiência. ~95%.</li>
+                    <li><strong>Muito inclinado (40°+):</strong> Telha colonial alta, por exemplo. Eficiência ~85%.</li>
+                  </ul>
+                  <p><strong>Não sabe a inclinação?</strong> Escolha "Média" — é o padrão mais comum em Minas Gerais.</p>
+                </div>
+                <select id="telhado">
+                  <option value="0.90">Plano ou muito baixo (0–10°)</option>
+                  <option value="1.00" selected>Médio — padrão MG (10–25°)</option>
+                  <option value="0.95">Inclinado (25–40°)</option>
+                  <option value="0.85">Muito inclinado (40°+)</option>
                 </select>
               </div>
             </div>
@@ -565,50 +631,96 @@
           <button type="button" class="quiz-btn-back">← Voltar</button>
         </div>
 
-        <!-- Passo 5: Tela de revelação (análise simulada + resultado) -->
+        <!-- Passo 5: Resultado -->
         <div class="quiz-step quiz-step-revelacao" data-step="5">
           <div class="quiz-revelacao-loading" id="quiz-revelacao-loading">
             <div class="quiz-spinner"></div>
             <div class="quiz-revelacao-msg" id="quiz-revelacao-msg">Processando dados...</div>
           </div>
-          
+
           <div class="sim-results" id="sim-results" style="display:none;">
-            <div class="results-title">☀️ Resultado da simula&ccedil;&atilde;o</div>
+            <div class="results-title">☀️ Resultado da simulação</div>
+
+            <!-- Aviso de região -->
+            <div id="aviso-regiao" style="display:none;background:rgba(74,93,249,0.08);border:1px solid rgba(74,93,249,0.2);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:0.85rem;color:var(--text-muted);"></div>
+
             <div class="metrics">
               <div class="metric highlight">
-                <div class="metric-label">Economia mensal</div>
-                <div class="metric-value" id="res-economia">&mdash;</div>
-                <div class="metric-unit">reais/m&ecirc;s</div>
+                <div class="metric-label">
+                  Economia mensal
+                  <button class="quiz-tooltip-btn quiz-tooltip-btn--small" data-tooltip="res-economia-mensal" aria-label="O que é isso?">?</button>
+                </div>
+                <div class="metric-value" id="res-economia">—</div>
+                <div class="metric-unit">reais/mês</div>
+                <div class="quiz-tooltip-box" id="tooltip-res-economia-mensal">
+                  <strong>Como calculamos?</strong>
+                  <p>Economia mensal = Valor da conta atual − Taxa mínima de disponibilidade CEMIG. Com energia solar, você só paga a taxa mínima obrigatória (entre R$ 54 e R$ 162/mês dependendo da sua ligação).</p>
+                  <p class="quiz-tooltip-fonte">Base: Tarifa CEMIG B1/B2/B3 vigente para MG — atualizada pela ANEEL anualmente.</p>
+                </div>
               </div>
               <div class="metric highlight">
                 <div class="metric-label">Economia anual</div>
-                <div class="metric-value" id="res-anual">&mdash;</div>
+                <div class="metric-value" id="res-anual">—</div>
                 <div class="metric-unit">reais/ano</div>
               </div>
               <div class="metric">
-                <div class="metric-label">Pot&ecirc;ncia do sistema</div>
-                <div class="metric-value" id="res-kwp">&mdash;</div>
-                <div class="metric-unit">kWp necess&aacute;rios</div>
+                <div class="metric-label">
+                  Potência do sistema
+                  <button class="quiz-tooltip-btn quiz-tooltip-btn--small" data-tooltip="res-kwp" aria-label="O que é isso?">?</button>
+                </div>
+                <div class="metric-value" id="res-kwp">—</div>
+                <div class="metric-unit">kWp necessários</div>
+                <div class="quiz-tooltip-box" id="tooltip-res-kwp">
+                  <strong>O que é kWp?</strong>
+                  <p>kWp (kilowatt-pico) é a potência máxima que o sistema solar gera em condições ideais de sol pleno. Quanto maior o kWp, maior o sistema e maior a geração de energia.</p>
+                  <p>Fórmula usada: kWp = (consumo mensal em kWh) ÷ (irradiação solar local × 30 dias × performance ratio de 78%)</p>
+                </div>
               </div>
               <div class="metric">
-                <div class="metric-label">N&ordm; de pain&eacute;is</div>
-                <div class="metric-value" id="res-paineis">&mdash;</div>
-                <div class="metric-unit">pain&eacute;is de 550W</div>
+                <div class="metric-label">Nº de painéis</div>
+                <div class="metric-value" id="res-paineis">—</div>
+                <div class="metric-unit">painéis de 550W</div>
               </div>
               <div class="metric">
-                <div class="metric-label">Gera&ccedil;&atilde;o mensal</div>
-                <div class="metric-value" id="res-geracao">&mdash;</div>
-                <div class="metric-unit">kWh/m&ecirc;s</div>
+                <div class="metric-label">
+                  Geração mensal
+                  <button class="quiz-tooltip-btn quiz-tooltip-btn--small" data-tooltip="res-geracao" aria-label="O que é isso?">?</button>
+                </div>
+                <div class="metric-value" id="res-geracao">—</div>
+                <div class="metric-unit">kWh/mês</div>
+                <div class="quiz-tooltip-box" id="tooltip-res-geracao">
+                  <strong>O que é kWh?</strong>
+                  <p>kWh (kilowatt-hora) é a unidade de energia elétrica consumida. É o que a CEMIG mede e cobra na sua conta. 1 kWh = um aparelho de 1.000W funcionando por 1 hora.</p>
+                  <p>Comparação: geladeira comum consome ~35 kWh/mês. Ar-condicionado 9.000 BTU consome ~90 kWh/mês.</p>
+                </div>
               </div>
               <div class="metric">
-                <div class="metric-label">Investimento est.</div>
-                <div class="metric-value" id="res-invest">&mdash;</div>
-                <div class="metric-unit">custo m&eacute;dio</div>
+                <div class="metric-label">
+                  Investimento est.
+                  <button class="quiz-tooltip-btn quiz-tooltip-btn--small" data-tooltip="res-invest" aria-label="O que é isso?">?</button>
+                </div>
+                <div class="metric-value" id="res-invest">—</div>
+                <div class="metric-unit">custo médio</div>
+                <div class="quiz-tooltip-box" id="tooltip-res-invest">
+                  <strong>Como calculamos o investimento?</strong>
+                  <p>Estimativa baseada no custo médio de sistemas solares no mercado brasileiro em 2024: entre R$ 3.500 e R$ 5.000 por kWp instalado, incluindo painéis, inversor, estrutura, cabeamento e mão de obra.</p>
+                  <p><strong>Importante:</strong> o valor real pode variar. A ProSol faz um projeto personalizado com orçamento exato e sem compromisso.</p>
+                  <p class="quiz-tooltip-fonte">📄 Fonte: ABSOLAR — Associação Brasileira de Energia Solar Fotovoltaica</p>
+                </div>
               </div>
             </div>
+
             <div class="payback-wrap">
-              <div class="payback-label">Retorno do investimento (payback):
-                <strong id="res-payback">&mdash;</strong>
+              <div class="payback-label">
+                Retorno do investimento (payback):
+                <strong id="res-payback">—</strong>
+                <button class="quiz-tooltip-btn quiz-tooltip-btn--small" data-tooltip="res-payback-info" aria-label="O que é isso?">?</button>
+              </div>
+              <div class="quiz-tooltip-box" id="tooltip-res-payback-info">
+                <strong>O que é payback?</strong>
+                <p>Payback é o tempo que você leva para recuperar o valor investido no sistema solar através da economia na conta de luz. Após o payback, você gera energia praticamente de graça pelos próximos 20+ anos.</p>
+                <p>Fórmula: Payback = Investimento ÷ Economia mensal</p>
+                <p><strong>Média nacional em 2024:</strong> 3 a 6 anos. Regiões com boa irradiação como o Vale do Jequitinhonha tendem ao limite inferior.</p>
               </div>
               <div class="payback-bar-bg">
                 <div class="payback-bar-fill" id="payback-bar" style="width:0%"></div>
@@ -618,103 +730,82 @@
               </div>
             </div>
 
-            <!-- Detalhes Financeiros Adicionais -->
-            <div class="calc-finance-item">
-              <div class="calc-finance-label">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
-                  <polyline points="13 2 13 9 20 9" />
-                </svg>
-                Conta atual (sem solar)
-              </div>
-              <div class="calc-finance-value" id="res-sem-solar">—</div>
-              <div class="calc-finance-desc">Valor mensal que você paga hoje</div>
-            </div>
-
-            <div class="calc-finance-item">
-              <div class="calc-finance-label">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                  <polyline points="17 6 23 6 23 12" />
-                </svg>
-                Conta com solar
-              </div>
-              <div class="calc-finance-value" id="res-com-solar">—</div>
-              <div class="calc-finance-desc">Apenas a taxa de disponibilidade mínima</div>
-            </div>
             <div class="calc-finance-details">
               <div class="calc-finance-item">
-                <div class="calc-finance-label">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2v20M2 12h20M8.5 15.5l7-7M15.5 15.5l7-7" />
-                  </svg>
-                  Economia Mensal Est.
-                </div>
-                <div class="calc-finance-value" id="res-economia-mensal">—</div>
-                <div class="calc-finance-desc">Valor aproximado de redução na conta de luz</div>
+                <div class="calc-finance-label">Conta atual (sem solar)</div>
+                <div class="calc-finance-value" id="res-sem-solar">—</div>
+                <div class="calc-finance-desc">Valor mensal que você paga hoje</div>
               </div>
-
               <div class="calc-finance-item">
                 <div class="calc-finance-label">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                  </svg>
+                  Conta com solar
+                  <button class="quiz-tooltip-btn quiz-tooltip-btn--small" data-tooltip="res-com-solar" aria-label="O que é isso?">?</button>
+                </div>
+                <div class="calc-finance-value" id="res-com-solar">—</div>
+                <div class="calc-finance-desc">Apenas a taxa mínima da CEMIG</div>
+                <div class="quiz-tooltip-box" id="tooltip-res-com-solar">
+                  <strong>Por que ainda tem custo?</strong>
+                  <p>Mesmo com energia solar, a CEMIG cobra uma taxa mínima de disponibilidade pela conexão à rede elétrica. Esse valor é fixo e não pode ser eliminado pela geração solar. Em 2024 na CEMIG:</p>
+                  <ul>
+                    <li>Monofásico: ~R$ 54/mês (30 kWh)</li>
+                    <li>Bifásico: ~R$ 108/mês (50 kWh)</li>
+                    <li>Trifásico: ~R$ 162/mês (100 kWh)</li>
+                  </ul>
+                  <p class="quiz-tooltip-fonte">📄 Resolução ANEEL nº 1000/2021 — Art. 98</p>
+                </div>
+              </div>
+              <div class="calc-finance-item">
+                <div class="calc-finance-label">Economia mensal estimada</div>
+                <div class="calc-finance-value" id="res-economia-mensal">—</div>
+                <div class="calc-finance-desc">Redução na sua conta de luz</div>
+              </div>
+              <div class="calc-finance-item">
+                <div class="calc-finance-label">
                   Economia em 25 anos
+                  <button class="quiz-tooltip-btn quiz-tooltip-btn--small" data-tooltip="res-25anos" aria-label="O que é isso?">?</button>
                 </div>
                 <div class="calc-finance-value" id="res-economia-total">—</div>
-                <div class="calc-finance-desc">Considerando vida útil dos painéis solares</div>
-              </div>
-
-              <div class="calc-finance-item">
-                <div class="calc-finance-label">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 8v8" />
-                    <path d="m8 12 4 4 4-4" />
-                  </svg>
-                  ROI (Retorno sobre Investimento)
+                <div class="calc-finance-desc">Vida útil garantida dos painéis</div>
+                <div class="quiz-tooltip-box" id="tooltip-res-25anos">
+                  <strong>Por que 25 anos?</strong>
+                  <p>Painéis solares de qualidade têm garantia de performance por 25 anos — os fabricantes garantem que após 25 anos o painel ainda produz pelo menos 80% da capacidade original.</p>
+                  <p>Este cálculo considera a economia acumulada sem correção monetária. Com a inflação energética histórica de ~8% ao ano, o valor real seria significativamente maior.</p>
                 </div>
-                <div class="calc-finance-value" id="res-roi">—</div>
-                <div class="calc-finance-desc">Retorno total após período de payback</div>
               </div>
-
+              <div class="calc-finance-item">
+                <div class="calc-finance-label">ROI (Retorno sobre Investimento)</div>
+                <div class="calc-finance-value" id="res-roi">—</div>
+                <div class="calc-finance-desc">Retorno total após payback</div>
+              </div>
               <div class="calc-finance-item">
                 <div class="calc-finance-label">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z" />
-                    <path d="m9 12 2 2 4-4" />
-                  </svg>
-                  Benefícios ESG
+                  CO₂ evitado em 25 anos
+                  <button class="quiz-tooltip-btn quiz-tooltip-btn--small" data-tooltip="res-co2-info" aria-label="O que é isso?">?</button>
                 </div>
                 <div class="calc-finance-value" id="res-co2">—</div>
-                <div class="calc-finance-desc">Toneladas de CO₂ evitadas em 25 anos</div>
+                <div class="calc-finance-desc">Toneladas de CO₂ não emitidas</div>
+                <div class="quiz-tooltip-box" id="tooltip-res-co2-info">
+                  <strong>Como calculamos?</strong>
+                  <p>O fator de emissão do sistema elétrico brasileiro é de aproximadamente <strong>0,0839 tCO₂/MWh</strong> (toneladas de CO₂ por MWh gerado).</p>
+                  <p>Fonte: Inventário Nacional de Emissões — Ministério da Ciência, Tecnologia e Inovação</p>
+                  <p class="quiz-tooltip-fonte">📄 <a href="https://www.gov.br/mcti/pt-br" target="_blank" rel="noopener">gov.br/mcti</a></p>
+                </div>
               </div>
+            </div>
+
+            <!-- Tarifa usada no cálculo -->
+            <div id="tarifa-usada" style="margin-top:16px;padding:12px 16px;background:var(--bg-surface);border-radius:10px;font-size:0.78rem;color:var(--text-muted);border:1px solid var(--border);">
             </div>
 
             <button type="button" class="btn-cta" onclick="enviarSimulacaoWhatsApp()">
-              📲 Quero receber um or&ccedil;amento detalhado
+              📲 Quero receber um orçamento detalhado
             </button>
-            <p class="sim-disclaimer">* Simula&ccedil;&atilde;o estimativa com base em dados m&eacute;dios de
-              irradia&ccedil;&atilde;o solar
-              (INPE/CRESESB), tarifa m&eacute;dia estadual e performance ratio de 78%.
-              Os valores reais podem variar conforme concession&aacute;ria local, inclina&ccedil;&atilde;o
-              do telhado, sombreamento e equipamentos escolhidos.</p>
+            <p class="sim-disclaimer">* Simulação estimativa com base em dados de irradiação solar do INPE/CRESESB para Minas Gerais, tarifas CEMIG vigentes e performance ratio de 78%. Os valores reais podem variar conforme sombreamento, inclinação do telhado e equipamentos escolhidos. Solicite uma visita técnica gratuita para um orçamento exato.</p>
           </div>
         </div>
 
-        <!-- selects ocultos para calcularSolar() ler -->
-        <select id="tipo" style="display:none;">
-          <option value="residencial" selected>Residencial</option>
-          <option value="comercial">Comercial</option>
-          <option value="rural">Rural / Industrial</option>
-        </select>
+        <!-- campos ocultos -->
+        <select id="tipo" style="display:none;"><option value="residencial" selected>Residencial</option><option value="comercial">Comercial</option><option value="rural">Rural / Industrial</option></select>
         <input type="number" id="conta" value="300" min="50" max="50000" style="display:none;" />
       </div>
     </div>

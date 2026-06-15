@@ -344,133 +344,33 @@ const SimulacaoSolar = (function () {
   let _dados = null;
 
   function calcularSolar() {
-    const uf = document.getElementById('uf').value;
-    const conta = parseFloat(document.getElementById('conta').value);
-    const ligacao = document.getElementById('ligacao').value;
-    const cidade = document.getElementById('cidade') ? sanitize(document.getElementById('cidade').value.trim()) : '';
-    const nome = document.getElementById('nome') ? sanitize(document.getElementById('nome').value.trim()) : '';
-    const celular = document.getElementById('celular') ? sanitize(document.getElementById('celular').value.trim()) : '';
-    const tipo = document.getElementById('tipo') ? document.getElementById('tipo').value : '';
+    const tipo      = document.getElementById('tipo')?.value || 'residencial';
+    const conta     = parseFloat(document.getElementById('conta')?.value) || 300;
+    const ligacao   = document.getElementById('ligacao')?.value || 'bi';
+    const telhado   = parseFloat(document.getElementById('telhado')?.value) || 1.00;
+    const bandeira  = parseFloat(document.getElementById('bandeira')?.value) || 0;
+    const cidade    = (document.getElementById('cidade')?.value || '').toLowerCase().trim();
+    const nome      = document.getElementById('nome') ? sanitize(document.getElementById('nome').value.trim()) : '';
+    const celular   = document.getElementById('celular') ? sanitize(document.getElementById('celular').value.trim()) : '';
 
     const tipoLabels = { residencial: 'Residencial', comercial: 'Comercial', rural: 'Rural / Industrial' };
     const tipoLabel = tipoLabels[tipo] || '';
 
-    if (!uf || !conta || conta <= 0) {
-      showErrorToast('Preencha o estado e o valor da conta de energia.');
+    if (!conta || conta <= 0) {
+      showErrorToast('Informe o valor da conta de energia.');
       return;
     }
 
-    /* ---- 1. VARIÁVEIS BASE ---- */
-    // Lê parâmetros editáveis do painel — com fallback para defaults por UF
-    const paramKwh       = parseFloat(document.getElementById('param-kwh')?.value)       || null;
-    const paramHsp       = parseFloat(document.getElementById('param-hsp')?.value)       || null;
-    const paramPr        = parseFloat(document.getElementById('param-pr')?.value)        || null;
-    const paramCustoKwp  = parseFloat(document.getElementById('param-custo-kwp')?.value) || null;
-    const paramTaxaDisp  = parseFloat(document.getElementById('param-taxa-disp')?.value) || null;
-    const paramInflacao  = parseFloat(document.getElementById('param-inflacao')?.value)  || null;
-
-    const hsp      = paramHsp  != null ? paramHsp  : (HSP_UF[uf]    || 5.0);
-    const tarifa   = paramKwh  != null ? paramKwh  : (TARIFA_UF[uf] || 0.95);
-    const pr       = paramPr   != null ? paramPr / 100 : PR;
-    const custoKwp = paramCustoKwp != null ? paramCustoKwp : CUSTO_KWP;
-    const inflacao = paramInflacao  != null ? paramInflacao / 100 : INFLACAO_ANUAL;
-
-    // Taxa de disponibilidade: se o usuário editou em R$, converte para kWh
-    const taxaDispBase = TAXA_DISP[ligacao] || 30;
-    const taxaDisp = paramTaxaDisp != null
-      ? Math.round(paramTaxaDisp / tarifa)
-      : taxaDispBase;
-
-    /* ---- 2. CONSUMO ---- */
-    const consumo_kwh = conta / tarifa;
-    const consumo_util = Math.max(consumo_kwh - taxaDisp, 0);
-
-    /* ---- 3. DIMENSIONAMENTO ---- */
-    const kwp = consumo_kwh / (hsp * 30 * pr);
-    const geracao_mensal = Math.round(kwp * hsp * 30 * pr);
-    const paineis = Math.ceil((kwp * 1000) / PAINEL_W);
-
-    /* ---- 4. PREÇO FINAL ---- */
-    const finalPrice = Math.round(kwp * custoKwp);
-
-    /* ---- 5. ECONOMIA ---- */
-    const noSystemMonthlyPrice = Math.round(conta);
-    const systemMonthlyPrice = Math.round(taxaDisp * tarifa);
-    const economia_mensal = Math.round(consumo_util * tarifa);
-    const economia_anual = economia_mensal * 12;
-
-    /* ---- 6. PAYBACK ---- */
-    let acumulado = -finalPrice;
-    let paybackAnos = 0;
-    let paybackMeses = 0;
-    let economia_ano = economia_anual;
-
-    for (let ano = 1; ano <= 25; ano++) {
-      const anterior = acumulado;
-      acumulado += economia_ano;
-      if (anterior < 0 && acumulado >= 0 && paybackAnos === 0) {
-        paybackAnos = ano - 1;
-        paybackMeses = Math.round((-anterior / economia_ano) * 12);
-        if (paybackMeses === 12) { paybackAnos++; paybackMeses = 0; }
-      }
-      economia_ano = economia_ano * (1 + inflacao);
-    }
-
-    /* ---- 7. CASH FLOW 25 ANOS ---- */
-    const cashFlow = [];
-    let fluxo = -finalPrice;
-    let eco = economia_anual;
-    for (let ano = 1; ano <= 25; ano++) {
-      fluxo += eco;
-      cashFlow.push(Math.round(fluxo));
-      eco = eco * (1 + inflacao);
-    }
-
-    /* ---- 8. TOTAIS FINAIS ---- */
-    const totalEconomy = cashFlow[24] + finalPrice;
-    const roi = Math.round((cashFlow[24] / finalPrice / 25) * 100);
-    const co2_evitado = Math.round(geracao_mensal * 12 * 25 * 0.000084);
-
-    /* ---- 9. FORMATAÇÃO ---- */
-    const fmt = n => Math.round(n).toLocaleString('pt-BR');
-    const fmtR$ = n => 'R$ ' + fmt(n);
-
-    /* ---- 10. ATUALIZAR DOM ---- */
-    document.getElementById('res-economia').textContent = fmtR$(economia_mensal);
-    document.getElementById('res-anual').textContent = fmtR$(economia_anual);
-    document.getElementById('res-kwp').textContent = kwp.toFixed(2) + ' kWp';
-    document.getElementById('res-paineis').textContent = paineis;
-    document.getElementById('res-geracao').textContent = fmt(geracao_mensal) + ' kWh';
-    document.getElementById('res-invest').textContent = fmtR$(finalPrice);
-
-    const paybackStr = paybackAnos > 0
-      ? paybackMeses > 0
-        ? `${paybackAnos} anos e ${paybackMeses} meses`
-        : `${paybackAnos} anos`
-      : `${paybackMeses} meses`;
-    document.getElementById('res-payback').textContent = paybackStr;
-    document.getElementById('payback-bar').style.width =
-      Math.min(((paybackAnos + paybackMeses / 12) / 20) * 100, 100) + '%';
-
-    document.getElementById('res-economia-mensal').textContent = fmtR$(economia_mensal);
-    document.getElementById('res-economia-total').textContent = fmtR$(Math.round(totalEconomy));
-    document.getElementById('res-roi').textContent = roi + '%';
-    document.getElementById('res-sem-solar').textContent = fmtR$(noSystemMonthlyPrice);
-    document.getElementById('res-com-solar').textContent = fmtR$(systemMonthlyPrice);
-    document.getElementById('res-co2').textContent = fmt(co2_evitado) + ' t';
-
-    /* ---- 11. MOSTRAR RESULTADOS ---- */
-    const results = document.getElementById('sim-results');
-    results.classList.add('show');
-    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Chama a função global que faz o cálculo completo
+    calcularSolarCalc();
 
     _dados = {
       nome, celular, cidade, tipoLabel,
-      economiaMensal: fmtR$(economia_mensal),
-      economiaAnual: fmtR$(economia_anual),
-      kwp: kwp.toFixed(2),
-      paineis,
-      payback: paybackStr
+      economiaMensal: document.getElementById('res-economia-mensal')?.textContent || '',
+      economiaAnual: document.getElementById('res-anual')?.textContent || '',
+      kwp: document.getElementById('res-kwp')?.textContent || '',
+      paineis: document.getElementById('res-paineis')?.textContent || '',
+      payback: document.getElementById('res-payback')?.textContent || ''
     };
   }
 
@@ -1537,5 +1437,166 @@ document.querySelectorAll('[data-video-player]').forEach(el => videoObserver.obs
   goToStep(1);
 })();
 
+/* ============================================================
+   CÁLCULO SOLAR STANDALONE — chamado pelo quiz e pelo painel de parâmetros
+   ============================================================ */
+function calcularSolarCalc() {
+  const CONFIG = {
+    tarifas: {
+      residencial: 0.9012,
+      comercial:   0.8147,
+      rural:       0.7234,
+    },
+    taxaMinima: {
+      mono: 54.00,
+      bi:   108.00,
+      tri:  162.00,
+    },
+    irradiacaoMG: {
+      default:          5.40,
+      almenara:         5.80,
+      jacinto:          5.75,
+      'salto da divisa':5.75,
+      'pedra azul':     5.70,
+      'mata verde':     5.72,
+      'rio do prado':   5.68,
+      'santa maria do salto': 5.65,
+      'joaima':         5.70,
+      'bandeira':       5.65,
+      'curral de dentro': 5.60,
+      'virgem da lapa': 5.55,
+      'araçuaí':        5.60,
+      'itaobim':        5.55,
+      'medina':         5.58,
+      'jequitinhonha':  5.50,
+      'montes claros':  5.45,
+      'januária':       5.50,
+      'pirapora':       5.40,
+      'teófilo otoni':  5.35,
+      'governador valadares': 5.20,
+      'ipatinga':       5.10,
+      'uberlândia':     5.30,
+      'uberaba':        5.25,
+      'belo horizonte': 5.00,
+      'contagem':       5.00,
+      'betim':          5.05,
+      'juiz de fora':   4.90,
+      'poços de caldas': 4.80,
+      'varginha':       4.85,
+      'lavras':         4.90,
+      'pouso alegre':   4.85,
+    },
+    custoKwp: {
+      min: 3500,
+      max: 5000,
+      medio: 4200,
+    },
+    potenciaPainel: 550,
+    performanceRatio: 0.78,
+    fatorCO2: 0.0839,
+  };
 
+  const tipo      = document.getElementById('tipo')?.value || 'residencial';
+  const conta     = parseFloat(document.getElementById('conta')?.value) || 300;
+  const ligacao   = document.getElementById('ligacao')?.value || 'bi';
+  const telhado   = parseFloat(document.getElementById('telhado')?.value) || 1.00;
+  const cidade    = (document.getElementById('cidade')?.value || '').toLowerCase().trim();
+
+  const tarifa = CONFIG.tarifas[tipo] || CONFIG.tarifas.residencial;
+  const taxaMin = CONFIG.taxaMinima[ligacao] || CONFIG.taxaMinima.bi;
+  const irradiacao = CONFIG.irradiacaoMG[cidade] || CONFIG.irradiacaoMG.default;
+
+  const consumoKwh = conta / tarifa;
+  const kwp = consumoKwh / (irradiacao * 30 * CONFIG.performanceRatio * telhado);
+  const paineis = Math.ceil(kwp / (CONFIG.potenciaPainel / 1000));
+  const geracaoMensal = kwp * irradiacao * 30 * CONFIG.performanceRatio * telhado;
+  const contaComSolar = taxaMin;
+  const economiaMensal = Math.max(0, conta - contaComSolar);
+  const economiaAnual = economiaMensal * 12;
+  const investimento = kwp * CONFIG.custoKwp.medio;
+  const paybackAnos = economiaMensal > 0 ? investimento / (economiaMensal * 12) : 0;
+  const economia25anos = economiaMensal * 12 * 25;
+  const roi = investimento > 0 ? ((economia25anos - investimento) / investimento * 100) : 0;
+  const co2 = (geracaoMensal * 12 * 25) / 1000 * CONFIG.fatorCO2;
+
+  const fmt = (v) => 'R$ ' + v.toLocaleString('pt-BR', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+  const fmtDec = (v, d=1) => v.toLocaleString('pt-BR', {minimumFractionDigits: d, maximumFractionDigits: d});
+
+  document.getElementById('res-economia').textContent      = fmt(economiaMensal);
+  document.getElementById('res-anual').textContent         = fmt(economiaAnual);
+  document.getElementById('res-kwp').textContent           = fmtDec(kwp, 2) + ' kWp';
+  document.getElementById('res-paineis').textContent       = paineis;
+  document.getElementById('res-geracao').textContent       = fmtDec(geracaoMensal, 0) + ' kWh';
+  document.getElementById('res-invest').textContent        = fmt(investimento);
+  document.getElementById('res-payback').textContent       = fmtDec(paybackAnos, 1) + ' anos';
+  document.getElementById('res-sem-solar').textContent     = fmt(conta);
+  document.getElementById('res-com-solar').textContent     = fmt(contaComSolar);
+  document.getElementById('res-economia-mensal').textContent = fmt(economiaMensal);
+  document.getElementById('res-economia-total').textContent = fmt(economia25anos);
+  document.getElementById('res-roi').textContent           = fmtDec(roi, 0) + '%';
+  document.getElementById('res-co2').textContent           = fmtDec(co2, 1) + ' t';
+
+  const barPct = Math.min((paybackAnos / 20) * 100, 100);
+  document.getElementById('payback-bar').style.width = barPct + '%';
+
+  const avisoEl = document.getElementById('aviso-regiao');
+  if (avisoEl) {
+    const cidadeConhecida = CONFIG.irradiacaoMG[cidade];
+    if (cidade && cidadeConhecida) {
+      avisoEl.style.display = 'block';
+      avisoEl.innerHTML = '📍 Irradiação solar usada para <strong>' + cidade + '</strong>: <strong>' + fmtDec(irradiacao, 2) + ' kWh/m²/dia</strong> — dados do Atlas INPE/LABREN para MG.';
+    } else if (cidade) {
+      avisoEl.style.display = 'block';
+      avisoEl.innerHTML = '📍 Cidade não encontrada na base. Usando irradiação média de MG: <strong>' + fmtDec(irradiacao, 2) + ' kWh/m²/dia</strong>. Para resultado mais preciso, solicite uma visita técnica.';
+    } else {
+      avisoEl.style.display = 'none';
+    }
+  }
+
+  const tarifaEl = document.getElementById('tarifa-usada');
+  if (tarifaEl) {
+    const nomesTipo = {residencial: 'B1 Residencial', comercial: 'B3 Comercial', rural: 'B2 Rural'};
+    const nomesLigacao = {mono: 'Monofásico', bi: 'Bifásico', tri: 'Trifásico'};
+    tarifaEl.innerHTML = '⚡ <strong>Base do cálculo:</strong> Tarifa CEMIG ' + (nomesTipo[tipo] || tipo) + ' — R$ ' + fmtDec(tarifa, 4) + '/kWh | ' + nomesLigacao[ligacao] + ' | Taxa mínima: ' + fmt(taxaMin) + '/mês | Irradiação: ' + fmtDec(irradiacao, 2) + ' kWh/m²/dia';
+  }
+
+  const results = document.getElementById('sim-results');
+  if (results) {
+    results.style.display = 'block';
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+/* ============================================================
+   TOOLTIPS DA CALCULADORA
+   ============================================================ */
+(function() {
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.quiz-tooltip-btn');
+    if (btn) {
+      e.stopPropagation();
+      const tooltipId = btn.dataset.tooltip;
+      const box = document.getElementById('tooltip-' + tooltipId);
+      if (!box) return;
+      const isVisible = box.classList.contains('visible');
+      document.querySelectorAll('.quiz-tooltip-box.visible').forEach(el => {
+        el.classList.remove('visible');
+      });
+      document.querySelectorAll('.quiz-tooltip-btn.active').forEach(el => {
+        el.classList.remove('active');
+      });
+      if (!isVisible) {
+        box.classList.add('visible');
+        btn.classList.add('active');
+      }
+    } else if (!e.target.closest('.quiz-tooltip-box')) {
+      document.querySelectorAll('.quiz-tooltip-box.visible').forEach(el => {
+        el.classList.remove('visible');
+      });
+      document.querySelectorAll('.quiz-tooltip-btn.active').forEach(el => {
+        el.classList.remove('active');
+      });
+    }
+  });
+})();
 
