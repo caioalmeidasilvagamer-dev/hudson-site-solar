@@ -1156,7 +1156,7 @@ html.dark .footer-col-title {
 }
 
 .footer-col-list a.footer-link--placeholder {
-  opacity: 0.5;
+  color: #777777;
   cursor: default;
   pointer-events: none;
 }
