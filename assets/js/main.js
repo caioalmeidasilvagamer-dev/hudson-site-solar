@@ -619,8 +619,6 @@ function initContatoForm() {
 
     // Fase 6: Toast + Confetti em vez de alert()
     form.reset();
-    showFormToast();
-    launchConfetti();
   });
 }
 
@@ -828,112 +826,8 @@ function initContatoForm() {
 })();
 
 
-/* ===== 5. CONFETTI DOURADO ===== */
-function launchConfetti() {
-  const canvas = document.getElementById('confetti-canvas');
-  if (!canvas) return;
-
-  const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  const COLORS = ['#f0c040', '#ffd44a', '#fff8e7', '#ffb830', '#ff6a00', '#ffffff'];
-  const COUNT = 110;
-  const DURATION = 2800; // ms
-  const start = performance.now();
-
-  const pieces = Array.from({ length: COUNT }, () => ({
-    x: Math.random() * canvas.width,
-    y: -Math.random() * canvas.height * 0.5 - 10,
-    w: Math.random() * 8 + 4,
-    h: Math.random() * 14 + 6,
-    r: Math.random() * Math.PI * 2,
-    dr: (Math.random() - 0.5) * 0.18,
-    vx: (Math.random() - 0.5) * 3.5,
-    vy: Math.random() * 4 + 2,
-    color: COLORS[Math.floor(Math.random() * COLORS.length)],
-    alpha: 1,
-  }));
-
-  function drawConfetti(now) {
-    const elapsed = now - start;
-    if (elapsed > DURATION) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      return;
-    }
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const fadeStart = DURATION * 0.65;
-    const globalAlpha = elapsed > fadeStart
-      ? 1 - (elapsed - fadeStart) / (DURATION - fadeStart)
-      : 1;
-
-    for (const p of pieces) {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.r += p.dr;
-      p.vy += 0.08; // gravidade suave
-
-      ctx.save();
-      ctx.globalAlpha = globalAlpha * p.alpha;
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.r);
-      ctx.fillStyle = p.color;
-      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-      ctx.restore();
-    }
-
-    requestAnimationFrame(drawConfetti);
-  }
-
-  requestAnimationFrame(drawConfetti);
-}
-
-
-/* ===== 6. TOAST DE SUCESSO DO FORMULÁRIO ===== */
-function showFormToast() {
-  const toast = document.getElementById('form-toast');
-  const closeBtn = document.getElementById('toast-close');
-  if (!toast) return;
-
-  toast.classList.add('show');
-
-  // Auto-fechar após 5s
-  const timer = setTimeout(() => {
-    toast.classList.remove('show');
-  }, 5000);
-
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      clearTimeout(timer);
-      toast.classList.remove('show');
-    }, { once: true });
-  }
-}
-
 function showErrorToast(msg) {
-  const toast = document.getElementById('form-toast');
-  const toastMsg = toast ? toast.querySelector('.toast-msg') : null;
-  const closeBtn = document.getElementById('toast-close');
-  if (!toast) { alert(msg); return; }
-
-  toast.style.setProperty('background', '#b91c1c');
-  if (toastMsg) toastMsg.textContent = msg;
-  toast.classList.add('show');
-
-  const timer = setTimeout(() => {
-    toast.classList.remove('show');
-    toast.style.removeProperty('background');
-  }, 4000);
-
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      clearTimeout(timer);
-      toast.classList.remove('show');
-      toast.style.removeProperty('background');
-    }, { once: true });
-  }
+  alert(msg);
 }
 
 
