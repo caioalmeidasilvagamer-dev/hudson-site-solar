@@ -1123,38 +1123,23 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!tracks[0].el) return;
 
   const SPEED = 0.5; // px por frame
-  const RESUME_DELAY = 10000; // 10 segundos
 
-  let paused = false;
-  let resumeTimer = null;
   const offsets = [0, 0, 0];
 
   // Inicializa offset do track 2 (direita) na metade pra parecer que já começou no meio
   offsets[1] = -(tracks[1].el.scrollWidth / 2);
 
-  function pauseAll() {
-    paused = true;
-    clearTimeout(resumeTimer);
-    resumeTimer = setTimeout(() => { paused = false; }, RESUME_DELAY);
-  }
-
-  const section = document.getElementById('projetos-carrosseis');
-  section.addEventListener('mouseenter', pauseAll);
-  section.addEventListener('touchstart', pauseAll, { passive: true });
-
   function tick() {
-    if (!paused) {
-      tracks.forEach((t, i) => {
-        const half = t.el.scrollWidth / 2;
-        offsets[i] += SPEED * t.dir;
+    tracks.forEach((t, i) => {
+      const half = t.el.scrollWidth / 2;
+      offsets[i] += SPEED * t.dir;
 
-        // loop: quando passou metade, volta ao início
-        if (offsets[i] <= -half) offsets[i] = 0;
-        if (offsets[i] >= 0 && t.dir === 1) offsets[i] = -half;
+      // loop: quando passou metade, volta ao início
+      if (offsets[i] <= -half) offsets[i] = 0;
+      if (offsets[i] >= 0 && t.dir === 1) offsets[i] = -half;
 
-        t.el.style.transform = `translateX(${offsets[i]}px)`;
-      });
-    }
+      t.el.style.transform = `translateX(${offsets[i]}px)`;
+    });
     requestAnimationFrame(tick);
   }
 
