@@ -1257,7 +1257,12 @@ document.querySelectorAll('[data-video-player]').forEach(wrap => {
     if (timeEl) timeEl.textContent = fmtTime(video.currentTime);
   });
 
-  // Estado inicial
+  // Estado inicial — mute controlado por tipo de vídeo
+  // contato-video (localização sem fala): inicia muted
+  // hero-preview e equipe (têm fala/som): iniciam com som
+  const src = video.src || video.querySelector('source')?.src || '';
+  const isSilentVideo = src.includes('contato-video');
+  video.muted = isSilentVideo;
   updateIcons();
   updateMuteIcons();
 
