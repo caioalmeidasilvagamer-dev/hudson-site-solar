@@ -1155,6 +1155,12 @@ html.dark .footer-col-title {
   transform: translateX(4px);
 }
 
+.footer-col-list a.footer-link--placeholder {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
 /* Redes Sociais e Botão Voltar ao Topo */
 .footer-social-wrapper {
   display: flex;
