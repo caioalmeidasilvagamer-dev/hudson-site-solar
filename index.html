@@ -520,27 +520,31 @@
 
           <!-- Detalhes técnicos com tooltips -->
           <details class="quiz-advanced">
-            <summary>⚙️ Detalhes técnicos (opcional — aumenta precisão do cálculo)</summary>
+            <summary>⚙️ Ajustar parâmetros do cálculo</summary>
 
-            <div class="quiz-fields-row" style="margin-top:16px;">
+            <!-- BÁSICO — CLIENTE -->
+            <p class="quiz-advanced-subtitle" style="margin-top:16px;">Dados da sua conta de luz (encontre na conta CEMIG)</p>
+
+            <div class="quiz-fields-row">
               <div class="field">
                 <label>
-                  Modalidade tarifária
+                  Tipo de imóvel
                   <button class="quiz-tooltip-btn" data-tooltip="modalidade" aria-label="O que é isso?">?</button>
                 </label>
                 <div class="quiz-tooltip-box" id="tooltip-modalidade">
-                  <strong>O que é modalidade tarifária?</strong>
-                  <p>É a categoria em que sua unidade consumidora está enquadrada na CEMIG.</p>
+                  <strong>Como saber?</strong>
+                  <p>Na conta de luz CEMIG, olhe o campo <strong>"Classe"</strong> ou <strong>"Subgrupo"</strong>.</p>
                   <ul>
-                    <li><strong>Grupo B (Baixa Tensão):</strong> A grande maioria das residências, comércios pequenos e rurais. Tensão de fornecimento até 2,3 kV.</li>
-                    <li><strong>Grupo A (Alta Tensão):</strong> Indústrias, shopping centers, grandes empresas. Tensão acima de 2,3 kV. Tem cobrança de demanda separada.</li>
+                    <li><strong>Residencial (B1):</strong> Casas e apartamentos — 90% das pessoas</li>
+                    <li><strong>Comercial (B3):</strong> Lojas, escritórios, restaurantes</li>
+                    <li><strong>Rural (B2):</strong> Fazendas, sítios, propriedades rurais</li>
                   </ul>
-                  <p><strong>Como saber o seu grupo?</strong> Olhe na conta de luz da CEMIG o campo <strong>"Classe"</strong> ou <strong>"Subgrupo"</strong>. Se não encontrar, ligue para a CEMIG: <strong>0800 721 0196</strong></p>
+                  <p>Se não encontrar, escolha <strong>"Residencial"</strong> — é o mais comum.</p>
                   <p class="quiz-tooltip-fonte">📄 Fonte: <a href="https://www.cemig.com.br/atendimento/tarifas-e-servicos/tarifas/" target="_blank" rel="noopener">Tarifas CEMIG</a></p>
                 </div>
                 <select id="modalidade">
-                  <option value="B">Grupo B (Baixa Tensão) — mais comum</option>
-                  <option value="A">Grupo A (Alta Tensão)</option>
+                  <option value="B">Residencial (B1) — mais comum</option>
+                  <option value="A">Comercial (B3)</option>
                 </select>
               </div>
 
@@ -550,26 +554,19 @@
                   <button class="quiz-tooltip-btn" data-tooltip="ligacao" aria-label="O que é isso?">?</button>
                 </label>
                 <div class="quiz-tooltip-box" id="tooltip-ligacao">
-                  <strong>O que é tipo de ligação?</strong>
-                  <p>É o número de fases elétricas que entram no seu imóvel — aparece na conta da CEMIG.</p>
+                  <strong>Como saber?</strong>
+                  <p>Olhe na conta de luz o campo <strong>"Tipo de Ligação"</strong>. Ou verifique o disjuntor geral:</p>
                   <ul>
-                    <li><strong>Monofásico (1 fase + neutro):</strong> Casas pequenas, apartamentos simples. Limite de 3 kW pelo disjuntor padrão. Na conta: "Monofásico".</li>
-                    <li><strong>Bifásico (2 fases + neutro):</strong> Casas médias, comércios pequenos. Limite de 6 kW. Na conta: "Bifásico".</li>
-                    <li><strong>Trifásico (3 fases + neutro):</strong> Casas grandes, comércios, indústrias. Acima de 6 kW. Na conta: "Trifásico".</li>
+                    <li><strong>Monofásico:</strong> 1 chave no disjuntor geral (casas pequenas)</li>
+                    <li><strong>Bifásico:</strong> 2 chaves (casas médias — mais comum)</li>
+                    <li><strong>Trifásico:</strong> 3 chaves (casas grandes, comércios)</li>
                   </ul>
-                  <p><strong>Como saber o seu?</strong> Olhe na conta de luz no campo <strong>"Tipo de Ligação"</strong> ou verifique o disjuntor geral da sua residência — monofásico tem 1 chave, bifásico tem 2, trifásico tem 3.</p>
-                  <p><strong>Taxa mínima de disponibilidade CEMIG (2024):</strong></p>
-                  <ul>
-                    <li>Monofásico: ~R$ 54/mês</li>
-                    <li>Bifásico: ~R$ 108/mês</li>
-                    <li>Trifásico: ~R$ 162/mês</li>
-                  </ul>
-                  <p class="quiz-tooltip-fonte">📄 Fonte: <a href="https://www.cemig.com.br/atendimento/tarifas-e-servicos/tarifas/" target="_blank" rel="noopener">Tarifas CEMIG 2024</a> | Resolução ANEEL nº 1000/2021</p>
+                  <p class="quiz-tooltip-fonte">📄 Fonte: <a href="https://www.cemig.com.br/atendimento/tarifas-e-servicos/tarifas/" target="_blank" rel="noopener">Tarifas CEMIG 2024</a></p>
                 </div>
                 <select id="ligacao">
-                  <option value="mono">Monofásico (1 fase)</option>
-                  <option value="bi" selected>Bifásico (2 fases)</option>
-                  <option value="tri">Trifásico (3 fases)</option>
+                  <option value="mono">Monofásico (1 chave)</option>
+                  <option value="bi" selected>Bifásico (2 chaves)</option>
+                  <option value="tri">Trifásico (3 chaves)</option>
                 </select>
               </div>
             </div>
@@ -577,27 +574,25 @@
             <div class="quiz-fields-row">
               <div class="field">
                 <label>
-                  Bandeira tarifária atual
+                  Bandeira tarifária
                   <button class="quiz-tooltip-btn" data-tooltip="bandeira" aria-label="O que é isso?">?</button>
                 </label>
                 <div class="quiz-tooltip-box" id="tooltip-bandeira">
-                  <strong>O que é bandeira tarifária?</strong>
-                  <p>É um sistema criado pela ANEEL que adiciona um custo extra à conta de luz conforme a situação do sistema elétrico brasileiro.</p>
+                  <strong>O que é?</strong>
+                  <p>Custo extra na conta conforme a situação do sistema elétrico. Aparece na conta CEMIG como "Bandeira".</p>
                   <ul>
-                    <li>🟢 <strong>Verde:</strong> Sem cobrança extra. Sistema elétrico em boa situação.</li>
-                    <li>🟡 <strong>Amarela:</strong> R$ 1,885 por 100 kWh consumidos.</li>
-                    <li>🔴 <strong>Vermelha 1:</strong> R$ 3,971 por 100 kWh.</li>
-                    <li>🔴🔴 <strong>Vermelha 2:</strong> R$ 9,492 por 100 kWh. Situação crítica.</li>
-                    <li>⚫ <strong>Escassez Hídrica:</strong> R$ 14,20 por 100 kWh (emergência).</li>
+                    <li>🟢 Verde: sem extra</li>
+                    <li>🟡 Amarela: +R$ 1,89/100 kWh</li>
+                    <li>🔴 Vermelha 1: +R$ 4,46/100 kWh</li>
+                    <li>🔴🔴 Vermelha 2: +R$ 7,88/100 kWh</li>
                   </ul>
-                  <p><strong>Como saber a bandeira atual?</strong> Ela aparece na sua conta de luz, no app da CEMIG ou no site oficial da ANEEL:</p>
-                  <p class="quiz-tooltip-fonte">📄 <a href="https://www.aneel.gov.br/bandeiras-tarifarias" target="_blank" rel="noopener">aneel.gov.br/bandeiras-tarifarias</a></p>
+                  <p>Confira no app da CEMIG ou na <a href="https://www.aneel.gov.br/bandeiras-tarifarias" target="_blank" rel="noopener">ANEEL</a>.</p>
                 </div>
                 <select id="bandeira">
                   <option value="0">🟢 Verde (sem adicional)</option>
-                  <option value="1.885" selected>🟡 Amarela (+R$ 1,885/100kWh)</option>
-                  <option value="3.971">🔴 Vermelha 1 (+R$ 3,971/100kWh)</option>
-                  <option value="9.492">🔴🔴 Vermelha 2 (+R$ 9,492/100kWh)</option>
+                  <option value="1.885" selected>🟡 Amarela (+R$ 1,89/100kWh)</option>
+                  <option value="4.463">🔴 Vermelha 1 (+R$ 4,46/100kWh)</option>
+                  <option value="7.877">🔴🔴 Vermelha 2 (+R$ 7,88/100kWh)</option>
                 </select>
               </div>
 
@@ -607,24 +602,196 @@
                   <button class="quiz-tooltip-btn" data-tooltip="telhado" aria-label="O que é isso?">?</button>
                 </label>
                 <div class="quiz-tooltip-box" id="tooltip-telhado">
-                  <strong>Por que a inclinação importa?</strong>
-                  <p>A inclinação do telhado afeta diretamente a captação de energia solar. Em Minas Gerais, o ângulo ideal de inclinação dos painéis é entre <strong>15° e 25°</strong>.</p>
+                  <strong>Como medir?</strong>
+                  <p>Olhe de fora da sua casa — qual a inclinação do telhado?</p>
                   <ul>
-                    <li><strong>Telhado plano (0–10°):</strong> Pode precisar de estrutura adicional para inclinar os painéis. Eficiência ~90%.</li>
-                    <li><strong>Inclinação leve (10–25°):</strong> Ideal para MG. Eficiência máxima ~100%.</li>
-                    <li><strong>Inclinação alta (25–40°):</strong> Ainda bom, mas começa a perder eficiência. ~95%.</li>
-                    <li><strong>Muito inclinado (40°+):</strong> Telha colonial alta, por exemplo. Eficiência ~85%.</li>
+                    <li><strong>Plano:</strong> Telhado tipo laje, sem inclinação visível</li>
+                    <li><strong>Médio:</strong> Telhado colonial comum (padrão MG)</li>
+                    <li><strong>Inclinado:</strong> Telhado com inclinação alta</li>
+                    <li><strong>Muito inclinado:</strong> Telhado colonial muito alto</li>
                   </ul>
-                  <p><strong>Não sabe a inclinação?</strong> Escolha "Média" — é o padrão mais comum em Minas Gerais.</p>
+                  <p>Se não sabe, escolha <strong>"Médio"</strong> — é o mais comum em MG.</p>
+                  <p class="quiz-tooltip-fonte">📄 Fonte: Atlas Solarimétrico — INPE/LABREN</p>
                 </div>
                 <select id="telhado">
-                  <option value="0.90">Plano ou muito baixo (0–10°)</option>
-                  <option value="1.00" selected>Médio — padrão MG (10–25°)</option>
-                  <option value="0.95">Inclinado (25–40°)</option>
-                  <option value="0.85">Muito inclinado (40°+)</option>
+                  <option value="0.90">Plano (laje sem inclinação)</option>
+                  <option value="1.00" selected>Médio — padrão MG</option>
+                  <option value="0.95">Inclinado</option>
+                  <option value="0.85">Muito inclinado</option>
                 </select>
               </div>
             </div>
+
+            <div class="quiz-fields-row">
+              <div class="field">
+                <label>
+                  Valor do kWh (R$)
+                  <button class="quiz-tooltip-btn" data-tooltip="tarifa-kwh" aria-label="O que é isso?">?</button>
+                </label>
+                <div class="quiz-tooltip-box" id="tooltip-tarifa-kwh">
+                  <strong>Como encontrar na conta?</strong>
+                  <p>Na conta CEMIG, olhe o campo <strong>"Tarifa de Energia"</strong> ou <strong>"Custo da Energia"</strong>. É o valor por kWh.</p>
+                  <ul>
+                    <li><strong>Residencial MG:</strong> ~R$ 1,13/kWh</li>
+                    <li><strong>Comercial MG:</strong> ~R$ 0,81/kWh</li>
+                    <li><strong>Rural MG:</strong> ~R$ 0,72/kWh</li>
+                  </ul>
+                  <p>Se não encontrar, use o valor padrão — já está correto para MG.</p>
+                  <p class="quiz-tooltip-fonte">📄 Fonte: <a href="https://www.cemig.com.br/atendimento/tarifas-e-servicos/tarifas/" target="_blank" rel="noopener">Tarifas CEMIG 2024/2025</a></p>
+                </div>
+                <input type="number" id="param-kwh" value="1.13" step="0.01" min="0.50" max="3.00" placeholder="1.13">
+              </div>
+
+              <div class="field">
+                <label>
+                  Cidade
+                  <button class="quiz-tooltip-btn" data-tooltip="cidade" aria-label="O que é isso?">?</button>
+                </label>
+                <div class="quiz-tooltip-box" id="tooltip-cidade">
+                  <strong>Por que importa?</strong>
+                  <p>Cada cidade recebe quantidade diferente de sol. O site usa dados do <strong>INPE</strong> (fonte oficial do governo).</p>
+                  <p>Almenara/MG é uma das cidades com mais sol de Minas Gerais!</p>
+                  <p class="quiz-tooltip-fonte">📄 Fonte: <a href="https://sol.inpe.br/" target="_blank" rel="noopener">Atlas Solarimétrico — INPE</a></p>
+                </div>
+                <input type="text" id="cidade" list="cidades-mg" placeholder="Ex: Almenara" autocomplete="off">
+                <datalist id="cidades-mg">
+                  <option value="Almenara">
+                  <option value="Jacinto">
+                  <option value="Salto da Divisa">
+                  <option value="Pedra Azul">
+                  <option value="Mata Verde">
+                  <option value="Rio do Prado">
+                  <option value="Santa Maria do Salto">
+                  <option value="Joaima">
+                  <option value="Bandeira">
+                  <option value="Curral de Dentro">
+                  <option value="Virgem da Lapa">
+                  <option value="Araçuaí">
+                  <option value="Itaobim">
+                  <option value="Medina">
+                  <option value="Jequitinhonha">
+                  <option value="Montes Claros">
+                  <option value="Januária">
+                  <option value="Pirapora">
+                  <option value="Teófilo Otoni">
+                  <option value="Governador Valadares">
+                  <option value="Ipatinga">
+                  <option value="Uberlândia">
+                  <option value="Uberaba">
+                  <option value="Belo Horizonte">
+                  <option value="Contagem">
+                  <option value="Betim">
+                  <option value="Juiz de Fora">
+                  <option value="Poços de Caldas">
+                  <option value="Varginha">
+                  <option value="Lavras">
+                  <option value="Pouso Alegre">
+                </datalist>
+              </div>
+            </div>
+
+            <!-- AVANÇADO — CONSULTOR -->
+            <details class="quiz-advanced-inner">
+              <summary>🔧 Parâmetros avançados (para consultores)</summary>
+              <p class="quiz-advanced-subtitle">Valores pré-preenchidos — só altere se souber o que faz.</p>
+
+              <div class="quiz-fields-row">
+                <div class="field">
+                  <label>
+                    Irradiação solar
+                    <button class="quiz-tooltip-btn" data-tooltip="irradiacao" aria-label="O que é isso?">?</button>
+                  </label>
+                  <div class="quiz-tooltip-box" id="tooltip-irradiacao">
+                    <strong>O que é irradiação solar?</strong>
+                    <p>É a quantidade de energia solar que chega ao solo por metro quadrado por dia. Quanto maior, mais energia seus painéis geram.</p>
+                    <ul>
+                      <li><strong>Minas Gerais:</strong> 4,80 a 5,80 kWh/m²/dia (varia por região)</li>
+                      <li><strong>Norte de MG (Jequitinhonha/Almenara):</strong> 5,50 – 5,80 (excelente)</li>
+                      <li><strong>Belo Horizonte/MG (centro):</strong> 4,90 – 5,10 (bom)</li>
+                      <li><strong>Sul de MG:</strong> 4,60 – 4,90 (bom)</li>
+                    </ul>
+                    <p><strong>Como alterar?</strong> Preencha o campo "Cidade" acima — o site preenche automaticamente. Para outro valor, edite este campo diretamente.</p>
+                    <p><strong>Valor oficial:</strong> Consulte o <a href="https://sol.inpe.br/" target="_blank" rel="noopener">Atlas Solarimétrico do INPE</a> para dados precisos da sua região.</p>
+                    <p class="quiz-tooltip-fonte">📄 Fonte: Atlas Solarimétrico do Brasil — INPE/LABREN (Dados 2024) | Média MG: 5,30 kWh/m²/dia</p>
+                  </div>
+                  <input type="number" id="param-irradiacao" step="0.01" min="3.00" max="7.00" placeholder="5.30">
+                </div>
+
+                <div class="field">
+                  <label>
+                    Taxa de disponibilidade
+                    <button class="quiz-tooltip-btn" data-tooltip="taxa-disp" aria-label="O que é isso?">?</button>
+                  </label>
+                  <div class="quiz-tooltip-box" id="tooltip-taxa-disp">
+                    <strong>O que é?</strong>
+                    <p>Custo fixo mensal da CEMIG para manter a conexão. Preenchido automaticamente pela ligação.</p>
+                    <p>Só altere se o valor da sua conta for diferente.</p>
+                    <p class="quiz-tooltip-fonte">📄 <a href="https://www.cemig.com.br/atendimento/tarifas-e-servicos/tarifas/" target="_blank" rel="noopener">Tarifas CEMIG 2024</a></p>
+                  </div>
+                  <input type="number" id="param-taxa-disp" step="1" min="20" max="500" placeholder="108">
+                </div>
+              </div>
+
+              <div class="quiz-fields-row">
+                <div class="field">
+                  <label>
+                    Custo por kWp (R$)
+                    <button class="quiz-tooltip-btn" data-tooltip="custo-kwp" aria-label="O que é isso?">?</button>
+                  </label>
+                  <div class="quiz-tooltip-box" id="tooltip-custo-kwp">
+                    <strong>O que é?</strong>
+                    <p>Preço médio de instalação por quilowatt-pico. Em 2026, no Brasil: R$ 4.500 a R$ 5.500/kWp.</p>
+                    <p>Só altere se tiver orçamento específico.</p>
+                    <p class="quiz-tooltip-fonte">📄 ABSOLAR — Painel do Setor 2024 | CustoSolar 2026</p>
+                  </div>
+                  <input type="number" id="param-custo-kwp" step="100" min="2500" max="7000" placeholder="4200">
+                </div>
+
+                <div class="field">
+                  <label>
+                    Performance Ratio (%)
+                    <button class="quiz-tooltip-btn" data-tooltip="pr" aria-label="O que é isso?">?</button>
+                  </label>
+                  <div class="quiz-tooltip-box" id="tooltip-pr">
+                    <strong>O que é?</strong>
+                    <p>Eficiência geral do sistema. 78% é o padrão para MG (ABNT NBR 16690).</p>
+                    <p>Só altere se o instalador informar valor específico.</p>
+                    <p class="quiz-tooltip-fonte">📄 ABNT NBR 16690:2019</p>
+                  </div>
+                  <input type="number" id="param-pr" step="1" min="60" max="95" placeholder="78">
+                </div>
+              </div>
+
+              <div class="quiz-fields-row">
+                <div class="field">
+                  <label>
+                    Potência do painel (Wp)
+                    <button class="quiz-tooltip-btn" data-tooltip="pot-painel" aria-label="O que é isso?">?</button>
+                  </label>
+                  <div class="quiz-tooltip-box" id="tooltip-pot-painel">
+                    <strong>O que é?</strong>
+                    <p>Potência de um único painel. 550 Wp é o padrão atual (2024/2025).</p>
+                    <p>Altere se o orçamento usar modelo diferente.</p>
+                    <p class="quiz-tooltip-fonte">📄 Catálogos fabricantes — mercado brasileiro</p>
+                  </div>
+                  <input type="number" id="param-pot-painel" step="10" min="300" max="700" placeholder="550">
+                </div>
+
+                <div class="field">
+                  <label>
+                    Inflação da tarifa (% a.a.)
+                    <button class="quiz-tooltip-btn" data-tooltip="inflacao" aria-label="O que é isso?">?</button>
+                  </label>
+                  <div class="quiz-tooltip-box" id="tooltip-inflacao">
+                    <strong>O que é?</strong>
+                    <p>Reajuste anual da energia. 6% é conservador (média MG: 4,5–8%).</p>
+                    <p>Quanto maior, maior a economia acumulada com solar.</p>
+                    <p class="quiz-tooltip-fonte">📄 ANEEL — Reajustes Tarifários | IBGE — IPCA</p>
+                  </div>
+                  <input type="number" id="param-inflacao" step="0.5" min="0" max="15" placeholder="6">
+                </div>
+              </div>
+            </details>
           </details>
 
           <button type="button" class="quiz-btn-finish" id="quiz-btn-finish">Ver minha economia →</button>

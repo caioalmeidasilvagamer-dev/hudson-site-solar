@@ -2258,6 +2258,61 @@ html.dark .footer-col-title {
   margin-bottom: 12px;
 }
 
+.quiz-advanced .field {
+  margin-bottom: 0;
+}
+
+.quiz-advanced .field label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quiz-advanced .field input,
+.quiz-advanced .field select {
+  font-size: 0.82rem;
+  padding: 8px 10px;
+}
+
+.quiz-advanced .quiz-fields-row {
+  margin-bottom: 12px;
+}
+
+.quiz-advanced-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+  font-style: italic;
+}
+
+.quiz-advanced-inner {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-body);
+}
+
+.quiz-advanced-inner summary {
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.quiz-advanced-inner[open] summary {
+  margin-bottom: 10px;
+}
+
+.quiz-advanced-inner .field input {
+  background: var(--bg-body);
+  border-style: dashed;
+}
+
 /* Botões de navegação */
 .quiz-btn-next,
 .quiz-btn-finish,

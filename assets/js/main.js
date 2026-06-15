@@ -421,6 +421,7 @@ const SimulacaoSolar = (function () {
 
     _dados = {
       nome, celular, cidade, tipoLabel,
+      tarifa: document.getElementById('tarifa-usada')?.textContent || '',
       economiaMensal: document.getElementById('res-economia-mensal')?.textContent || '',
       economiaAnual: document.getElementById('res-anual')?.textContent || '',
       kwp: document.getElementById('res-kwp')?.textContent || '',
@@ -1315,8 +1316,30 @@ document.querySelectorAll('[data-video-player]').forEach(el => videoObserver.obs
           if (cidadeInput.value.trim() === cidade) {
             analiseCidade.textContent = 'Região com ótima incidência solar ✓';
           }
+          const irrInput = document.getElementById('param-irradiacao');
+          const c = cidade.toLowerCase().trim();
+          const IRR_MG = {almenara:5.80,jacinto:5.75,'salto da divisa':5.75,'pedra azul':5.70,'mata verde':5.72,'rio do prado':5.68,'santa maria do salto':5.65,joaima:5.70,bandeira:5.65,'curral de dentro':5.60,'virgem da lapa':5.55,araçuaí:5.60,itaobim:5.55,medina:5.58,jequitinhonha:5.50,'montes claros':5.45,januária:5.50,pirapora:5.40,'teófilo otoni':5.35,'governador valadares':5.20,ipatinga:5.10,uberlândia:5.30,uberaba:5.25,'belo horizonte':5.00,contagem:5.00,betim:5.05,'juiz de fora':4.90,'poços de caldas':4.80,varginha:4.85,lavras:4.90,'pouso alegre':4.85};
+          if (irrInput && IRR_MG[c]) irrInput.value = IRR_MG[c];
         }, 1200);
       }, 600);
+    });
+  }
+
+  const ligacaoSelect = document.getElementById('ligacao');
+  const TAXA_DISP = {mono: 54, bi: 108, tri: 162};
+  if (ligacaoSelect) {
+    ligacaoSelect.addEventListener('change', () => {
+      const taxaInput = document.getElementById('param-taxa-disp');
+      if (taxaInput && TAXA_DISP[ligacaoSelect.value]) taxaInput.value = TAXA_DISP[ligacaoSelect.value];
+    });
+  }
+
+  const tipoSelect = document.getElementById('tipo');
+  const TARIFA_DEFAULT = {residencial: 1.13, comercial: 0.81, rural: 0.72};
+  if (tipoSelect) {
+    tipoSelect.addEventListener('change', () => {
+      const kwhInput = document.getElementById('param-kwh');
+      if (kwhInput && TARIFA_DEFAULT[tipoSelect.value]) kwhInput.value = TARIFA_DEFAULT[tipoSelect.value];
     });
   }
 
@@ -1416,9 +1439,9 @@ document.querySelectorAll('[data-video-player]').forEach(el => videoObserver.obs
 function calcularSolarCalc() {
   const CONFIG = {
     tarifas: {
-      residencial: 0.9012,
-      comercial:   0.8147,
-      rural:       0.7234,
+      residencial: 1.13,
+      comercial:   0.81,
+      rural:       0.72,
     },
     taxaMinima: {
       mono: 54.00,
@@ -1426,7 +1449,7 @@ function calcularSolarCalc() {
       tri:  162.00,
     },
     irradiacaoMG: {
-      default:          5.40,
+      default:          5.30,
       almenara:         5.80,
       jacinto:          5.75,
       'salto da divisa':5.75,
@@ -1459,14 +1482,11 @@ function calcularSolarCalc() {
       'lavras':         4.90,
       'pouso alegre':   4.85,
     },
-    custoKwp: {
-      min: 3500,
-      max: 5000,
-      medio: 4200,
-    },
+    custoKwp: 5000,
     potenciaPainel: 550,
     performanceRatio: 0.78,
-    fatorCO2: 0.0839,
+    inflacaoTarifa: 6.0,
+    fatorCO2: 0.0289,
   };
 
   const tipo      = document.getElementById('tipo')?.value || 'residencial';
@@ -1475,20 +1495,39 @@ function calcularSolarCalc() {
   const telhado   = parseFloat(document.getElementById('telhado')?.value) || 1.00;
   const cidade    = (document.getElementById('cidade')?.value || '').toLowerCase().trim();
 
-  const tarifa = CONFIG.tarifas[tipo] || CONFIG.tarifas.residencial;
-  const taxaMin = CONFIG.taxaMinima[ligacao] || CONFIG.taxaMinima.bi;
-  const irradiacao = CONFIG.irradiacaoMG[cidade] || CONFIG.irradiacaoMG.default;
+  const tarifaInput      = parseFloat(document.getElementById('param-kwh')?.value);
+  const irradiacaoInput  = parseFloat(document.getElementById('param-irradiacao')?.value);
+  const taxaDispInput    = parseFloat(document.getElementById('param-taxa-disp')?.value);
+  const custoKwpInput    = parseFloat(document.getElementById('param-custo-kwp')?.value);
+  const prInput          = parseFloat(document.getElementById('param-pr')?.value);
+  const potPainelInput   = parseFloat(document.getElementById('param-pot-painel')?.value);
+  const inflacaoInput    = parseFloat(document.getElementById('param-inflacao')?.value);
+
+  const tarifa       = (!isNaN(tarifaInput) && tarifaInput > 0) ? tarifaInput : (CONFIG.tarifas[tipo] || CONFIG.tarifas.residencial);
+  const taxaMin      = (!isNaN(taxaDispInput) && taxaDispInput > 0) ? taxaDispInput : (CONFIG.taxaMinima[ligacao] || CONFIG.taxaMinima.bi);
+  const irradiacao   = (!isNaN(irradiacaoInput) && irradiacaoInput > 0) ? irradiacaoInput : (CONFIG.irradiacaoMG[cidade] || CONFIG.irradiacaoMG.default);
+  const custoKwp     = (!isNaN(custoKwpInput) && custoKwpInput > 0) ? custoKwpInput : CONFIG.custoKwp;
+  const pr           = (!isNaN(prInput) && prInput > 0) ? (prInput / 100) : CONFIG.performanceRatio;
+  const potPainel    = (!isNaN(potPainelInput) && potPainelInput > 0) ? potPainelInput : CONFIG.potenciaPainel;
+  const inflacao     = (!isNaN(inflacaoInput) && inflacaoInput >= 0) ? inflacaoInput : CONFIG.inflacaoTarifa;
 
   const consumoKwh = conta / tarifa;
-  const kwp = consumoKwh / (irradiacao * 30 * CONFIG.performanceRatio * telhado);
-  const paineis = Math.ceil(kwp / (CONFIG.potenciaPainel / 1000));
-  const geracaoMensal = kwp * irradiacao * 30 * CONFIG.performanceRatio * telhado;
+  const kwp = consumoKwh / (irradiacao * 30 * pr * telhado);
+  const paineis = Math.ceil(kwp / (potPainel / 1000));
+  const geracaoMensal = kwp * irradiacao * 30 * pr * telhado;
   const contaComSolar = taxaMin;
   const economiaMensal = Math.max(0, conta - contaComSolar);
   const economiaAnual = economiaMensal * 12;
-  const investimento = kwp * CONFIG.custoKwp.medio;
+  const investimento = kwp * custoKwp;
   const paybackAnos = economiaMensal > 0 ? investimento / (economiaMensal * 12) : 0;
-  const economia25anos = economiaMensal * 12 * 25;
+
+  let economia25anos = 0;
+  let contaAnual = conta * 12;
+  for (let ano = 0; ano < 25; ano++) {
+    const economiaAno = Math.max(0, contaAnual - (taxaMin * 12));
+    economia25anos += economiaAno;
+    contaAnual *= (1 + inflacao / 100);
+  }
   const roi = investimento > 0 ? ((economia25anos - investimento) / investimento * 100) : 0;
   const co2 = (geracaoMensal * 12 * 25) / 1000 * CONFIG.fatorCO2;
 
@@ -1530,7 +1569,18 @@ function calcularSolarCalc() {
   if (tarifaEl) {
     const nomesTipo = {residencial: 'B1 Residencial', comercial: 'B3 Comercial', rural: 'B2 Rural'};
     const nomesLigacao = {mono: 'Monofásico', bi: 'Bifásico', tri: 'Trifásico'};
-    tarifaEl.innerHTML = '⚡ <strong>Base do cálculo:</strong> Tarifa CEMIG ' + (nomesTipo[tipo] || tipo) + ' — R$ ' + fmtDec(tarifa, 4) + '/kWh | ' + nomesLigacao[ligacao] + ' | Taxa mínima: ' + fmt(taxaMin) + '/mês | Irradiação: ' + fmtDec(irradiacao, 2) + ' kWh/m²/dia';
+    const params = [
+      '⚡ <strong>Base do cálculo:</strong>',
+      'Tarifa CEMIG ' + (nomesTipo[tipo] || tipo) + ' — R$ ' + fmtDec(tarifa, 2) + '/kWh',
+      nomesLigacao[ligacao],
+      'Taxa mínima: ' + fmt(taxaMin) + '/mês',
+      'Irradiação: ' + fmtDec(irradiacao, 2) + ' kWh/m²/dia',
+      'Custo/kWp: ' + fmt(custoKwp),
+      'PR: ' + fmtDec(pr * 100, 0) + '%',
+      'Painel: ' + potPainel + ' Wp',
+      'Inflação: ' + fmtDec(inflacao, 1) + '% a.a.'
+    ];
+    tarifaEl.innerHTML = params.join(' &nbsp;|&nbsp; ');
   }
 
   const results = document.getElementById('sim-results');
