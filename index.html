@@ -403,6 +403,38 @@
       <p class="sim-sub">Responda algumas perguntas e veja o resultado em segundos</p>
 
       <div class="sim-card">
+        <!-- Parâmetros editáveis -->
+        <details class="quiz-params" id="quiz-params">
+          <summary class="quiz-params-summary">⚙️ Parâmetros da simulação</summary>
+          <div class="quiz-params-grid">
+            <div class="field">
+              <label for="param-kwh">Valor do kWh (R$)</label>
+              <input type="number" id="param-kwh" value="1.13" step="0.01" min="0.50" max="3.00">
+            </div>
+            <div class="field">
+              <label for="param-hsp">Horas Sol Pico (HSP)</label>
+              <input type="number" id="param-hsp" value="5.2" step="0.1" min="3.0" max="7.0">
+            </div>
+            <div class="field">
+              <label for="param-pr">Eficiência do sistema (%)</label>
+              <input type="number" id="param-pr" value="78" step="1" min="60" max="95">
+            </div>
+            <div class="field">
+              <label for="param-custo-kwp">Custo por kWp (R$)</label>
+              <input type="number" id="param-custo-kwp" value="4500" step="100" min="2000" max="9000">
+            </div>
+            <div class="field">
+              <label for="param-taxa-disp">Taxa mínima mensal (R$)</label>
+              <input type="number" id="param-taxa-disp" value="45" step="1" min="10" max="200">
+            </div>
+            <div class="field">
+              <label for="param-inflacao">Inflação anual estimada (%)</label>
+              <input type="number" id="param-inflacao" value="10" step="1" min="0" max="30">
+            </div>
+          </div>
+          <p class="quiz-params-hint">Valores padrão calibrados para Minas Gerais (CEMIG, mai/2025). Edite apenas se necessário.</p>
+        </details>
+
         <!-- Barra de progresso -->
         <div class="quiz-progress">
           <div class="quiz-progress-step active"></div>

@@ -361,21 +361,37 @@ const SimulacaoSolar = (function () {
     }
 
     /* ---- 1. VARIÁVEIS BASE ---- */
-    const hsp = HSP_UF[uf] || 5.0;
-    const tarifa = TARIFA_UF[uf] || 0.95;
-    const taxaDisp = TAXA_DISP[ligacao] || 30;
+    // Lê parâmetros editáveis do painel — com fallback para defaults por UF
+    const paramKwh       = parseFloat(document.getElementById('param-kwh')?.value)       || null;
+    const paramHsp       = parseFloat(document.getElementById('param-hsp')?.value)       || null;
+    const paramPr        = parseFloat(document.getElementById('param-pr')?.value)        || null;
+    const paramCustoKwp  = parseFloat(document.getElementById('param-custo-kwp')?.value) || null;
+    const paramTaxaDisp  = parseFloat(document.getElementById('param-taxa-disp')?.value) || null;
+    const paramInflacao  = parseFloat(document.getElementById('param-inflacao')?.value)  || null;
+
+    const hsp      = paramHsp  != null ? paramHsp  : (HSP_UF[uf]    || 5.0);
+    const tarifa   = paramKwh  != null ? paramKwh  : (TARIFA_UF[uf] || 0.95);
+    const pr       = paramPr   != null ? paramPr / 100 : PR;
+    const custoKwp = paramCustoKwp != null ? paramCustoKwp : CUSTO_KWP;
+    const inflacao = paramInflacao  != null ? paramInflacao / 100 : INFLACAO_ANUAL;
+
+    // Taxa de disponibilidade: se o usuário editou em R$, converte para kWh
+    const taxaDispBase = TAXA_DISP[ligacao] || 30;
+    const taxaDisp = paramTaxaDisp != null
+      ? Math.round(paramTaxaDisp / tarifa)
+      : taxaDispBase;
 
     /* ---- 2. CONSUMO ---- */
     const consumo_kwh = conta / tarifa;
     const consumo_util = Math.max(consumo_kwh - taxaDisp, 0);
 
     /* ---- 3. DIMENSIONAMENTO ---- */
-    const kwp = consumo_kwh / (hsp * 30 * PR);
-    const geracao_mensal = Math.round(kwp * hsp * 30 * PR);
+    const kwp = consumo_kwh / (hsp * 30 * pr);
+    const geracao_mensal = Math.round(kwp * hsp * 30 * pr);
     const paineis = Math.ceil((kwp * 1000) / PAINEL_W);
 
     /* ---- 4. PREÇO FINAL ---- */
-    const finalPrice = Math.round(kwp * CUSTO_KWP);
+    const finalPrice = Math.round(kwp * custoKwp);
 
     /* ---- 5. ECONOMIA ---- */
     const noSystemMonthlyPrice = Math.round(conta);
@@ -397,7 +413,7 @@ const SimulacaoSolar = (function () {
         paybackMeses = Math.round((-anterior / economia_ano) * 12);
         if (paybackMeses === 12) { paybackAnos++; paybackMeses = 0; }
       }
-      economia_ano = economia_ano * (1 + INFLACAO_ANUAL);
+      economia_ano = economia_ano * (1 + inflacao);
     }
 
     /* ---- 7. CASH FLOW 25 ANOS ---- */
@@ -407,7 +423,7 @@ const SimulacaoSolar = (function () {
     for (let ano = 1; ano <= 25; ano++) {
       fluxo += eco;
       cashFlow.push(Math.round(fluxo));
-      eco = eco * (1 + INFLACAO_ANUAL);
+      eco = eco * (1 + inflacao);
     }
 
     /* ---- 8. TOTAIS FINAIS ---- */
