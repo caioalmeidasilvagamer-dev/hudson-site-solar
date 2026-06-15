@@ -967,14 +967,14 @@ html:not(.dark) .stat-number {
 
 .stat-label {
   font-size: 0.78rem;
-  color: var(--text-muted);
+  color: var(--color-white);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   white-space: nowrap;
 }
 
 html:not(.dark) .stat-label {
-  color: var(--text-muted);
+  color: var(--color-white);
 }
 
 /* Scroll indicator */
@@ -2085,8 +2085,15 @@ html.dark .footer-col-title {
 }
 
 @keyframes quiz-fade-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .quiz-step-title {
@@ -2305,7 +2312,9 @@ html.dark .footer-col-title {
 }
 
 @keyframes quiz-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .quiz-revelacao-msg {
@@ -4911,7 +4920,7 @@ html:not(.dark) .form-card-glass {
     right: 24px;
     bottom: 96px;
     /* Fica acima do WhatsApp flutuante ou equilibrado no canto */
-  z-index: 210;
+    z-index: 210;
     width: 48px;
     height: 48px;
     border-radius: 14px;
@@ -5753,9 +5762,20 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
 }
 
 @keyframes whats-pulse {
-  0% { transform: scale(1); opacity: 0.6; }
-  70% { transform: scale(1.6); opacity: 0; }
-  100% { transform: scale(1.6); opacity: 0; }
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  70% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
 }
 
 .float-whats-balloon {
@@ -5770,7 +5790,7 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   white-space: nowrap;
   padding: 8px 14px;
   border-radius: 20px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.4s ease, transform 0.4s ease;
