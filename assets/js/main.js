@@ -1066,8 +1066,7 @@ function initAllReveals() {
       className.includes('beneficios-reveal') ||
       className.includes('reveal-left') ||
       className.includes('reveal-right') ||
-      className.includes('calc-reveal') ||
-      className.includes('historia-reveal');
+      className.includes('calc-reveal');
   });
 
   if (revealsToObserve.length === 0) return;

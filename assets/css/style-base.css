@@ -3357,197 +3357,6 @@ html:not(.dark) .depoimento-card:hover {
 }
 
 /* ========== NOSSA HISTÓRIA ========== */
-.historia-timeline {
-  position: relative;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 48px 0;
-}
-
-.historia-item {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 32px;
-  margin-bottom: 48px;
-  position: relative;
-}
-
-.historia-anos {
-  font-family: var(--font-display);
-  font-size: var(--font-size-3xl);
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-  text-align: right;
-  min-width: 80px;
-}
-
-.historia-content {
-  position: relative;
-  padding: 24px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-2xl);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-}
-
-.historia-circle {
-  display: none;
-}
-
-.historia-title {
-  font-size: 1.35rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--text);
-}
-
-.historia-desc {
-  font-size: 0.9rem;
-  line-height: 1.7;
-  color: var(--text-muted);
-}
-
-.historia-item::before {
-  display: none;
-}
-
-.historia-item:last-child::before {
-  display: none;
-}
-
-/* Stats */
-.historia-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  margin-top: 64px;
-}
-
-.historia-stat {
-  text-align: center;
-  padding: 24px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-2xl);
-}
-
-.stat-number {
-  font-family: var(--font-display);
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 8px;
-}
-
-.stat-label {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* === HERO — cores claras sobre overlay escuro === */
-.hero .stat-number {
-  color: var(--solar-yellow);
-}
-
-html:not(.dark) .hero .stat-label {
-  color: var(--hero-text-dim);
-}
-
-.hero-stat-divider {
-  width: 1px;
-  height: 36px;
-  background: var(--border);
-  flex-shrink: 0;
-}
-
-.hero .hero-stat-divider {
-  background: var(--hero-divider);
-}
-
-/* Responsivo */
-@media (max-width: 767px) {
-  .historia-item {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .historia-anos {
-    text-align: left;
-    font-size: var(--font-size-2xl);
-  }
-
-  .historia-circle {
-    left: 16px;
-    top: -12px;
-    transform: none;
-  }
-
-  .historia-content {
-    padding: 20px;
-  }
-
-  .historia-item::before {
-    left: 24px;
-    top: 40px;
-    bottom: -48px;
-  }
-
-  .historia-stats {
-    grid-template-columns: 1fr;
-  }
-
-  .stat-number {
-    font-size: var(--font-size-3xl);
-  }
-}
-
-/* Reveal */
-.historia-reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
-}
-
-.historia-reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.historia-reveal[data-delay="1"] {
-  transition-delay: 0.1s;
-}
-
-.historia-reveal[data-delay="2"] {
-  transition-delay: var(--transition-fast);
-}
-
-.historia-reveal[data-delay="3"] {
-  transition-delay: var(--transition-normal);
-}
-
-.historia-reveal[data-delay="4"] {
-  transition-delay: var(--transition-slow);
-}
-
-.historia-reveal[data-delay="5"] {
-  transition-delay: 0.5s;
-}
-
-.historia-reveal[data-delay="6"] {
-  transition-delay: 0.6s;
-}
-
-.historia-reveal[data-delay="7"] {
-  transition-delay: 0.7s;
-}
-
-.historia-reveal[data-delay="8"] {
-  transition-delay: 0.8s;
-}
 
 /* Contato */
 .contato-section {
@@ -5370,40 +5179,8 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
   word-break: break-word;
 }
 
-/* === 7. historia-item no mobile — corrigir circle saindo da tela === */
-@media (max-width: 600px) {
-  .historia-item {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .historia-anos {
-    font-size: var(--font-size-xl);
-    text-align: left;
-  }
-
-  .historia-content {
-    padding: 16px;
-  }
-
-  .historia-circle {
-    display: none;
-  }
-
-  .historia-item::before {
-    display: none;
-  }
-
-  .historia-timeline {
-    padding: 24px 0;
-  }
-}
 
 /* === 8. stat-number — resolver conflito entre hero e história === */
-#nossa-historia .stat-number {
-  font-size: var(--font-size-heading-md);
-}
-
 .hero-stats .stat-number {
   font-size: clamp(1.6rem, 4vw, 2rem);
 }
@@ -5412,7 +5189,6 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
 .beneficio-title,
 .projeto-title,
 .form-title,
-.historia-title,
 .step-title {
   overflow-wrap: break-word;
   word-break: break-word;
@@ -5420,7 +5196,6 @@ DESIGN ENHANCEMENTS — PREMIUM MODERN DESIGN
 
 .beneficio-desc,
 .projeto-details,
-.historia-desc,
 .depo-text,
 .contato-subtext {
   overflow-wrap: break-word;
