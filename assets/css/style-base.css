@@ -648,6 +648,12 @@ html:not(.dark) .theme-icon--moon {
   color: var(--color-white);
 }
 
+.mobile-menu-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 0;
+}
+
 
 /* ============================================================
    HERO — mobile-first (empilhado)
