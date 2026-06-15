@@ -1996,6 +1996,20 @@ html.dark .footer-col-title {
   pointer-events: none;
 }
 
+.quiz-select-cidade {
+  height: 44px;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.quiz-select-cidade option:first-child {
+  color: var(--text-muted, #999);
+}
+
+.quiz-select-cidade option:not(:first-child) {
+  text-transform: capitalize;
+}
+
 .field .prefix {
   position: relative;
 }

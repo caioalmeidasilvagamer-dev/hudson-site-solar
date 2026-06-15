@@ -493,7 +493,9 @@
           <div class="quiz-fields-row">
             <div class="field" style="flex:2">
               <label for="cidade">Cidade</label>
-              <input type="text" id="cidade" placeholder="Ex: Almenara, Montes Claros, Uberlândia...">
+              <select id="cidade" class="quiz-select-cidade">
+                <option value="">Selecione sua cidade...</option>
+              </select>
             </div>
             <div class="field" style="flex:1;display:none">
               <select id="uf"><option value="MG" selected>MG</option></select>
@@ -653,40 +655,9 @@
                   <p>Almenara/MG é uma das cidades com mais sol de Minas Gerais!</p>
                   <p class="quiz-tooltip-fonte">📄 Fonte: <a href="https://sol.inpe.br/" target="_blank" rel="noopener">Atlas Solarimétrico — INPE</a></p>
                 </div>
-                <input type="text" id="cidade" list="cidades-mg" placeholder="Ex: Almenara" autocomplete="off">
-                <datalist id="cidades-mg">
-                  <option value="Almenara">
-                  <option value="Jacinto">
-                  <option value="Salto da Divisa">
-                  <option value="Pedra Azul">
-                  <option value="Mata Verde">
-                  <option value="Rio do Prado">
-                  <option value="Santa Maria do Salto">
-                  <option value="Joaima">
-                  <option value="Bandeira">
-                  <option value="Curral de Dentro">
-                  <option value="Virgem da Lapa">
-                  <option value="Araçuaí">
-                  <option value="Itaobim">
-                  <option value="Medina">
-                  <option value="Jequitinhonha">
-                  <option value="Montes Claros">
-                  <option value="Januária">
-                  <option value="Pirapora">
-                  <option value="Teófilo Otoni">
-                  <option value="Governador Valadares">
-                  <option value="Ipatinga">
-                  <option value="Uberlândia">
-                  <option value="Uberaba">
-                  <option value="Belo Horizonte">
-                  <option value="Contagem">
-                  <option value="Betim">
-                  <option value="Juiz de Fora">
-                  <option value="Poços de Caldas">
-                  <option value="Varginha">
-                  <option value="Lavras">
-                  <option value="Pouso Alegre">
-                </datalist>
+                <select id="param-cidade" class="quiz-select-cidade">
+                  <option value="">Selecione...</option>
+                </select>
               </div>
             </div>
 
@@ -2356,6 +2327,7 @@
     </svg>
   </button>
 
+  <script src="assets/js/tarifas-mg.js?v=8"></script>
   <script src="assets/js/main.js?v=8" defer></script>
 </body>
 

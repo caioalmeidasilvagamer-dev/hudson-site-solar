@@ -1296,37 +1296,56 @@ document.querySelectorAll('[data-video-player]').forEach(el => videoObserver.obs
     });
   }
 
-  // Passo 3 — cidade
-  const cidadeInput = document.getElementById('cidade');
-  const analiseCidade = document.getElementById('quiz-analise-cidade');
-  let cidadeTimeout = null;
+  // Popula selects de cidades a partir de CIDADES_MG (tarifas-mg.js)
+  document.querySelectorAll('.quiz-select-cidade').forEach(sel => {
+    if (typeof CIDADES_MG === 'undefined') return;
+    CIDADES_MG.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.nome;
+      opt.textContent = c.nome + ' — ' + (c.irradiacao ? c.irradiacao.toFixed(2) + ' kWh/m²/dia' : '');
+      opt.dataset.irr = c.irradiacao || '';
+      opt.dataset.tarifa = c.tarifa_kwh || '';
+      sel.appendChild(opt);
+    });
+  });
 
-  if (cidadeInput) {
-    cidadeInput.addEventListener('input', () => {
-      clearTimeout(cidadeTimeout);
-      const cidade = cidadeInput.value.trim();
-      if (!cidade) {
-        analiseCidade.classList.remove('visible');
-        return;
-      }
-      cidadeTimeout = setTimeout(() => {
-        analiseCidade.textContent = `Consultando índice solar de ${cidade}...`;
-        analiseCidade.classList.add('visible');
-        setTimeout(() => {
-          if (cidadeInput.value.trim() === cidade) {
-            analiseCidade.textContent = 'Região com ótima incidência solar ✓';
-          }
-          const irrInput = document.getElementById('param-irradiacao');
-          const c = cidade.toLowerCase().trim();
-          const IRR_MG = {almenara:5.80,jacinto:5.75,'salto da divisa':5.75,'pedra azul':5.70,'mata verde':5.72,'rio do prado':5.68,'santa maria do salto':5.65,joaima:5.70,bandeira:5.65,'curral de dentro':5.60,'virgem da lapa':5.55,araçuaí:5.60,itaobim:5.55,medina:5.58,jequitinhonha:5.50,'montes claros':5.45,januária:5.50,pirapora:5.40,'teófilo otoni':5.35,'governador valadares':5.20,ipatinga:5.10,uberlândia:5.30,uberaba:5.25,'belo horizonte':5.00,contagem:5.00,betim:5.05,'juiz de fora':4.90,'poços de caldas':4.80,varginha:4.85,lavras:4.90,'pouso alegre':4.85};
-          if (irrInput && IRR_MG[c]) irrInput.value = IRR_MG[c];
-        }, 1200);
-      }, 600);
+  // Passo 3 — cidade (select)
+  const cidadeInput = document.getElementById('cidade');
+  const paramCidadeInput = document.getElementById('param-cidade');
+  const analiseCidade = document.getElementById('quiz-analise-cidade');
+  const TAXA_DISP = {mono: 54, bi: 108, tri: 162};
+  const TARIFA_DEFAULT = {residencial: 1.13, comercial: 0.81, rural: 0.72};
+
+  function aplicarCidade(sel) {
+    const nome = sel.value.trim();
+    if (!nome) {
+      analiseCidade.classList.remove('visible');
+      return;
+    }
+    analiseCidade.textContent = `Consultando índice solar de ${nome}...`;
+    analiseCidade.classList.add('visible');
+    setTimeout(() => {
+      analiseCidade.textContent = 'Região com ótima incidência solar ✓';
+      const opt = sel.options[sel.selectedIndex];
+      const irrInput = document.getElementById('param-irradiacao');
+      const kwhInput = document.getElementById('param-kwh');
+      if (irrInput && opt.dataset.irr) irrInput.value = opt.dataset.irr;
+      if (kwhInput && opt.dataset.tarifa) kwhInput.value = opt.dataset.tarifa;
+    }, 800);
+  }
+
+  if (cidadeInput) cidadeInput.addEventListener('change', () => aplicarCidade(cidadeInput));
+  if (paramCidadeInput) {
+    paramCidadeInput.addEventListener('change', () => {
+      // Sincroniza com o select principal do quiz
+      if (cidadeInput && paramCidadeInput.value) cidadeInput.value = paramCidadeInput.value;
+      const irrInput = document.getElementById('param-irradiacao');
+      const opt = paramCidadeInput.options[paramCidadeInput.selectedIndex];
+      if (opt && opt.dataset.irr && irrInput) irrInput.value = opt.dataset.irr;
     });
   }
 
   const ligacaoSelect = document.getElementById('ligacao');
-  const TAXA_DISP = {mono: 54, bi: 108, tri: 162};
   if (ligacaoSelect) {
     ligacaoSelect.addEventListener('change', () => {
       const taxaInput = document.getElementById('param-taxa-disp');
@@ -1335,7 +1354,6 @@ document.querySelectorAll('[data-video-player]').forEach(el => videoObserver.obs
   }
 
   const tipoSelect = document.getElementById('tipo');
-  const TARIFA_DEFAULT = {residencial: 1.13, comercial: 0.81, rural: 0.72};
   if (tipoSelect) {
     tipoSelect.addEventListener('change', () => {
       const kwhInput = document.getElementById('param-kwh');
@@ -1448,40 +1466,6 @@ function calcularSolarCalc() {
       bi:   108.00,
       tri:  162.00,
     },
-    irradiacaoMG: {
-      default:          5.30,
-      almenara:         5.80,
-      jacinto:          5.75,
-      'salto da divisa':5.75,
-      'pedra azul':     5.70,
-      'mata verde':     5.72,
-      'rio do prado':   5.68,
-      'santa maria do salto': 5.65,
-      'joaima':         5.70,
-      'bandeira':       5.65,
-      'curral de dentro': 5.60,
-      'virgem da lapa': 5.55,
-      'araçuaí':        5.60,
-      'itaobim':        5.55,
-      'medina':         5.58,
-      'jequitinhonha':  5.50,
-      'montes claros':  5.45,
-      'januária':       5.50,
-      'pirapora':       5.40,
-      'teófilo otoni':  5.35,
-      'governador valadares': 5.20,
-      'ipatinga':       5.10,
-      'uberlândia':     5.30,
-      'uberaba':        5.25,
-      'belo horizonte': 5.00,
-      'contagem':       5.00,
-      'betim':          5.05,
-      'juiz de fora':   4.90,
-      'poços de caldas': 4.80,
-      'varginha':       4.85,
-      'lavras':         4.90,
-      'pouso alegre':   4.85,
-    },
     custoKwp: 5000,
     potenciaPainel: 550,
     performanceRatio: 0.78,
@@ -1489,11 +1473,17 @@ function calcularSolarCalc() {
     fatorCO2: 0.0289,
   };
 
+  const irradiacaoMG = (typeof IRR_MG !== 'undefined') ? IRR_MG : {
+    'almenara': 5.80, 'belo horizonte': 5.00, 'uberlândia': 5.30
+  };
+  irradiacaoMG.default = 5.30;
+
   const tipo      = document.getElementById('tipo')?.value || 'residencial';
   const conta     = parseFloat(document.getElementById('conta')?.value) || 300;
   const ligacao   = document.getElementById('ligacao')?.value || 'bi';
   const telhado   = parseFloat(document.getElementById('telhado')?.value) || 1.00;
-  const cidade    = (document.getElementById('cidade')?.value || '').toLowerCase().trim();
+  const cidadeEl  = document.getElementById('cidade') || document.getElementById('param-cidade');
+  const cidade    = (cidadeEl?.value || '').toLowerCase().trim();
 
   const tarifaInput      = parseFloat(document.getElementById('param-kwh')?.value);
   const irradiacaoInput  = parseFloat(document.getElementById('param-irradiacao')?.value);
@@ -1505,7 +1495,7 @@ function calcularSolarCalc() {
 
   const tarifa       = (!isNaN(tarifaInput) && tarifaInput > 0) ? tarifaInput : (CONFIG.tarifas[tipo] || CONFIG.tarifas.residencial);
   const taxaMin      = (!isNaN(taxaDispInput) && taxaDispInput > 0) ? taxaDispInput : (CONFIG.taxaMinima[ligacao] || CONFIG.taxaMinima.bi);
-  const irradiacao   = (!isNaN(irradiacaoInput) && irradiacaoInput > 0) ? irradiacaoInput : (CONFIG.irradiacaoMG[cidade] || CONFIG.irradiacaoMG.default);
+  const irradiacao   = (!isNaN(irradiacaoInput) && irradiacaoInput > 0) ? irradiacaoInput : (irradiacaoMG[cidade] || irradiacaoMG.default);
   const custoKwp     = (!isNaN(custoKwpInput) && custoKwpInput > 0) ? custoKwpInput : CONFIG.custoKwp;
   const pr           = (!isNaN(prInput) && prInput > 0) ? (prInput / 100) : CONFIG.performanceRatio;
   const potPainel    = (!isNaN(potPainelInput) && potPainelInput > 0) ? potPainelInput : CONFIG.potenciaPainel;
@@ -1553,7 +1543,7 @@ function calcularSolarCalc() {
 
   const avisoEl = document.getElementById('aviso-regiao');
   if (avisoEl) {
-    const cidadeConhecida = CONFIG.irradiacaoMG[cidade];
+    const cidadeConhecida = irradiacaoMG[cidade];
     if (cidade && cidadeConhecida) {
       avisoEl.style.display = 'block';
       avisoEl.innerHTML = '📍 Irradiação solar usada para <strong>' + cidade + '</strong>: <strong>' + fmtDec(irradiacao, 2) + ' kWh/m²/dia</strong> — dados do Atlas INPE/LABREN para MG.';
