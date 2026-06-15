@@ -4615,7 +4615,7 @@ html:not(.dark) .form-card-glass {
     font-family: 'Courier New', monospace;
     font-size: var(--font-size-xxs);
     background: var(--whatsapp-opacity-10);
-    color: var(--whatsapp);
+    color: var(--sky-accent);
     padding: 4px 8px;
     border-radius: var(--radius-sm);
     border: 1px solid var(--whatsapp-opacity-20);
