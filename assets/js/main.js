@@ -24,6 +24,61 @@ function throttle(fn, delay) {
   };
 }
 
+// ============================================================
+// RATE LIMITER — proteção contra spam e abuso
+// ============================================================
+const RateLimit = {
+  _store: {},
+
+  // Verifica se ação pode ser executada
+  // key: identificador da ação | limit: máximo de tentativas | windowMs: janela de tempo em ms
+  check(key, limit, windowMs) {
+    const now = Date.now();
+    if (!this._store[key]) this._store[key] = [];
+
+    // Remove tentativas fora da janela de tempo
+    this._store[key] = this._store[key].filter(t => now - t < windowMs);
+
+    if (this._store[key].length >= limit) {
+      return false; // bloqueado
+    }
+
+    this._store[key].push(now);
+    return true; // permitido
+  },
+
+  // Retorna segundos restantes para próxima tentativa
+  waitTime(key, windowMs) {
+    const now = Date.now();
+    if (!this._store[key] || !this._store[key].length) return 0;
+    const oldest = Math.min(...this._store[key]);
+    const wait = Math.ceil((windowMs - (now - oldest)) / 1000);
+    return Math.max(0, wait);
+  },
+
+  // Bloqueia visualmente um botão com countdown
+  blockButton(btn, seconds, originalText) {
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+    btn.style.cursor = 'not-allowed';
+    let remaining = seconds;
+    const original = originalText || btn.textContent;
+    btn.textContent = `Aguarde ${remaining}s...`;
+    const interval = setInterval(() => {
+      remaining--;
+      if (remaining <= 0) {
+        clearInterval(interval);
+        btn.disabled = false;
+        btn.style.opacity = '';
+        btn.style.cursor = '';
+        btn.textContent = original;
+      } else {
+        btn.textContent = `Aguarde ${remaining}s...`;
+      }
+    }, 1000);
+  }
+};
+
 /* ===== TEMA DIA/NOITE ===== */
 (function initThemeToggle() {
   const btn = document.getElementById('theme-toggle');
@@ -375,6 +430,12 @@ const SimulacaoSolar = (function () {
   }
 
   function enviarSimulacaoWhatsApp() {
+    // Rate limit: máximo 5 aberturas de WhatsApp por 5 minutos
+    if (!RateLimit.check('whatsapp_simulacao', 5, 300000)) {
+      alert('Você já enviou muitas solicitações. Aguarde alguns minutos ou ligue diretamente: (33) 98884-5152');
+      return;
+    }
+
     if (!_dados) {
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Olá! Vim pelo site da ProSol Energia Solar e gostaria de um orçamento gratuito.')}`, '_blank');
       return;
@@ -584,6 +645,13 @@ function initContatoForm() {
   // Intercepta e processa envio do form
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+
+    // Rate limit: máximo 3 envios por 10 minutos
+    if (!RateLimit.check('form_contato', 3, 600000)) {
+      const wait = RateLimit.waitTime('form_contato', 600000);
+      showErrorToast(`Muitos envios em sequência. Aguarde ${Math.ceil(wait/60)} minuto(s) ou entre em contato diretamente pelo WhatsApp.`);
+      return;
+    }
 
     const nome = sanitize(document.getElementById('form-nome').value.trim());
     const tel = sanitize(document.getElementById('form-telefone').value.trim());
@@ -1255,6 +1323,9 @@ document.querySelectorAll('[data-video-player]').forEach(el => videoObserver.obs
   // Botões "Continuar"
   document.querySelectorAll('.quiz-btn-next').forEach(btn => {
     btn.addEventListener('click', () => {
+      // Rate limit: máximo 20 cliques de navegação por minuto (anti-bot)
+      if (!RateLimit.check('quiz_nav', 20, 60000)) return;
+
       const next = parseInt(btn.dataset.next);
       goToStep(next);
     });
@@ -1278,6 +1349,14 @@ document.querySelectorAll('[data-video-player]').forEach(el => videoObserver.obs
 
       if (!nome || !celular) {
         showErrorToast('Preencha seu nome e WhatsApp para ver o resultado.');
+        return;
+      }
+
+      // Rate limit: máximo 3 simulações por 2 minutos
+      if (!RateLimit.check('simulacao', 3, 120000)) {
+        const wait = RateLimit.waitTime('simulacao', 120000);
+        showErrorToast(`Muitas simulações em sequência. Aguarde ${wait} segundos ou entre em contato pelo WhatsApp.`);
+        RateLimit.blockButton(btnFinish, wait, 'Ver minha economia →');
         return;
       }
 

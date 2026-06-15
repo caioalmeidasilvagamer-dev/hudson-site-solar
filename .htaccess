@@ -6,6 +6,48 @@
 
 
 # ============================================================
+# 0. PROTEÇÃO CONTRA FLOOD E ABUSO (mod_evasive / mod_rewrite)
+# ============================================================
+
+# Bloqueia user-agents vazios (bots primitivos)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_USER_AGENT} ^-?$ [NC]
+  RewriteRule ^ - [F,L]
+
+  # Bloqueia user-agents conhecidos de scrapers e bots maliciosos
+  RewriteCond %{HTTP_USER_AGENT} (scrapy|zgrab|masscan|nikto|sqlmap|nmap|python-requests|curl\/[0-9]) [NC]
+  RewriteRule ^ - [F,L]
+
+  # Bloqueia requisições sem Referer para arquivos JS e CSS (acesso direto suspeito)
+  RewriteCond %{REQUEST_URI} \.(js|css)$ [NC]
+  RewriteCond %{HTTP_REFERER} ^$ [NC]
+  RewriteCond %{HTTP_USER_AGENT} ^$ [NC]
+  RewriteRule ^ - [F,L]
+</IfModule>
+
+# Limita tamanho máximo de requisição (proteção contra POST flood)
+<IfModule mod_php.c>
+  php_value upload_max_filesize 2M
+  php_value post_max_size 2M
+</IfModule>
+
+# Limita tamanho do corpo da requisição via LimitRequestBody (Apache nativo)
+LimitRequestBody 102400
+
+# Bloqueia acesso a arquivos sensíveis por URL direta
+<IfModule mod_rewrite.c>
+  RewriteRule ^(\.git|\.env|node_modules|package\.json|composer\.(json|lock)) - [F,L]
+</IfModule>
+
+# Proteção adicional de headers — remove informações do servidor
+<IfModule mod_headers.c>
+  Header unset X-Powered-By
+  Header unset Server
+  ServerTokens Prod
+</IfModule>
+
+# ============================================================
 # 1. REDIRECIONAR HTTP → HTTPS (obrigatório para SEO e segurança)
 # ============================================================
 
