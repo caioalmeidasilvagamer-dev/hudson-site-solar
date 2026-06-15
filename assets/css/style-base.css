@@ -263,17 +263,19 @@ h1 {
 }
 
 h2 {
-  font-weight: 700;
+  font-weight: 800;
   /* Peso forte para seções */
   font-size: var(--font-size-heading-lg);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 h3 {
-  font-weight: 600;
+  font-weight: 700;
   /* Peso médio para sub-seções */
   font-size: clamp(1.5rem, 4vw, 2.2rem);
   letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 h4 {
@@ -1430,6 +1432,7 @@ html.dark .footer-col-title {
   /* Peso premium e marcante */
   color: var(--text);
   letter-spacing: -0.02em;
+  line-height: 1.1;
   margin-bottom: 24px;
   padding-bottom: 16px;
   text-align: center;
@@ -1867,8 +1870,9 @@ html.dark .footer-col-title {
 
 .section-title {
   font-size: var(--font-size-heading-md);
-  font-weight: 600;
-  line-height: 1.15;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   margin-bottom: 12px;
 }
 
